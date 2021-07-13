@@ -1,0 +1,5 @@
+rdflib
+rdflib-jsonld
+SPARQLWrapper
+pandas
+# prefect[kubernetes]
