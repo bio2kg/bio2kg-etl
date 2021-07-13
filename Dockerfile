@@ -8,3 +8,9 @@ RUN curl -s https://api.github.com/repos/RMLio/rmlmapper-java/releases/latest \
     | wget -O /opt/rmlmapper.jar -qi -
 
 RUN npm i -g @rmlio/yarrrml-parser
+
+
+# FROM quay.io/redhat-github-actions/runner:latest as runner
+# USER root
+# RUN dnf module install -y nodejs:14/default
+# USER $UID
