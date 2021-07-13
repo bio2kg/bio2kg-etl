@@ -1,4 +1,6 @@
-ETL for the Bio2KG knowledge graph.
+# ETL for the Bio2KG knowledge graph
+
+[![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml)
 
 ## Use GitHub Actions on the DSRI
 
