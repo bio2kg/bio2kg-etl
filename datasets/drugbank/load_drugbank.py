@@ -14,6 +14,7 @@ import requests
 import pandas
 
 start_time = datetime.datetime.now()
+os.makedirs('data', exist_ok=True)
 log.basicConfig(filename='data/run.log', filemode='w', level=log.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S', format='%(asctime)s %(levelname)-8s %(message)s')
 log.getLogger().addHandler(log.StreamHandler(sys.stdout))
@@ -21,7 +22,6 @@ log.getLogger().addHandler(log.StreamHandler(sys.stdout))
 drugbank_username = os.getenv('DRUGBANK_USERNAME', 'vincent.emonet@maastrichtuniversity.nl')
 drugbank_password = os.getenv('DRUGBANK_PASSWORD', 'changepassword')
 drugbank_version = os.getenv('DRUGBANK_VERSION', '5-1-8')
-os.makedirs('data', exist_ok=True)
 # if not Path('data/drugbank.zip').isfile():
 if not os.path.isfile('data/drugbank.zip'):
     log.info('drugbank.xml not present, downloading it')
