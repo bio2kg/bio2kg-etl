@@ -14,14 +14,17 @@ import pandas
 import zipfile
 import pathlib
 
-def get_path(path=''):
-    return pathlib.Path(__file__).parent.resolve() / 'data' / path
+def get_path(filename=''):
+    # Get path of file in drugbank/data folder
+    return str(pathlib.Path(__file__).parent.resolve() / 'data' / filename)
 
+# Setup timer and logging
 start_time = datetime.datetime.now()
 os.makedirs(get_path(), exist_ok=True)
 log.basicConfig(filename=get_path('run.log'), filemode='w', level=log.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S', format='%(asctime)s %(levelname)-8s %(message)s')
 log.getLogger().addHandler(log.StreamHandler(sys.stdout))
+
 
 # Set those variables as GitHub secrets for the workflow
 drugbank_username = os.getenv('DRUGBANK_USERNAME', 'vincent.emonet@maastrichtuniversity.nl')
