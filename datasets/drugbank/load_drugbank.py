@@ -25,7 +25,7 @@ drugbank_password = os.getenv('DRUGBANK_PASSWORD', 'changepassword')
 drugbank_version = os.getenv('DRUGBANK_VERSION', '5-1-8')
 if not os.path.isfile('data/drugbank.zip'):
     log.info('drugbank.xml not present, downloading it')
-    os.system('curl -s -o data/drugbank.zip -u ' + drugbank_username + ':' + drugbank_password + ' https://go.drugbank.com/releases/' + drugbank_version + '/downloads/all-full-database')
+    os.system('curl -Lfs -o data/drugbank.zip -u ' + drugbank_username + ':' + drugbank_password + ' https://go.drugbank.com/releases/' + drugbank_version + '/downloads/all-full-database')
 
 log.info('💽 Loading the drugbank.zip file')
 
