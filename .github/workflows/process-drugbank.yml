@@ -14,18 +14,23 @@ jobs:
 
   process:
     runs-on: ["self-hosted", "dsri", "bio2kg" ]
-    strategy:
-      matrix:
-        python-version: [3.8]
+    # strategy:
+    #   matrix:
+    #     python-version: [3.8]
 
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
+    # - name: Set up Python ${{ matrix.python-version }}
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: ${{ matrix.python-version }}
+
+    - name: Update 
+      run: |
+        yum update
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
