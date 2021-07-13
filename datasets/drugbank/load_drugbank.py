@@ -10,8 +10,8 @@ import re
 import io
 import json
 import xml.etree.ElementTree as ET
-import requests
 import pandas
+import zipfile
 
 start_time = datetime.datetime.now()
 os.makedirs('data', exist_ok=True)
@@ -19,21 +19,18 @@ log.basicConfig(filename='data/run.log', filemode='w', level=log.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S', format='%(asctime)s %(levelname)-8s %(message)s')
 log.getLogger().addHandler(log.StreamHandler(sys.stdout))
 
+# Set those variables as GitHub secrets for the workflow
 drugbank_username = os.getenv('DRUGBANK_USERNAME', 'vincent.emonet@maastrichtuniversity.nl')
 drugbank_password = os.getenv('DRUGBANK_PASSWORD', 'changepassword')
 drugbank_version = os.getenv('DRUGBANK_VERSION', '5-1-8')
-# if not Path('data/drugbank.zip').isfile():
 if not os.path.isfile('data/drugbank.zip'):
     log.info('drugbank.xml not present, downloading it')
-    os.system('curl -Lfv -o data/drugbank.zip -u ' + drugbank_username + ':' + drugbank_password + ' https://go.drugbank.com/releases/' + drugbank_version + '/downloads/all-full-database')
+    os.system('curl -s -o data/drugbank.zip -u ' + drugbank_username + ':' + drugbank_password + ' https://go.drugbank.com/releases/' + drugbank_version + '/downloads/all-full-database')
 
 log.info('💽 Loading the drugbank.zip file')
 
-# xml_path = os.path.join('download', 'drugbank.xml.gz')
 zip_path = os.path.join('data', 'drugbank.zip')
-import zipfile
 archive = zipfile.ZipFile(zip_path, 'r')
-# extracted_file = archive.read('full database.xml')
 
 with archive.open('full database.xml', 'r') as xml_file:
     log.info('Zip loaded, parsing the XML...')
