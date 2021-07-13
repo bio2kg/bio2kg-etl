@@ -11,6 +11,30 @@ jobs:
       steps: ...
 ```
 
+You can install anything you want with conda, pip, npm, yarn, maven.
+
+### Build the GitHub Actions runner
+
+For the latest miniforge conda versions, checkout https://github.com/conda-forge/miniforge/releases
+
+Build:
+
+```bash
+docker build --build-arg conda_version=4.10.3 --build-arg miniforge_python=Mambaforge -t ghcr.io/bio2kg/workflow-runner:latest .
+```
+
+Quick try:
+
+```bash
+docker run -it --entrypoint=bash ghcr.io/bio2kg/workflow-runner:latest
+```
+
+Push:
+
+```bash
+docker push ghcr.io/bio2kg/workflow-runner:latest
+```
+
 ### Deploy a GitHub Actions runner
 
 You can easily start a GitHub Actions workflow runner in your project on the DSRI:
@@ -42,28 +66,6 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set cpuLimit="60" \
     --set runnerImage=ghcr.io/bio2kg/workflow-runner \
 	--set runnerTag=latest
-```
-
-### Build the GitHub Actions runner
-
-For the latest miniforge conda versions, checkout https://github.com/conda-forge/miniforge/releases
-
-Build:
-
-```bash
-docker build --build-arg conda_version=4.10.3 --build-arg miniforge_python=Mambaforge -t ghcr.io/bio2kg/workflow-runner:latest .
-```
-
-Quick try:
-
-```bash
-docker run -it --entrypoint=bash ghcr.io/bio2kg/workflow-runner:latest
-```
-
-Push:
-
-```bash
-docker push ghcr.io/bio2kg/workflow-runner:latest
 ```
 
 ## Deploy Prefect workflows
