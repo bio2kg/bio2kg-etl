@@ -20,23 +20,23 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Hello 
+    - name: Check 
       run: |
-        echo "Hello bio2kg"
-        mkdir testfolder
         pwd
         id
 
-    - name: Update 
+    - name: Install dependencies
       run: |
         conda install -y --file requirements.txt
-        conda install -y php
 
     - name: Run ETL script
+      env:
+        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
       run: |
-        python datasets/check.py
-      # python datasets/drugbank/load_drugbank.py
+        python datasets/drugbank/load_drugbank.py
 
-    # - name: Install dependencies
-    #   run: |
-    #     pip install -r requirements.txt
+    - name: Upload CSV input artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: output
+        path: datasets/drugbank/data/drugbank_processed.csv

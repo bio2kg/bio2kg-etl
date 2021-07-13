@@ -93,8 +93,7 @@ drugbank_df = pandas.DataFrame.from_dict(rows)[columns]
 
 print(drugbank_df.head())
 
-
-
+drugbank_df.to_csv('data/drugbank_processed.csv')
 
 run_time = datetime.datetime.now() - start_time
 log.info('Ran for ' + str(run_time))
