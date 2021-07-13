@@ -34,7 +34,7 @@ jobs:
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
       run: |
         python datasets/drugbank/load_drugbank.py
-        ls 
+        ls datasets/drugbank/data
 
     - name: Upload CSV input artifact
       uses: actions/upload-artifact@v2
