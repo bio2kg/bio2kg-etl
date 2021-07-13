@@ -1,22 +1,33 @@
 ETL for the Bio2KG knowledge graph.
 
-## Deploy a GitHub Actions runner
+## Use GitHub Actions on the DSRI
+
+You can define GitHub Actions workflows in the folder `.github/workflows` to run on the DSRI:
+
+```yaml
+jobs:
+	your-job:
+		runs-on: ["self-hosted", "dsri", "bio2kg" ]
+		steps: ...
+```
+
+### Deploy a GitHub Actions runner
 
 You can easily start a GitHub Actions workflow runner in your project on the DSRI:
 
-1. Get an access token with a user in the bio2kg organization
+1. Get an access token with a user in the bio2kg organization, and export it in your environment
 
 ```bash
 export GITHUB_PAT="TOKEN"
 ```
 
-2. Go to your project
+2. Go to your project on the DSRI
 
 ```bash
-oc project my-project
+oc project bio2kg
 ```
 
-3. Start the runners
+3. Start the runners in your project
 
 ```bash
 helm install actions-runner openshift-actions-runner/actions-runner \
@@ -28,17 +39,32 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set memoryRequest="512Mi" \
     --set memoryLimit="100Gi" \
     --set cpuRequest="100m" \
-    --set cpuLimit="60"
+    --set cpuLimit="60" \
+    --set runnerImage=ghcr.io/bio2kg/workflow-runner \
+	--set runnerTag=latest
 ```
 
-You can also change the default runner image:
+### Build the GitHub Actions runner
+
+For the latest miniforge conda versions, checkout https://github.com/conda-forge/miniforge/releases
+
+Build:
 
 ```bash
-	--set runnerImage=quay.io/redhat-github-actions/runner \
-	--set runnerTag=v1
+docker build --build-arg conda_version=4.10.3 --build-arg miniforge_python=Mambaforge -t ghcr.io/bio2kg/workflow-runner:latest .
 ```
 
+Quick try:
 
+```bash
+docker run -it --entrypoint=bash ghcr.io/bio2kg/workflow-runner:latest
+```
+
+Push:
+
+```bash
+docker push ghcr.io/bio2kg/workflow-runner:latest
+```
 
 ## Deploy Prefect workflows
 

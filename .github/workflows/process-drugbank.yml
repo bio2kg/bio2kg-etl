@@ -34,15 +34,14 @@ jobs:
 
     - name: Update 
       run: |
-        sudo yum update
-        sudo yum install python3
+        conda install -y --file requirements.txt
+        conda install -y php
 
     - name: Run ETL script
       run: |
-        python3 datasets/check.py
+        python datasets/check.py
       # python datasets/drugbank/load_drugbank.py
 
-    - name: Install dependencies
-      run: |
-        # python3 -m pip install --upgrade pip
-        pip install -r requirements.txt
+    # - name: Install dependencies
+    #   run: |
+    #     pip install -r requirements.txt
