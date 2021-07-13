@@ -31,6 +31,15 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set cpuLimit="60"
 ```
 
+You can also change the default runner image:
+
+```bash
+	--set runnerImage=quay.io/redhat-github-actions/runner \
+	--set runnerTag=v1
+```
+
+
+
 ## Deploy Prefect workflows
 
 Experimental.
