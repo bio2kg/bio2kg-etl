@@ -6,9 +6,9 @@ You can define GitHub Actions workflows in the folder `.github/workflows` to run
 
 ```yaml
 jobs:
-	your-job:
-		runs-on: ["self-hosted", "dsri", "bio2kg" ]
-		steps: ...
+    your-job:
+      runs-on: ["self-hosted", "dsri", "bio2kg" ]
+      steps: ...
 ```
 
 ### Deploy a GitHub Actions runner
