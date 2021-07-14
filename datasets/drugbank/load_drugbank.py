@@ -25,8 +25,7 @@ log.basicConfig(filename=get_path('run.log'), filemode='w', level=log.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S', format='%(asctime)s %(levelname)-8s %(message)s')
 log.getLogger().addHandler(log.StreamHandler(sys.stdout))
 
-
-# Set those variables as GitHub secrets for the workflow
+# Set those variables as GitHub secrets for drugbank download
 drugbank_username = os.getenv('DRUGBANK_USERNAME', 'vincent.emonet@maastrichtuniversity.nl')
 drugbank_password = os.getenv('DRUGBANK_PASSWORD', 'changepassword')
 drugbank_version = os.getenv('DRUGBANK_VERSION', '5-1-8')

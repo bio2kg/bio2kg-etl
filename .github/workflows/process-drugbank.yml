@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/drugbank'
+    - 'datasets/drugbank/*'
     - '.github/workflows/process-drugbank.yml'
   # schedule:
   #   - cron:  '00 01 * * *'

@@ -67,7 +67,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set cpuRequest="100m" \
     --set cpuLimit="60" \
     --set runnerImage=ghcr.io/bio2kg/workflow-runner \
-	--set runnerTag=latest
+    --set runnerTag=latest
 ```
 
 ## Deploy Prefect workflows
@@ -87,7 +87,7 @@ Install Prefect in your project (`oc project my-project`) on OpenShift:
 
 ```bash
 helm install prefect prefecthq/prefect-server \
-	--set agent.enabled=true \
+    --set agent.enabled=true \
     --set jobs.createTenant.enabled=true \
     --set serviceAccount.create=false --set serviceAccount.name=anyuid \
     --set postgresql.useSubChart=true \
@@ -108,13 +108,6 @@ helm upgrade prefect prefecthq/prefect-server \
 	--set ui.apolloApiUrl=http://prefect-graphql-bio2kg.apps.dsri2.unimaas.nl/graphql 
 ```
 
-> Getting error with postgres:
->
-> ```
-> create Pod prefect-postgresql-0 in StatefulSet prefect-postgresql failed error: pods "prefect-postgresql-0" is forbidden: unable to validate against any security context constraint: 
-> [provider restricted: .spec.securityContext.fsGroup: Invalid value: []int64{1001}: 1001 is not an allowed group spec.containers[0].securityContext.runAsUser: Invalid value: 1001: must be in the ranges: [1001810000, 1001819999]]
-> ```
-
 Uninstall:
 
 ```bash
@@ -123,11 +116,10 @@ helm uninstall prefect
 
 ### Run Prefect workflow
 
-Register the test flow:
+Register the test workflow:
 
 ```bash
-python3 datasets/workflow.py
-# prefect run --name "bio2kg-etl"
+python3 workflows/prefect-workflow.py
 ```
 
 ## Deploy a Virtuoso triplestore
