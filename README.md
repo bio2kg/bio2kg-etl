@@ -15,7 +15,7 @@ jobs:
 
 You can install anything you want with conda, pip, npm, yarn, maven.
 
-### Build the GitHub Actions runner
+### Build the GitHub Actions runner image
 
 For the latest miniforge conda versions, checkout https://github.com/conda-forge/miniforge/releases
 
@@ -37,7 +37,7 @@ Push:
 docker push ghcr.io/bio2kg/workflow-runner:latest
 ```
 
-### Deploy a GitHub Actions runner
+### Deploy a GitHub Actions runner on the DSRI
 
 You can easily start a GitHub Actions workflow runner in your project on the DSRI:
 
@@ -69,6 +69,8 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set runnerImage=ghcr.io/bio2kg/workflow-runner \
     --set runnerTag=latest
 ```
+
+4. Check the runners are available from GitHub: go to your organization **Settings** page on GitHub, then go to the **Actions** tab, click go to the **Runner** tab, and scroll to the bottom. In the list of active runners you should see the runners you just deployed. 
 
 ## Deploy Prefect workflows
 
@@ -122,39 +124,24 @@ Register the test workflow:
 python3 workflows/prefect-workflow.py
 ```
 
-## Deploy a Virtuoso triplestore
+## Deploy a Virtuoso triplestore on DSRI
 
-The [Virtuoso triplestore](https://hub.docker.com/r/openlink/virtuoso-opensource-7) deployment is defined in the `docker-compose.yml`. 
+On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog**. 
 
-We use [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) to route the Virtuoso triplestore to a publicly available URL on our servers.
-
-1. Change the `dba` user password in the `.env` file (default to `VIRTUOSO_PASSWORD=dba`)
-2. Run a Virtuoso triplestore container:
+You can also do it in one line from the command-line:
 
 ```bash
-docker-compose up -d
+oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
+  -p APPLICATION_NAME=triplestore \
+  -p STORAGE_SIZE=300Gi \
+  -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
+  -p TRIPLESTORE_URL=https://data.bio2kg.org/
 ```
 
-> Database files stored in `/data/bio2rdf5/virtuoso` on your machine. The path can be changed in the `docker-compose.yml`
-
-3. Manage the triplestore data:
-
-**Bulk load** `.nq` files in `/data/bio2rdf5/virtuoso/dumps` (on the server):
+After starting the Virtuoso triplestore you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
 
 ```bash
-docker exec -it bio2kg-graph-virtuoso isql-v -U dba -P dba exec="ld_dir('/data/dumps', '*.nq', 'http://bio2rdf.org'); rdf_loader_run();"
-```
-
-**Check** bulk load in process:
-
-```bash
-docker exec -it bio2kg-graph-virtuoso isql-v -U dba -P dba exec="select * from DB.DBA.load_list;"
-```
-
-**Reset** the triplestore:
-
-```bash
-docker exec -it bio2kg-graph-virtuoso isql-v -U dba -P dba exec="RDF_GLOBAL_RESET ();"
+./prepare_virtuoso_dsri.sh
 ```
 
 **Configure Virtuoso**:
@@ -162,5 +149,3 @@ docker exec -it bio2kg-graph-virtuoso isql-v -U dba -P dba exec="RDF_GLOBAL_RESE
 * Instructions to **enable CORS** for the SPARQL endpoint via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtTipsAndTricksCORsEnableSPARQLURLs
 
 * Instructions to enable the **faceted browser** and **full text search** via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtFacetBrowserInstallConfig
-
-* Enable LDP: https://github.com/vemonet/shapes-of-you#enable-virtuoso-linked-data-platform
