@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p data
+cd data
+
 ## Download sample TSV files from GitHub (OMOP CDM mappings, about 15M)
 wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
 

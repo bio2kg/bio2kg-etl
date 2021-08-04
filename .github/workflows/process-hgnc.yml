@@ -24,11 +24,11 @@ jobs:
       run: |
         cd datasets/hgnc
         ./download.sh
-        yarrrml-parser -i hgnc-mapping.yarrr.yml -o mapping.rml.ttl
-        java -jar /opt/rmlmapper.jar -m mapping.rml.ttl -o bio2kg-hgnc.ttl -s turtle
+        yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
+        java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/hgnc/bio2kg-hgnc.ttl
+        path: datasets/hgnc/data/bio2kg-hgnc.ttl
