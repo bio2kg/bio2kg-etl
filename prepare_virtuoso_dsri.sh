@@ -24,4 +24,4 @@ oc exec $pod_id -- isql -U dba -P $DBA_PASSWORD exec="select DB.DBA.DAV_COL_CREA
 
 # Test the LDP
 # echo "<http://subject.org> <http://pred.org> <http://object.org> ." > test-rdf.ttl
-# curl -u dav:$DBA_PASSWORD --data-binary @test-rdf.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: test-rdf" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/home/dav
+# curl -u dav:$DBA_PASSWORD --data-binary @test-rdf.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: test-rdf" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
