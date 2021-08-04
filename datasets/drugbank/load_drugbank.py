@@ -43,7 +43,7 @@ archive = zipfile.ZipFile(get_path('drugbank.zip'), 'r')
 
 # Script based on https://github.com/dhimmel/drugbank/blob/gh-pages/parse.ipynb
 # with archive.open('full database.xml', 'r') as xml_file:
-with open(get_path('sample_drugbank.xml')) as xml_file:
+with open(get_path('full database.xml')) as xml_file:
     log.info('Zip loaded, parsing the XML...')
     tree = ET.parse(xml_file)
     

@@ -5,7 +5,8 @@ from prefect.run_configs import KubernetesRun
 @task
 def say_hello():
     logger = prefect.context.get("logger")
-    logger.info("Hello, Cloud!")
+    logger.info("Hello, Logger!")
+    print("Hello Print!")
 
 with Flow("bio2kg-etl") as flow:
     say_hello()

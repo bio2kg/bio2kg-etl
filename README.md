@@ -118,7 +118,21 @@ helm uninstall prefect
 
 ### Run Prefect workflow
 
-Register the test workflow:
+Change the host in the user configuration file `~/.prefect/config.toml` (cf. [docs](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server#connecting-to-your-server))
+
+```toml
+[server]
+  host = "http://prefect-graphql-bio2kg.apps.dsri2.unimaas.nl"
+  port = 80
+```
+
+Create the project (if not already existing)
+
+```bash
+prefect create project 'bio2kg'
+```
+
+Register a workflow:
 
 ```bash
 python3 workflows/prefect-workflow.py
