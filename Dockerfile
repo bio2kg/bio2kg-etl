@@ -54,4 +54,8 @@ RUN conda install --file requirements.txt && \
 RUN curl -s https://api.github.com/repos/RMLio/rmlmapper-java/releases/latest \
     | grep browser_download_url | grep .jar | cut -d '"' -f 4 \
     | wget -O /opt/rmlmapper.jar -qi -
+
+RUN echo "export PATH=\"$PATH:$(yarn global bin)\"" >> .bash_profile && \
+    echo "export PATH=\"$PATH:$(yarn global bin)\"" >> .bashrc
+
 RUN yarn global add @rmlio/yarrrml-parser
