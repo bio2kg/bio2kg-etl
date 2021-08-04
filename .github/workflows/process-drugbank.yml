@@ -8,7 +8,7 @@ on:
     - '.github/workflows/process-drugbank.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
-    # Everyday at 01:00am GMT+1
+  # Everyday at 01:00am GMT+1
 
 jobs:
 
@@ -20,11 +20,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Check 
-      run: |
-        pwd
-        id
-
     - name: Install dependencies
       run: |
         conda install -y --file requirements.txt
@@ -34,9 +29,8 @@ jobs:
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
       run: |
         python datasets/drugbank/load_drugbank.py
-        ls datasets/drugbank
 
-    - name: Upload CSV output artifact
+    - name: Upload CSV output
       uses: actions/upload-artifact@v2
       with:
         name: output

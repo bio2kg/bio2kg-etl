@@ -1,0 +1,34 @@
+name: Process HGNC
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+    - 'datasets/hgnc/*'
+    - '.github/workflows/process-hgnc.yml'
+  # schedule:
+  #   - cron:  '00 01 * * *'
+  # Everyday at 01:00am GMT+1
+
+jobs:
+
+  process:
+    runs-on: ["self-hosted", "dsri", "bio2kg" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Run ETL
+      run: |
+        cd datasets/hgnc
+        ./download.sh
+        yarrrml-parser -i hgnc-mapping.yarrr.yml -o mapping.rml.ttl
+        java -jar /opt/rmlmapper.jar -i mapping.rml.ttl -o bio2kg-hgnc.ttl -s turtle
+
+    - name: Upload RDF output
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: datasets/hgnc/bio2kg-hgnc.ttl
