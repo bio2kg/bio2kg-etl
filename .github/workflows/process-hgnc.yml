@@ -20,12 +20,12 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Run ETL
+    - name: Run RML mapper ETL
       run: |
         cd datasets/hgnc
         ./download.sh
         yarrrml-parser -i hgnc-mapping.yarrr.yml -o mapping.rml.ttl
-        java -jar /opt/rmlmapper.jar -i mapping.rml.ttl -o bio2kg-hgnc.ttl -s turtle
+        java -jar /opt/rmlmapper.jar -m mapping.rml.ttl -o bio2kg-hgnc.ttl -s turtle
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
