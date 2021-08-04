@@ -72,6 +72,12 @@ helm install actions-runner openshift-actions-runner/actions-runner \
 
 4. Check the runners are available from GitHub: go to your organization **Settings** page on GitHub, then go to the **Actions** tab, click go to the **Runner** tab, and scroll to the bottom. In the list of active runners you should see the runners you just deployed. 
 
+Uninstall:
+
+```bash
+helm uninstall actions-runner
+```
+
 ## Deploy Prefect workflows
 
 Experimental.
