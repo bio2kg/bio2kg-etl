@@ -20,8 +20,7 @@ def get_path(filename=''):
 
 # Setup timer and logging
 start_time = datetime.datetime.now()
-print("path")
-print(get_path())
+print('Data in folder: ' + get_path())
 os.makedirs(get_path(), exist_ok=True)
 log.basicConfig(filename=get_path('run.log'), filemode='w', level=log.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S', format='%(asctime)s %(levelname)-8s %(message)s')
@@ -32,7 +31,7 @@ drugbank_username = os.getenv('DRUGBANK_USERNAME', 'vincent.emonet@maastrichtuni
 drugbank_password = os.getenv('DRUGBANK_PASSWORD', 'changepassword')
 drugbank_version = os.getenv('DRUGBANK_VERSION', '5-1-8')
 if not os.path.isfile(get_path('drugbank.zip')):
-    log.info('drugbank.xml not present, downloading it')
+    log.info('Drugbank XML database file not present, downloading it')
     os.system('curl -Lfs -o ' + get_path('drugbank.zip') + ' -u ' + drugbank_username + ':' + drugbank_password + ' https://go.drugbank.com/releases/' + drugbank_version + '/downloads/all-full-database')
 
 log.info('💽 Loading the drugbank.zip file')
@@ -42,8 +41,8 @@ archive = zipfile.ZipFile(get_path('drugbank.zip'), 'r')
 
 
 # Script based on https://github.com/dhimmel/drugbank/blob/gh-pages/parse.ipynb
-# with archive.open('full database.xml', 'r') as xml_file:
-with open(get_path('full database.xml')) as xml_file:
+with archive.open('full database.xml', 'r') as xml_file:
+# with open(get_path('full database.xml')) as xml_file:
     log.info('Zip loaded, parsing the XML...')
     tree = ET.parse(xml_file)
     
