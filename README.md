@@ -13,7 +13,7 @@ jobs:
       steps: ...
 ```
 
-You can install anything you want with conda, pip, npm, yarn, maven.
+You can install anything you want with conda, pip, yarn, npm, maven.
 
 ### Build the GitHub Actions runner image
 
@@ -78,6 +78,71 @@ Uninstall:
 helm uninstall actions-runner
 ```
 
+## Deploy a Virtuoso triplestore on DSRI
+
+On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog**. 
+
+You can also do it in one line from the command-line:
+
+```bash
+oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
+  -p APPLICATION_NAME=triplestore \
+  -p STORAGE_SIZE=300Gi \
+  -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
+  -p TRIPLESTORE_URL=https://data.bio2kg.org/
+```
+
+After starting the Virtuoso triplestore you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
+
+```bash
+./prepare_virtuoso_dsri.sh
+```
+
+**Configure Virtuoso**:
+
+* Instructions to **enable CORS** for the SPARQL endpoint via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtTipsAndTricksCORsEnableSPARQLURLs
+
+* Instructions to enable the **faceted browser** and **full text search** via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtFacetBrowserInstallConfig
+
+## Deploy the RMLStreamer on DSRI
+
+Add or update the template in the `bio2kg` project:
+
+```bash
+oc apply -f https://raw.githubusercontent.com/vemonet/flink-on-openshift/master/template-flink-dsri.yml
+```
+
+Create the Flink cluster:
+
+```bash
+oc new-app apache-flink -p APPLICATION_NAME=flink \
+  -p STORAGE_SIZE=100Gi \
+  -p WORKER_COUNT="4" \
+  -p TASKS_SLOTS="64" \
+  -p CPU_LIMIT="32" \
+  -p MEMORY_LIMIT=60Gi \
+  -p FLINK_IMAGE="flink:1.12.3-scala_2.11"
+```
+
+Download the [latest release](https://github.com/RMLio/RMLStreamer/releases) of the `RMLStreamer.jar` file in the Flink cluster (to do only if not already present)
+
+```bash
+oc exec $(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name) -- bash -c "curl -s https://api.github.com/repos/RMLio/RMLStreamer/releases/latest | grep browser_download_url | grep .jar | cut -d '\"' -f 4 | wget -O /mnt/RMLStreamer.jar -qi -"
+```
+
+Submit a job:
+
+```bash
+export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name)
+export PARALLELISM=64
+
+oc exec $FLINK_POD -- /opt/flink/bin/flink run --detached -p $PARALLELISM -c io.rml.framework.Main /opt/RMLStreamer.jar toFile -m /mnt/input.csv -o /mnt/output.nt --job-name "RMLStreamer Bio2KG - dataset"
+```
+
+See the Flink docs for more details on running jobs using the [CLI](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/cli/) or [Kubernetes native execution](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/native_kubernetes/).
+
+cf. more Flink [docs for Kubernetes deployment](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/standalone/kubernetes/)
+
 ## Deploy Prefect workflows
 
 Experimental.
@@ -124,7 +189,7 @@ helm uninstall prefect
 
 ### Run Prefect workflow
 
-Change the host in the user configuration file `~/.prefect/config.toml` (cf. [docs](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server#connecting-to-your-server))
+On your laptop, change the host in the configuration file `~/.prefect/config.toml` (cf. [docs](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server#connecting-to-your-server))
 
 ```toml
 [server]
@@ -143,29 +208,3 @@ Register a workflow:
 ```bash
 python3 workflows/prefect-workflow.py
 ```
-
-## Deploy a Virtuoso triplestore on DSRI
-
-On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog**. 
-
-You can also do it in one line from the command-line:
-
-```bash
-oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
-  -p APPLICATION_NAME=triplestore \
-  -p STORAGE_SIZE=300Gi \
-  -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
-  -p TRIPLESTORE_URL=https://data.bio2kg.org/
-```
-
-After starting the Virtuoso triplestore you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
-
-```bash
-./prepare_virtuoso_dsri.sh
-```
-
-**Configure Virtuoso**:
-
-* Instructions to **enable CORS** for the SPARQL endpoint via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtTipsAndTricksCORsEnableSPARQLURLs
-
-* Instructions to enable the **faceted browser** and **full text search** via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtFacetBrowserInstallConfig
