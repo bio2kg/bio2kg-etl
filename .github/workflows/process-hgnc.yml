@@ -26,10 +26,10 @@ jobs:
       run: |
         cd datasets/HGNC
         ./run.sh
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-hgnc.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-hgnc.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
-    - name: Upload RDF output
-      uses: actions/upload-artifact@v2
-      with:
-        name: output
-        path: datasets/HGNC/data/bio2kg-hgnc.ttl
+    # - name: Upload RDF output
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: output
+    #     path: datasets/HGNC/data/bio2kg-hgnc.ttl

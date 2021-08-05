@@ -28,88 +28,88 @@ mappings:
       - [dcterms:identifier, $(hgnc_id)]
       - [hgncv:approved-symbol, $(symbol)]
       - p: hgncv:has-symbol
-        o:
-          - mapping: TMhgnc2
-            condition:
-              function: equal
-              parameters:
-                - [str1, $(symbol)]
-                - [str2, $(symbol)]
-  #     - [hgncv:approved-name, $(Approved Name)]
-  #     # - p: hgncv:status
-  #     #   o:
-  #     #   - function: sql:concat
-  #     #     parameters:
-  #     #       - [sql:valueParam, "hgncv:"]
-  #     #       - parameter: sql:valueParam2 
-  #     #         value:
-  #     #           function: sql:replace
-  #     #           parameters:
-  #     #             - [sql:valueParam, $(Status)]
-  #     #             - [sql:valueParam2, " "]
-  #     #             - [sql:valueParam3, "-"]
-  #     - p: hgncv:locus
-  #       o:
-  #         - mapping: TMhgnc3
-  #           condition:
-  #             function: equal
-  #             parameters:
-  #               - [str1, $(hgnc_id)]
-  #               - [str2, $(hgnc_id)]
-  #     - [hgncv:previous-symbol, $(Previous_Symbols)]
-  #     - [hgncv:previous-name, $(Previous_Names)]
-  #     - [hgncv:name-synonym, $(Name_Synonyms)]
-  #     - [hgncv:synonym, $(Synonyms)]
-  #     - [hgncv:chromosome, $(Chromosome)]
-  #     - [hgncv:date-approved, $(Date_Approved)]
-  #     - [hgncv:date-modified, $(Date_Modified)]
-  #     - [hgncv:date-symbol-changed, $(Date_Symbol_Changed)]
-  #     - [hgncv:date-name-changed, $(Date_Name_Changed)]
-  #     - [hgncv:accession, $(Accession_Numbers)]
-  #     - [hgncv:x-ec, $(Enzyme_IDs)]
-  #     - p: hgncv:x-ncbigene
-  #       o:
-  #         - mapping: TMncbigene-gene_info1
-  #           condition:
-  #             function: equal
-  #             parameters:
-  #               - [str1, $(Entrez_Gene_ID)]
-  #               - [str2, $(GeneID)]
-  #     - [hgncv:x-ensembl, http://rdf.ebi.ac.uk/resource/ensembl/$(Ensembl_Gene_ID)]
-  #     - [hgncv:x-mgi, $(Mouse_Genome_Database_ID)]
-  #     # - p: hgncv:xref
-  #     #   o:
-  #     #   - function: sql:regexp_like
-  #     #     parameters:
-  #     #       - [sql:valueParam, $(Specialist_Database_Links)]
-  #     #       - [sql:valueParam2, "href="(\S+)""]
-  #     #       - [sql:valueParam3, "c"]
-  #     - [hgncv:x-pubmed, http://bio2rdf.org/pubmed:$(Pubmed_IDs)]
-  #     - [hgncv:x-refseq, http://bio2rdf.org/refseq:$(RefSeq_IDs)]
-  #     - [hgncv:gene-family-tag, $(Gene_Family_Tag)]
-  #     - [hgncv:gene-family-description, $(Gene_family_description)]
-  #     - [hgncv:record-type, $(Record_Type)]
-  #     - [hgncv:primary-id, $(Primary_IDs)]
-  #     - [hgncv:secondary-id, $(Secondary_IDs)]
-  #     - [hgncv:x-ccds, http://bio2rdf.org/ccds:$(CCDS_IDs)]
-  #     - [hgncv:x-vega, http://bio2rdf.org/vega:$(VEGA_IDs)]
-  #     - [hgncv:locus-specific-xref, $(Locus_Specific_Databases)]
-  #     # - p: hgncv:x-ncbigene
-  #     #   o:
-  #     #     - mapping: TMncbigene-gene_info1
-  #     #       condition:
-  #     #         function: equal
-  #     #         parameters:
-  #     #           - [str1, $(Entrez_Gene_ID_(supplied_by_NCBI))]
-  #     #           - [str2, $(GeneID)]
-  #     # - [hgncv:x-omim, http://bio2rdf.org/omim:$(OMIM_ID_(Supplied_by_NCBI))]
-  #     # - [hgncv:x-refseq, http://bio2rdf.org/refseq:$(RefSeq_(Supplied_by_NCBI))]
-  #     # - [hgncv:x-uniprot, http://bio2rdf.org/uniprot:$(UniProt_ID(supplied_by_UniProt))]
-  #     # - [hgncv:x-ensembl, http://rdf.ebi.ac.uk/resource/ensembl/$(Ensembl_ID_(supplied_by_Ensembl))]
-  #     # - [hgncv:x-vega, http://bio2rdf.org/vega:$(Vega_ID_(supplied_by_Vega))]
-  #     # - [hgncv:x-ucsc, http://bio2rdf.org/ucsc:$(UCSC_ID_(supplied_by_UCSC))]
-  #     # - [hgncv:x-mgi, $(Mouse_Genome_Database_ID_(supplied_by_MGI))]
-  #     # - [hgncv:x-rgd, $(Rat_Genome_Database_ID_(supplied_by_RGD))]
+        o: $(symbol)
+          # - mapping: TMhgnc2
+          #   condition:
+          #     function: equal
+          #     parameters:
+          #       - [str1, $(symbol)]
+          #       - [str2, $(symbol)]
+      # - [hgncv:approved-name, $(Approved Name)]
+      # # - p: hgncv:status
+      # #   o:
+      # #   - function: sql:concat
+      # #     parameters:
+      # #       - [sql:valueParam, "hgncv:"]
+      # #       - parameter: sql:valueParam2 
+      # #         value:
+      # #           function: sql:replace
+      # #           parameters:
+      # #             - [sql:valueParam, $(Status)]
+      # #             - [sql:valueParam2, " "]
+      # #             - [sql:valueParam3, "-"]
+      # - p: hgncv:locus
+      #   o:
+      #     - mapping: TMhgnc3
+      #       condition:
+      #         function: equal
+      #         parameters:
+      #           - [str1, $(hgnc_id)]
+      #           - [str2, $(hgnc_id)]
+      # - [hgncv:previous-symbol, $(Previous_Symbols)]
+      # - [hgncv:previous-name, $(Previous_Names)]
+      # - [hgncv:name-synonym, $(Name_Synonyms)]
+      # - [hgncv:synonym, $(Synonyms)]
+      # - [hgncv:chromosome, $(Chromosome)]
+      # - [hgncv:date-approved, $(Date_Approved)]
+      # - [hgncv:date-modified, $(Date_Modified)]
+      # - [hgncv:date-symbol-changed, $(Date_Symbol_Changed)]
+      # - [hgncv:date-name-changed, $(Date_Name_Changed)]
+      # - [hgncv:accession, $(Accession_Numbers)]
+      # - [hgncv:x-ec, $(Enzyme_IDs)]
+      # - p: hgncv:x-ncbigene
+      #   o:
+      #     - mapping: TMncbigene-gene_info1
+      #       condition:
+      #         function: equal
+      #         parameters:
+      #           - [str1, $(Entrez_Gene_ID)]
+      #           - [str2, $(GeneID)]
+      # - [hgncv:x-ensembl, http://rdf.ebi.ac.uk/resource/ensembl/$(Ensembl_Gene_ID)]
+      # - [hgncv:x-mgi, $(Mouse_Genome_Database_ID)]
+      # # - p: hgncv:xref
+      # #   o:
+      # #   - function: sql:regexp_like
+      # #     parameters:
+      # #       - [sql:valueParam, $(Specialist_Database_Links)]
+      # #       - [sql:valueParam2, "href="(\S+)""]
+      # #       - [sql:valueParam3, "c"]
+      # - [hgncv:x-pubmed, http://bio2rdf.org/pubmed:$(Pubmed_IDs)]
+      # - [hgncv:x-refseq, http://bio2rdf.org/refseq:$(RefSeq_IDs)]
+      # - [hgncv:gene-family-tag, $(Gene_Family_Tag)]
+      # - [hgncv:gene-family-description, $(Gene_family_description)]
+      # - [hgncv:record-type, $(Record_Type)]
+      # - [hgncv:primary-id, $(Primary_IDs)]
+      # - [hgncv:secondary-id, $(Secondary_IDs)]
+      # - [hgncv:x-ccds, http://bio2rdf.org/ccds:$(CCDS_IDs)]
+      # - [hgncv:x-vega, http://bio2rdf.org/vega:$(VEGA_IDs)]
+      # - [hgncv:locus-specific-xref, $(Locus_Specific_Databases)]
+      # # - p: hgncv:x-ncbigene
+      # #   o:
+      # #     - mapping: TMncbigene-gene_info1
+      # #       condition:
+      # #         function: equal
+      # #         parameters:
+      # #           - [str1, $(Entrez_Gene_ID_(supplied_by_NCBI))]
+      # #           - [str2, $(GeneID)]
+      # # - [hgncv:x-omim, http://bio2rdf.org/omim:$(OMIM_ID_(Supplied_by_NCBI))]
+      # # - [hgncv:x-refseq, http://bio2rdf.org/refseq:$(RefSeq_(Supplied_by_NCBI))]
+      # # - [hgncv:x-uniprot, http://bio2rdf.org/uniprot:$(UniProt_ID(supplied_by_UniProt))]
+      # # - [hgncv:x-ensembl, http://rdf.ebi.ac.uk/resource/ensembl/$(Ensembl_ID_(supplied_by_Ensembl))]
+      # # - [hgncv:x-vega, http://bio2rdf.org/vega:$(Vega_ID_(supplied_by_Vega))]
+      # # - [hgncv:x-ucsc, http://bio2rdf.org/ucsc:$(UCSC_ID_(supplied_by_UCSC))]
+      # # - [hgncv:x-mgi, $(Mouse_Genome_Database_ID_(supplied_by_MGI))]
+      # # - [hgncv:x-rgd, $(Rat_Genome_Database_ID_(supplied_by_RGD))]
 
 
   TMhgnc2:
@@ -125,13 +125,13 @@ mappings:
       - [dcterms:title, $(symbol)]
       # - [dcterms:identifier, "hgnc.symbol:$(symbol)"]
       - p: hgncv:is-approved-symbol-of
-        o:
-          - mapping: TMhgnc1
-            condition:
-              function: equal
-              parameters:
-                - [str1, $(symbol)]
-                - [str2, $(symbol)]
+        o: $(symbol)
+          # - mapping: TMhgnc1
+          #   condition:
+          #     function: equal
+          #     parameters:
+          #       - [str1, $(symbol)]
+          #       - [str2, $(symbol)]
 
 
   # TMhgnc3:
