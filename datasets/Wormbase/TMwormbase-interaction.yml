@@ -1,0 +1,44 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  wbv: http://bio2rdf.org/wormbase_vocabulary:
+
+mappings:
+  TMwormbase-interaction1:
+    sources:
+      access: ftp://ftp.wormbase.org/pub/wormbase/releases/current-production-release/species/c_elegans/PRJNA13758/annotation/c_elegans.PRJNA13758.WS269.interactions.txt.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/wormbase:$(WBInteractionID)
+    po:
+      - [rdf:type, wbv:Resource]
+      - [rdf:type, wbv:{Interaction_subtype}-{Interaction_type}-Interaction]
+      - [rdfs:label, $(Interaction_subtype) $(Interaction_type) interaction between $(Interactor1) and $(Interactor2) [wormbase:$(WBInteractionID)]]
+      - [dcterms:title, $(Interaction_subtype) $(Interaction_type) interaction between $(Interactor1) and $(Interactor2)]
+      - [dcterms:identifier, wormbase:$(WBInteractionID)]
+      - p: wbv:involves
+        o:
+          - mapping: TMwormbase-geneid
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Interactor1)]
+                - [str2, $(gene_id)]
+      - p: wbv:involves
+        o:
+          - mapping: TMwormbase-geneid
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Interactor2)]
+                - [str2, $(gene_id)]
+
+

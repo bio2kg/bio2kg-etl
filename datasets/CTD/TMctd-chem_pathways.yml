@@ -1,0 +1,67 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ctdv: http://bio2rdf.org/ctd_vocabulary:
+
+mappings:
+  TMctd-chem_pathways1:
+    sources:
+      access: http://ctdbase.org/reports/CTD_chemicals_pathways.tsv.gz
+      referenceFormulation: csv
+    s: "http://bio2rdf.org/ctd_resource:$(ChemicalID)_$(PathwayID)"
+    po:
+      - [rdf:type, ctdv:Resource]
+      - [rdf:type, ctdv:Chemical-Pathway-Association]
+      - p: rdfs:label
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "Chemical-pathway association between mesh:{ChemicalID} and {PathwayID} with p-value {CorrectedPValue} [ctd_resource:{ChemicalID}"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:regexp_like
+                parameters:
+                  - [sql:valueParam, $(PathwayID)]
+                  - [sql:valueParam2, "[^:]*$"]
+                  - [sql:valueParam3, "c"]
+      - [dcterms:title, Association between $(ChemicalName) ($(ChemicalID)) and $(DiseaseName) ($(DiseaseID))]
+      - p: dcterms:identifier
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "ctd_resource:{ChemicalID}"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:regexp_like
+                parameters:
+                  - [sql:valueParam, $(PathwayID)]
+                  - [sql:valueParam2, "[^:]*$"]
+                  - [sql:valueParam3, "c"]
+      - p: ctdv:pathway
+        o:
+          - mapping: TMctd-pathways1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(PathwayID)]
+                - [str2, $(PathwayID)]
+      - p: ctdv:chemical
+        o:
+          - mapping: TMctd-chemicals1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(MESH:$(ChemicalID))]
+                - [str2, $(ChemicalID)]
+      - [ctdv:p-value, $(CorrectedPValue)]
+
+

@@ -1,0 +1,48 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  genagev: http://bio2rdf.org/genage_vocabulary:
+
+mappings:
+  TMgenage_model1:
+    sources:
+      access: http://genomics.senescence.info/genes/models_genes.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/genage:$(GenAge_ID)
+    po:
+      - [rdf:type, genagev:Resource]
+      - [rdf:type, genagev:Aging-Related-Gene]
+      - [rdfs:label, Aging related gene $(GenAge_ID) [genage-model:$(GenAge_ID)]]
+      - [dcterms:title, Aging related gene $(GenAge_ID)]
+      - [dcterms:identifier, [genage-model:$(GenAge_ID)]]
+      - [genagev:gene-symbol, $(symbol)]
+      - p: genagev:taxon
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(organism)]
+                - [str2, $(name_txt)]
+      - p: genagev:x-ncbigene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(entrez_gene_id)]
+                - [str2, $(GeneID)]
+      - [genagev:maximum-percent-observed-average-lifespan-change, $(avg_lifespan_change_(max_obsv))]
+      - [genagev:lifespan-effect, $(lifespan_effect)]
+      - [genagev:longevity-influence, $(longevity_influence)]
+
+

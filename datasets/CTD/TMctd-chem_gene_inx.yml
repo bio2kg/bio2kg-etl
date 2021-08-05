@@ -1,0 +1,54 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ctdv: http://bio2rdf.org/ctd_vocabulary:
+
+mappings:
+  TMctd-chem_gene_inx1:
+    sources:
+      access: http://ctdbase.org/reports/CTD_chemicals.tsv.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ctd_resource:$(ChemicalID)_$(GeneID)
+    po:
+      - [rdf:type, ctdv:Resource]
+      - [rdf:type, ctdv:Chemical-Gene-Association]
+      - [rdfs:label, Association between $(GeneSymbol) (ncbigene:$(GenID)) and $(ChemicalName) (mesh:$(ChemicalID)) [ctd_resource:$(ChemicalID)$(GeneID)]]
+      - [dcterms:title, Association between $(GeneSymbol) (ncbigene:$(GenID)) and $(ChemicalName) (mesh:$(ChemicalID))]
+      - [dcterms:identifier, ctd_resource:$(ChemicalID)$(GeneID)]
+      - [rdfs:comment, Interaction]
+      - p: ctdv:organism
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Organism)]
+                - [str2, $(tax_id)]
+      - p: ctdv:gene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(GeneID)]
+                - [str2, $(GeneID)]
+      - p: ctdv:chemical
+        o:
+          - mapping: TMctd-chemicals1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(MESH:$(ChemicalID))]
+                - [str2, $(ChemicalID)]
+      - [ctdv:article, http://bio2rdf.org/pubmed:$(PubMedIDs)]
+
+

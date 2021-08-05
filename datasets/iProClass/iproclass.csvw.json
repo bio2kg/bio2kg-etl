@@ -1,0 +1,89 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "ftp://ftp.pir.georgetown.edu/databases/iproclass/iproclass.tb.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["UniProtKB accession", "UniProtKB ID", "EntrezGene", "RefSeq", "NCBI GI number", "PDB", "Pfam", "GO", "PIRSF", "IPI", "UniRef100", "UniRef90", "UniRef50", "UniParc", "PIR-PSD accession", "NCBI taxonomy", "MIM", "UniGene", "Ensembl", "PubMed ID", "EMBL/GenBank/DDBJ", "EMBL protein_id"],
+      "columns": [{
+        "titles": "EntrezGene",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "RefSeq",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "NCBI GI number",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "PDB",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "Pfam",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "GO",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "PIRSF",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "IPI",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "UniRef100",
+        "null": ""
+      },{
+        "titles": "UniRef90",
+        "null": ""
+      },{
+        "titles": "UniRef50",
+        "null": ""
+      },{
+        "titles": "UniParc",
+        "null": ""
+      },{
+        "titles": "PIR-PSD accession",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "NCBI taxonomy",
+        "null": ""
+      },{
+        "titles": "MIM",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "UniGene",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "Ensembl",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "PubMed ID",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "EMBL/GenBank/DDBJ",
+        "separator": "; ",
+        "null": ""
+      },{
+        "titles": "EMBL protein_id",
+        "separator": "; ",
+        "null": ""
+      }]
+    }
+  }]
+}

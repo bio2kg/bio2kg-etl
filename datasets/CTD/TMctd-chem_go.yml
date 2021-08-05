@@ -1,0 +1,74 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ctdv: http://bio2rdf.org/ctd_vocabulary:
+
+mappings:
+  TMctd-chem_go1:
+    sources:
+      access: http://ctdbase.org/reports/CTD_chem_go_enriched.tsv.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/mesh:$(ChemicalID)
+    po:
+      - [rdf:type, ctdv:Chemical]
+      - [rdf:type, mesh:Resource]
+      - [rdf:type, mesh:Supplementary-Descriptor]
+      - p:
+        - function: sql:replace
+          parameters:
+            - parameter: sql:valueParam 
+              value:
+                function: sql:replace
+                parameters:
+                  - parameter: sql:valueParam 
+                    value:
+                      function: sql:replace
+                      parameters:
+                        - [sql:valueParam, $(Ontology)]
+                        - [sql:valueParam2, "Biological Process"]
+                        - [sql:valueParam3, "ctdv:is-participant-in"]
+                  - [sql:valueParam2, "Cellular Component"]
+                  - [sql:valueParam3, "ctdv:is-located-in"]
+            - [sql:valueParam2, "Molecular Function"]
+            - [sql:valueParam3, "ctdv:has-function"]
+        o: $(GoTermID)
+      - p:
+        - function: sql:replace
+          parameters:
+            - parameter: sql:valueParam 
+              value:
+                function: sql:replace
+                parameters:
+                  - parameter: sql:valueParam 
+                    value:
+                      function: sql:replace
+                      parameters:
+                        - [sql:valueParam, $(Ontology)]
+                        - [sql:valueParam2, "Biological Process"]
+                        - [sql:valueParam3, "ctdv:is-participant-in"]
+                  - [sql:valueParam2, "Cellular Component"]
+                  - [sql:valueParam3, "ctdv:is-located-in"]
+            - [sql:valueParam2, "Molecular Function"]
+            - [sql:valueParam3, "ctdv:has-function"]
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "http://purl.obolibrary.org/obo/"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:replace
+                parameters:
+                  - [sql:valueParam, $(GO_ID)]
+                  - [sql:valueParam2, ":"]
+                  - [sql:valueParam3, "_"]
+
+

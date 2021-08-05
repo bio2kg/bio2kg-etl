@@ -1,0 +1,65 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  gendrv: http://bio2rdf.org/homologene_vocabulary:
+
+mappings:
+  TMgendr-manipulations1:
+    sources:
+      access: http://genomics.senescence.info/diet/dataset.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/gendr:$(GenDR_ID)
+    po:
+      - [rdf:type, gendrv:Resource]
+      - [rdf:type, gendrv:Dietary-Restriction-Life-Extension-Related-Gene]
+      - [rdfs:label, Dietary restriction life extension related gene$(GenDR_ID) [gendr-manipulations:$(GenDR_ID)]]
+      - [dcterms:title, Dietary restriction life extension related gene$(GenDR_ID)]
+      - [dcterms:identifier, [gendr-manipulations:$(GenDR_ID)]]
+      - p: gendrv:x-ncbigene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(entrez_gene_id)]
+                - [str2, $(GeneID)]
+      - [gendrv:gene-name, $(gene_name)]
+      - [gendrv:gene-symbol, $(gene_symbol)]
+
+
+  TMgendr-manipulations2:
+    sources:
+      access: http://genomics.senescence.info/diet/dataset.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/gendr:$(GenDR_ID)_$(entrez_gene_id)_association
+    po:
+      - [rdf:type, gendrv:Gene-Phenotype-Association]
+      - [rdfs:label, Association between $(gene_symbol) and variation in life span extension induced by dietary restriction]
+      - p: gendrv:gene
+        o:
+          - mapping: TMgendr-manipulations1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(GenDR_ID)]
+                - [str2, $(GenDR_ID)]
+      - [gendrv:phenotype, gendrv:Diet-Induced-Life-Span-Variant]
+      - p: gendrv:x-taxid
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(species)]
+                - [str2, $(name_txt)]
+
+

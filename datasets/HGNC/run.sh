@@ -11,10 +11,12 @@ if [ ! -f "data/hgnc.csv" ]; then
 fi
 
 echo "Running YARRRML parser"
-yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
+# yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
+yarrrml-parser -i TMhgnc.yml -o data/TMhgnc.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
-java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle
+# java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle
+java -jar /opt/rmlmapper.jar -m data/TMhgnc.rml.ttl -o data/bio2rdf-hgnc.ttl -s turtle
 
 
 

@@ -1,0 +1,168 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc_complete_set.txt.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "Approved Symbol",
+        "null": ""
+      },{
+        "titles": "Approved Name",
+        "null": ""
+      },{
+        "titles": "Status",
+        "null": ""
+      },{
+        "titles": "Locus Type",
+        "null": ""
+      },{
+        "titles": "Locus Group",
+        "null": ""
+      },{
+        "titles": "Previous Symbols",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Previous Names",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Synonyms",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Name Synonyms",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Chromosome",
+        "null": ""
+      },{
+        "titles": "Date Approved",
+        "null": "",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Date Modified",
+        "null": "",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Date Symbol Changed",
+        "null": "",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Date Name Changed",
+        "null": "",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Accession Numbers",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Enzyme IDs",
+        "null": ""
+      },{
+        "titles": "Entrez Gene ID",
+        "null": ""
+      },{
+        "titles": "Ensembl Gene ID",
+        "null": ""
+      },{
+        "titles": "Mouse Genome Database ID",
+        "null": ""
+      },{
+        "titles": "Specialist Database Links",
+        "separator": "<!--,--> ",
+        "null": ""
+      },{
+        "titles": "Specialist Database IDs",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Pubmed IDs",
+        "separator": ",  ",
+        "null": ""
+      },{
+        "titles": "RefSeq IDs",
+        "null": ""
+      },{
+        "titles": "Gene Family Tag",
+        "separator": ", ",
+        "null": ""
+      },{
+        "titles": "Gene family description",
+        "null": ""
+      },{
+        "titles": "Record Type",
+        "null": ""
+      },{
+        "titles": "Primary IDs",
+        "separator": ",  ",
+        "null": ""
+      },{
+        "titles": "Secondary IDs",
+        "separator": ",  ",
+        "null": ""
+      },{
+        "titles": "CCDS IDs",
+        "separator": ",  ",
+        "null": ""
+      },{
+        "titles": "VEGA IDs",
+        "separator": ",  ",
+        "null": ""
+      },{
+        "titles": "Locus Specific Databases",
+        "null": ""
+      },{
+        "titles": "Entrez Gene ID (supplied by NCBI)",
+        "null": ""
+      },{
+        "titles": "OMIM ID (supplied by NCBI)",
+        "null": ""
+      },{
+        "titles": "RefSeq (supplied by NCBI)",
+        "null": ""
+      },{
+        "titles": "UniProt ID (supplied by UniProt)",
+        "null": ""
+      },{
+        "titles": "Ensembl ID (supplied by Ensembl)",
+        "null": ""
+      },{
+        "titles": "Vega ID (supplied by Vega)",
+        "null": ""
+      },{
+        "titles": "UCSC ID (supplied by UCSC)",
+        "null": ""
+      },{
+        "titles": "Mouse Genome Database ID (supplied by MGI)",
+        "null": ""
+      },{
+        "titles": "Rat Genome Database ID (supplied by RGD)",
+        "null": ""
+      },{
+        "titles": "RNACentral IDs (supplied by RNACentral)",
+        "null": ""
+      },{
+        "titles": "LNCipedia symbol (supplied by LNCipedia)",
+        "null": ""
+      }]
+    }
+  }]
+}

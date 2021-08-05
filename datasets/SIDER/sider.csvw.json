@@ -1,0 +1,55 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "https://raw.githubusercontent.com/anaigmo/Bio2RDF/master/data/sider/meddra_all_se.csv",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["STITCH_ID_flat", "STITCH_ID_stereo", "UMLS_ID", "MedDRA_concept_type", "UMLS_ID_for_MedDRA", "Side_effect"],
+      "columns": [{
+        "titles": "UMLS_ID_for_MedDRA",
+        "null": ""
+      }],
+      "primaryKey": "STITCH_ID_flat,STITCH_ID_stereo,UMLS_ID,MedDRA_concept_type,UMLS_ID_for_MedDRA"
+    }
+  },{
+    "url": "https://raw.githubusercontent.com/anaigmo/Bio2RDF/master/data/sider/meddra_all_indications.csv",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["STITCH_ID_flat", "UMLS_ID", "Detection_method", "Name", "MedDRA_concept_type", "UMLS_ID_for_MedDRA", "MedDRA_concept_name"],
+      "columns": [{
+        "titles": "MedDRA_concept_type",
+        "null": ""
+      },{
+        "titles": "UMLS_ID_for_MedDRA",
+        "null": ""
+      }],
+      "primaryKey": "STITCH_ID_flat,UMLS_ID,MedDRA_concept_type,UMLS_ID_for_MedDRA"
+    }
+  },{
+    "url": "https://raw.githubusercontent.com/anaigmo/Bio2RDF/master/data/sider/meddra_freq.csv",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["STITCH_ID_flat", "STITCH_ID_stereo", "UMLS_ID", "Placebo", "Frequency", "Lower_bound", "Upper_bound", "MedDRA_concept_type", "UMLS_ID_for_MedDRA", "Side_effect"],
+      "columns": [{
+        "titles": "Placebo",
+        "default": "no_placebo"
+      },{
+        "titles": "MedDRA concept type",
+        "null": ""
+      },{
+        "titles": "UMLS ID for MedDRA",
+        "null": ""
+      }],
+      "primaryKey": "STITCH_ID_flat,STITCH_ID_stereo,UMLS_ID,Frequency,MedDRA_concept_type,UMLS_ID_for_MedDRA"
+    }
+  }]
+}

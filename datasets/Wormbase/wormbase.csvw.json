@@ -1,0 +1,106 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "https://raw.githubusercontent.com/anaigmo/Bio2RDF/master/data/wormbase/WBgeneIDs.csv",
+    "dialect": {
+      "delimiter": ",",
+      "header": false
+    },
+    "tableSchema":{
+      "primaryKey": "gene_id",
+      "rowTitles": ["taxid", "gene_id", "symbol", "cosmid", "status", "type"],
+      "columns": [{
+        "titles": "symbol",
+        "null": ""
+      },{
+        "titles": "cosmid", 
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.wormbase.org/pub/wormbase/releases/current-production-release/species/c_elegans/PRJNA13758/annotation/c_elegans.PRJNA13758.WS269.interactions.txt.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 4
+    },
+    "tableSchema":{
+      "rowTitles": ["WBInteractionID", "Interaction_type", "Interaction_subtype", "Summary", "Citation", "Interactor1", "Common-name1", "Role1", "Interactor2", "Common-name2", "Role2"],
+      "columns": [{
+        "titles": "Interaction_subtype",
+        "null": ""
+      },{
+        "titles": "Summary",
+        "null": ""
+      },{
+        "titles": "Citation",
+        "null": ""
+      },{
+        "titles": "Interactor1",
+        "null": ""
+      },{
+        "titles": "Common-name1",
+        "null": ""
+      },{
+        "titles": "Role1",
+        "null": ""
+      },{
+        "titles": "Interactor2",
+        "null": ""
+      },{
+        "titles": "Common-name2",
+        "null": ""
+      },{
+        "titles": "Role2",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.wormbase.org/pub/wormbase/releases/current-production-release/ONTOLOGY/gene_association.WS269.wb",
+    "dialect": {
+      "delimiter": ",",
+      "header": false,
+      "skipRows": 3
+    },
+    "tableSchema":{
+      "primaryKey": "gene_id",
+      "rowTitles": ["database", "gene_id", "symbol", "association", "GO_id", "references", "evidence", "dbxrefs", "ud1", "ud2", "cosmid", "type", "taxid", "mod_date", "db"],
+      "columns": [{
+        "titles": "symbol",
+        "null": ""
+      },{
+        "titles": "GO_id",
+        "null": ""
+      },{
+        "titles": "references",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "evidence",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.wormbase.org/pub/wormbase/releases/current-production-release/ONTOLOGY/phenotype_association.WS269.wb",
+    "dialect": {
+      "delimiter": ",",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "gene_id",
+      "columns": [{
+        "titles": "symbol",
+        "null": ""
+      },{
+        "titles": "association",
+        "default": "YES"
+      },{
+        "titles": "variant",
+        "null": ""
+      },{
+        "titles": "cosmid",
+        "null": ""
+      }]
+    }
+  }]
+}

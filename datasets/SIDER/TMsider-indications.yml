@@ -1,0 +1,33 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  sidv: http://bio2rdf.org/sider_vocabulary:
+  stitchv: http://bio2rdf.org/stitch_vocabulary:
+  meddrav: http://bio2rdf.org/meddra_vocabulary:
+
+mappings:
+  TMsider-indications1:
+    sources:
+      access: http://sideeffects.embl.de/media/download/meddra_all_indications.tsv.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/sider:$(STITCH ID flat)_$(UMLS ID)
+    po:
+      - [rdf:type, sidv:Resource]
+      - [rdf:type, sidv:Drug-Indication-Association]
+      - [rdfs:label, stitch:$(STITCH ID flat) - meddra:$(UMLS ID) [sider:$(STITCH ID flat)_$(UMLS ID)]]
+      - [dcterms:title, stitch:$(STITCH ID flat) - meddra:$(UMLS ID)]
+      - [dcterms:identifier, sider:$(STITCH ID flat)_$(UMLS ID)]
+      - [sidv:drug, http://bio2rdf.org/stitch:$(STITCH ID flat)]
+      - [sidv:indication, http://bio2rdf.org/meddra:$(UMLS ID)]
+      - [sidv:provenance, $(Detection method)]
+
+

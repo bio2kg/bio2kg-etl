@@ -1,0 +1,59 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  wbv: http://bio2rdf.org/wormbase_vocabulary:
+
+mappings:
+  TMwormbase-gene_association1:
+    sources:
+      access: ftp://ftp.wormbase.org/pub/wormbase/releases/current-production-release/ONTOLOGY/gene_association.WS269.wb
+      referenceFormulation: csv
+    s: http://bio2rdf.org/wormbase_resource:$(gene_id)_$(GO_id)_$(evidence)
+    po:
+      - [rdf:type, wbv:Resource]
+      - [rdf:type, wbv:Gene-GO-Association]
+      - [rdfs:label, $(gene_id) $(GO_id) association [wormbase_resource:$(gene_id)_$(GO_id)_$(evidence)]]
+      - [dcterms:title, $(gene_id) $(GO_id) association]
+      - [dcterms:identifier, wormbase_resource:$(gene_id)_$(GO_id)_$(evidence)]
+      - p: wbv:x-taxid
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(taxid)]
+                - [str2, $(tax_id)]
+      - p: wbv:gene
+        o:
+          - mapping: TMwormbase-geneid
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(gene_id)]
+                - [str2, $(gene_id)]
+      - [wbv:evidence-type, $(evidence)]
+      - [wbv:x-go, $(GO_id)]
+      - p: wbv:x-go
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "http://purl.obolibrary.org/obo/"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:replace
+                parameters:
+                  - [sql:valueParam, $(GO_id)]
+                  - [sql:valueParam2, ":"]
+                  - [sql:valueParam3, "_"]
+      - [wbv:publication, $(references)]
+
+

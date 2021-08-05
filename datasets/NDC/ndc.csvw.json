@@ -1,0 +1,96 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "https://www.accessdata.fda.gov/cder/ndctext.zip~package.txt",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "NDCPACKAGECODE",
+      "columns": [{
+        "titles": "STARTMARKETINGDATE",
+        "null": "",
+        "datatype": {
+          "base": "date",
+          "format": "yyyyMMdd"
+        }
+      },{
+        "titles": "ENDMARKETINGDATE",
+        "null": "",
+        "datatype": {
+          "base": "date",
+          "format": "yyyyMMdd"
+        }
+      }]
+    }
+  },{
+    "url": "https://www.accessdata.fda.gov/cder/ndctext.zip~product.txt",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "STARTMARKETINGDATE",
+        "null": "",
+        "datatype": {
+          "base": "date",
+          "format": "yyyyMMdd"
+        }
+      },{
+        "titles": "ENDMARKETINGDATE",
+        "null": "",
+        "datatype": {
+          "base": "date",
+          "format": "yyyyMMdd"
+        }
+      },{
+        "titles": "PROPRIETARYNAMESUFFIX",
+        "null": ""
+      },{
+        "titles": "DOSAGEFORMNAME",
+        "null": "",
+        "separator": ", "
+      },{
+        "titles": "ROUTENAME",
+        "null": "",
+        "separator": "; "
+      },{
+        "titles": "APPLICATIONNUMBER",
+        "null": ""
+      },{
+        "titles": "SUBSTANCENAME",
+        "null": "",
+        "separator": "; "
+      },{
+        "titles": "ACTIVE_NUMERATOR_STRENGTH",
+        "null": "",
+        "datatype": {
+          "base": "string"
+        }
+      },{
+        "titles": "ACTIVE_INGRED_UNIT",
+        "null": "",
+        "separator": "; "
+      },{
+        "titles": "PHARM_CLASSES",
+        "null": "",
+        "separator": ","
+      },{
+        "titles": "DEASCHEDULE",
+        "null": ""
+      },{
+        "titles": "NDC_EXCLUDE_FLAG",
+        "null": ""
+      },{
+        "titles": "LISTING_RECORD_CERTIFIED_THROUGH",
+        "null": "",
+        "datatype": {
+          "base": "date",
+          "format": "yyyyMMdd"
+        }
+      }]
+    }
+  }]
+}

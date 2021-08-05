@@ -1,0 +1,186 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "altA",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "altB",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "aliasA",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "aliasB",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "method",
+        "null": "-"
+      },{
+        "titles": "author",
+        "null": "-"
+      },{
+        "titles": "pmids",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "taxa",
+        "null": "-"
+      },{
+        "titles": "taxb",
+        "null": "-"
+      },{
+        "titles": "interactionType",
+        "null": "-"
+      },{
+        "titles": "sourcedb",
+        "null": "-"
+      },{
+        "titles": "interactionIdentifier",
+        "null": "-"
+      },{
+        "titles": "confidence",
+        "null": "-",
+        "separator": "|"
+      },{
+        "titles": "expansion",
+        "null": "-"
+      },{
+        "titles": "biological_role_A",
+        "null": "-"
+      },{
+        "titles": "biological_role_B",
+        "null": "-"
+      },{
+        "titles": "experimental_role_A",
+        "null": "-"
+      },{
+        "titles": "experimental_role_B",
+        "null": "-"
+      },{
+        "titles": "interactor_type_A",
+        "null": "-"
+      },{
+        "titles": "interactor_type_B",
+        "null": "-"
+      },{
+        "titles": "xrefs_A",
+        "null": "-"
+      },{
+        "titles": "xrefs_B",
+        "null": "-"
+      },{
+        "titles": "xrefs_Interaction",
+        "null": "-"
+      },{
+        "titles": "Annotations_A",
+        "null": "-"
+      },{
+        "titles": "Annotations_B",
+        "null": "-"
+      },{
+        "titles": "Annotations_Interaction",
+        "null": "-"
+      },{
+        "titles": "Host_organism_taxid",
+        "null": "-"
+      },{
+        "titles": "parameters_Interaction",
+        "null": "-"
+      },{
+        "titles": "Creation_date",
+        "null": "-",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Update_date",
+        "null": "-",
+        "datatype": {
+               "base": "date",
+               "format": "YYYY-MM-DD"
+        }
+      },{
+        "titles": "Checksum_A",
+        "null": "-"
+      },{
+        "titles": "Checksum_B",
+        "null": "-"
+      },{
+        "titles": "Checksum_Interaction",
+        "null": "-"
+      },{
+        "titles": "Negative",
+        "null": "-"
+      },{
+        "titles": "OriginalReferenceA",
+        "null": "-"
+      },{
+        "titles": "OriginalReferenceB",
+        "null": "-"
+      },{
+        "titles": "FinalReferenceA",
+        "null": "-"
+      },{
+        "titles": "FinalReferenceB",
+        "null": "-"
+      },{
+        "titles": "MappingScoreA",
+        "null": "-"
+      },{
+        "titles": "MappingScoreB",
+        "null": "-"
+      },{
+        "titles": "irogida",
+        "null": "-"
+      },{
+        "titles": "irogidb",
+        "null": "-"
+      },{
+        "titles": "irigid",
+        "null": "-"
+      },{
+        "titles": "crogida",
+        "null": "-"
+      },{
+        "titles": "crogidb",
+        "null": "-"
+      },{
+        "titles": "crigidb",
+        "null": "-"
+      },{
+        "titles": "icrogida",
+        "null": "-"
+      },{
+        "titles": "icrogidb",
+        "null": "-"
+      },{
+        "titles": "icrigid",
+        "null": "-"
+      },{
+        "titles": "imex_id",
+        "null": "-"
+      },{
+        "titles": "edgetype",
+        "null": "-"
+      },{
+        "titles": "numParticipants",
+        "null": "-",
+        "datatype": {
+          "base": "integer"
+        }
+      }]
+    }
+  }]
+}

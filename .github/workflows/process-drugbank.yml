@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/drugbank/*'
+    - 'datasets/DrugBank/*'
     - '.github/workflows/process-drugbank.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
@@ -28,10 +28,10 @@ jobs:
       env:
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
       run: |
-        python datasets/drugbank/load_drugbank.py
+        python datasets/DrugBank/load_drugbank.py
 
     - name: Upload CSV output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/drugbank/data/drugbank_processed.csv
+        path: datasets/DrugBank/data/drugbank_processed.csv

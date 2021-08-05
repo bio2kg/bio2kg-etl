@@ -1,0 +1,114 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fno: <http://w3id.org/function/ontology#> .
+@prefix sql: <http://dchaves.oeg-upm.net/resources/function/sql.ttl#> .
+@prefix bv: <http://bio2rdf.org/bio2rdf_vocabulary:> .
+@prefix ncbiv: <http://bio2rdf.org/ncbigene_vocabulary:> .
+
+<TMncbigene-gene_info1>
+
+	rml:logicalSource [
+		rml:source "ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz" ;
+		rml:referenceFormulation ql:CSV ;
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ncbiv:Resource;
+		rr:class ncbiv:Gene;
+		rr:template "http://bio2rdf.org/ncbigene:{GeneID}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{description} (symbol:{Symbol}, taxon:{tax_id}) [ncbigene:{GeneID}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{description} (symbol:{Symbol}, taxon:{tax_id})"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:description ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "ncbigene:{GeneID}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:x-taxonomy ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMtaxonomy-names1>;
+			rr:joinCondition [ rr:child "tax_id"; rr:parent "tax_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:symbol ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Symbol"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:locus ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "LocusTag"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:symbol-synonym ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Synonyms"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:dbxref ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "dbXrefs"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:chromosome ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "chromosome"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:map-location ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "map_location"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:nomenclature-authority ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Symbol_from_nomeclature_authority"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:nomenclature-authority-fullname ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Full_name_from_nomenclature_authority"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:nomenclature-status ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Nomenclature_status"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:other-designations ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Other_designations"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ncbiv:modification-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "Modification_date"; rr:datatype xsd:string; ];
+	];
+
+.
+

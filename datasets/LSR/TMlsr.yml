@@ -1,0 +1,73 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  lsrv: http://bio2rdf.org/lsr_vocabulary:
+  dctypes: http://purl.org/dc/dcmitype/
+  idot: http://identifiers.org/idot/
+  void: http://rdfs.org/ns/void#
+  cito: http://purl.org/spar/cito/
+  dcat: http://www.w3.org/ns/dcat#
+  foaf: http://xmlns.com/foaf/0.1/
+
+mappings:
+  TMlsr1:
+    sources:
+      access: http://tinyurl.com/lsregistry
+      referenceFormulation: csv
+    s: http://bio2rdf.org/lsr:$(Preferred_Prefix)
+    po:
+      - [rdf:type, lsrv:Resource]
+      - [rdf:type, dctypes:Dataset]
+      - [rdf:type, lsrv:Dataset]
+      - [rdfs:label, $(Title) [lsr:$(Preferred_Prefix)]]
+      - [dcterms:title, $(Title)]
+      - [dcterms:identifier, lsr:$(Preferred_Prefix)]
+      - [dcterms:description, $(Description)]
+      - [idot:preferredPrefix, $(Preferred_Prefix)]
+      - [idot:alternativePrefix, $(Alt-prefix)]
+      - [void:uriRegexPattern, $(Provider_Base_URI)]
+      - [void:uriRegexPattern, $(Alternative_Base_URI)]
+      - [lsrv:x-biodbcore, $(BiodbcoreID)]
+      - [lsrv:x-bioportal, bioportal:$(BioPortal_Ontology_ID)]
+      - [lsrv:x-datahub, $(thedatahub)]
+      - [cito:citesAsAuthority, http://bio2rdf.org/pudmed:$(PubMedID)]
+      - [dcterms:alternative, $(Abbreviation)]
+      - p: dcterms:publisher
+        o:
+          - mapping: TMlsr2
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Organization)]
+                - [str2, $(Organization)]
+      - [lsrv:type, $(Type(warehouse,dataset,terminology))]
+      - [dcat:keyword, $(Keywords)]
+      - [foaf:page, $(Homepage)]
+      - [dcterms:license, $(License_URL)]
+      - [lsrv:license-text, $(License_Text)]
+      - [dcterms:rights, $(Rights)]
+      - [idot:identifierPattern, $(ID_regex)]
+      - [idot:exampleIdentifier, $(ExampleID)]
+      - [idot:accessPattern, $(Provider_HTML_URL)]
+
+
+  TMlsr2:
+    sources:
+      access: http://tinyurl.com/lsregistry
+      referenceFormulation: csv
+    s: http://bio2rdf.org/lsr_resource:$(Organization)
+    po:
+      - [rdf:type, lsrv:Resource]
+      - [dcterms:title, $(Organization)]
+      - [dcterms:identifier, lsr_resource:$(Organization)]
+
+

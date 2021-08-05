@@ -1,0 +1,210 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2vega.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "columns": [{
+        "titles": "RNA_nucleotide_accession.version",
+        "null": "-"
+      },{
+        "titles": "Vega_rna_identifier",
+        "null": "-"
+      },{
+        "titles": "protein_accession.version",
+        "null": "-"
+      },{
+        "titles": "Vega_protein_identifier",
+        "null": "-"
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2sts",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID"
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2unigene",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID"
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2pubmed.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID"
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2ensembl.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "columns": [{
+        "titles": "RNA_nucleotide_accession.version",
+        "null": "-"
+      },{
+        "titles": "Ensembl_rna_identifier",
+        "null": "-"
+      },{
+        "titles": "protein_accession.version",
+        "null": "-"
+      },{
+        "titles": "Vega_protein_identifier",
+        "null": "-"
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene_info.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "columns": [{
+        "titles": "Symbol",
+        "null": "NEWENTRY"
+      },{
+        "titles": "LocusTag",
+        "null": "-"
+      },{
+        "titles": "Synonyms",
+        "null": "-"
+      },{
+        "titles": "dbXrefs",
+        "null": "-"
+      },{
+        "titles": "chromosome",
+        "null": "-"
+      },{
+        "titles": "map_location",
+        "null": "-"
+      },{
+        "titles": "description",
+        "null": "-"
+      },{
+        "titles": "type_of_gene",
+        "null": "-"
+      },{
+        "titles": "Symbol_from_nomenclature_authority",
+        "null": "-"
+      },{
+        "titles": "Full_name_from_nomenclature_authority",
+        "null": "-"
+      },{
+        "titles": "Nomenclature_status",
+        "null": "-"
+      },{
+        "titles": "Full_name_from_nomenclature_authority",
+        "null": "-"
+      },{
+        "titles": "Other_designations",
+        "separator": "|",
+        "null": "-"
+      },{
+        "titles": "Modification_date",
+        "null": "-",
+        "datatype": {
+          "base": "date",
+          "format": "YYYYMMDD"
+        }
+      },{
+        "titles": "Feature_type",
+        "null": "-"
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2go.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "columns": [{
+        "titles": "Qualifier",
+        "null": "-"
+      },{
+        "titles": "PubMed",
+        "separator": "|",
+        "null": "-"
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": true
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "columns": [{
+        "titles": "Status",
+        "null": "-"
+      },{
+        "titles": "RNA_nucleotide_accession.version",
+        "null": "-"
+      },{
+        "titles": "RNA_nucleotide_gi",
+        "null": "-"
+      },{
+        "titles": "protein_accession.version",
+        "null": "-"
+      },{
+        "titles": "protein_gi",
+        "null": "-"
+      },{
+        "titles": "genomic_nucleotide_accession.version",
+        "null": "-"
+      },{
+        "titles": "genomic_nucleotide_gi",
+        "null": "-"
+      },{
+        "titles": "start_position_on_the_genomic_accession",
+        "null": "-",
+        "datatype": {
+          "base": "integer"
+        }
+      },{
+        "titles": "end_position_on_the_genomic_accession",
+        "null": "-",
+        "datatype": {
+          "base": "integer"
+        }
+      },{
+        "titles": "orientation",
+        "null": "?"
+      },{
+        "titles": "assembly",
+        "null": "-"
+      },{
+        "titles": "mature_peptide_accession.version",
+        "null": "-"
+      },{
+        "titles": "mature_peptide_gi",
+        "null": "-"
+      },{
+        "titles": "Symbol",
+        "null": "-"
+      }]
+    }
+  }]
+}

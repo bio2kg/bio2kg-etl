@@ -1,0 +1,67 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ncbiv: http://bio2rdf.org/ncbigene_vocabulary:
+
+mappings:
+  TMncbigene-gene2go1:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2go.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene:$(GeneID)
+    po:
+      - [rdf:type, ncbivv:Resource]
+      - [ncbiv:$(Category), $(GO_ID)]
+      - p: ncbiv:gene-$(Category)-association
+        o:
+          - mapping: TMncbigene-gene2go2
+            condition:
+              function: equal
+              parameters:
+                - [str1, $($(GeneID)_$(GO_ID))]
+                - [str2, $($(GeneID)_$(GO_ID))]
+
+
+  TMncbigene-gene2go2:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2go.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene_resource:$(GeneID)_$(GO_ID)
+    po:
+      - [rdf:type, ncbivv:Resource]
+      - [rdfs:label, association between $(GeneID) and $(GO_ID)]
+      - [dcterms:identifier, ncbigene_resource:$(GeneID)_$(GO_ID)]
+      - [ncbiv:evidence, http://bio2rdf.org/eco:$(Evidence)]
+      - p: ncbiv:gene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(GeneID)]
+                - [str2, $(GeneID)]
+      - [ncbiv:go-category, ncbigene_vocabulary:$(Category)]
+      - [ncbiv:go-term, $(GO_ID)]
+      - p: ncbiv:go-term
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "http://purl.obolibrary.org/obo/"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:replace
+                parameters:
+                  - [sql:valueParam, $(GO_ID)]
+                  - [sql:valueParam2, ":"]
+                  - [sql:valueParam3, "_"]
+
+

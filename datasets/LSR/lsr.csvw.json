@@ -1,0 +1,98 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "http://tinyurl.com/lsregistry",
+    "dialect": {
+      "delimiter": ",",
+      "header": true
+    },
+    "tableSchema":{
+      "rowTitles": ["hid", "taxid", "ncbigene", "genesymbol", "gi", "refseq"],
+      "columns": [{
+        "titles": "Alt-prefix",
+        "null": ""
+      },{
+        "titles": "Provider Base URI",
+        "null": ""
+      },{
+        "titles": "Alternative Base URI",
+        "null": ""
+      },{
+        "titles": "MIRIAM",
+        "null": ""
+      },{
+        "titles": "BiodbcoreID",
+        "null": ""
+      },{
+        "titles": "Bioportal Ontology ID",
+        "null": ""
+      },{
+        "titles": "thedatahub",
+        "null": ""
+      },{
+        "titles": "Abbreviation",
+        "null": ""
+      },{
+        "titles": "Title",
+        "null": ""
+      },{
+        "titles": "Description",
+        "null": ""
+      },{
+        "titles": "PubMed ID",
+        "null": ""
+      },{
+        "titles": "Organization",
+        "null": ""
+      },{
+        "titles": "Type (warehouse, dataset or terminology)",
+        "null": ""
+      },{
+        "titles": "Keywords",
+        "null": ""
+      },{
+        "titles": "Homepage",
+        "null": ""
+      },{
+        "titles": "homepage still available?",
+        "null": ""
+      },{
+        "titles": "sub-namespace in dataset",
+        "null": ""
+      },{
+        "titles": "part of collection",
+        "null": ""
+      },{
+        "titles": "License URL",
+        "null": ""
+      },{
+        "titles": "License Text",
+        "null": ""
+      },{
+        "titles": "Rights",
+        "null": ""
+      },{
+        "titles": "ID regex",
+        "null": ""
+      },{
+        "titles": "ExampleID",
+        "null": ""
+      },{
+        "titles": "Provider HTML URL",
+        "null": ""
+      },{
+        "titles": "MIRIAM checked",
+        "null": ""
+      },{
+        "titles": "MIRIAM curator notes",
+        "null": ""
+      },{
+        "titles": "MIRIAM coverage",
+        "null": ""
+      },{
+        "titles": "updates",
+        "null": ""
+      }]
+    }
+  }]
+}

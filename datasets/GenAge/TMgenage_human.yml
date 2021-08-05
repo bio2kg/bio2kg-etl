@@ -1,0 +1,55 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  genagev: http://bio2rdf.org/genage_vocabulary:
+
+mappings:
+  TMgenage_human1:
+    sources:
+      access: http://genomics.senescence.info/genes/human_genes.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/hagr:$(GenAge ID)
+    po:
+      - [rdf:type, genagev:Resource]
+      - [rdf:type, genagev:Human-Aging-Related-Gene]
+      - [rdfs:label, Human aging related gene $(GenAge_ID) [genage-human:$(GenAge_ID)]]
+      - [dcterms:title, Human aging related gene $(GenAge_ID)]
+      - [dcterms:identifier, [genage-human:$(GenAge_ID)]]
+      - [genagev:alias, $(aliases)]
+      - p: genagev:x-hgnc.symbol
+        o:
+          - mapping: TMhgnc1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(symbol)]
+                - [str2, $(Approved_Symbol)]
+      - p: genagev:x-ncbigene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(entrez_gene_id)]
+                - [str2, $(GeneID)]
+      - [genagev:inclusion-criteria, $(why)]
+      - [genagev:cytogenetic-band, $(band)]
+      - [genagev:gene-start-position, $(location_start)]
+      - [genagev:gene-end-position, $(location_end)]
+      - [genagev:strand-orientation, $(orientation)]
+      - [genagev:x-uniprot, $(uniprot)]
+      - [genagev:promoter-accession, $(acc_promoter)]
+      - [genagev:cds-accession, $(acc_cds)]
+      - [genagev:orf-accession, $(acc_orf)]
+      - [genagev:article, http://bio2rdf.org/pubmed:$(references)]
+
+

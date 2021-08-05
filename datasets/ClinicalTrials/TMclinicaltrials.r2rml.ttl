@@ -1,0 +1,1578 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bv: <http://bio2rdf.org/bio2rdf_vocabulary:> .
+@prefix ctv: <http://bio2rdf.org/clinicaltrials_vocabulary:> .
+
+<TMclinicaltrials1>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.studies"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{brief_title} [clinicaltrials:{nct_id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "brief_title"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials:{nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:download-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "nlm_download_date_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:url ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "https://clinicaltrials.gov/show/{nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:nct-id ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "nct_id"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:brief-title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "brief_title"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:official-title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "official_title"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:acronym ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "acronym"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:sponsor ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials4>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:source ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials4>;
+			rr:joinCondition [ rr:child "source"; rr:parent "name"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:has-dmc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "has_dmc"; rr:datatype xsd:boolean; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:overall-status ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "overall_status"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:why-stopped ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "why_stopped"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:start-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "start_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:completion-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "completion_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:primary-completion-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "primary_completion_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:verification-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "verification_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:lastchanged-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "last_update_submitted_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:firstreceived-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "study_first_submitted_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:firstreceived-results-date ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "results_first_submitted_date"; rr:datatype xsd:date; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:phase ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "phase"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:study-type ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "study_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:target-duration ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "target_duration"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:number-of-arms ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "number_of_arms"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:number-of-arms ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "number_of_groups"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:enrollment ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "enrollment"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:condition ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials5>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:arm-group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials6>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:intervention ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials7>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:eligibility ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials8>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:biospec-retention ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "biospec_retention"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:biospec-descr ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "biospec_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:overall-official ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials9>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:location ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials10>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:responsible-party ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials15>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:condition-mesh ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials17>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:is-fda-regulated ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "is_fda_regulated_drug"; rr:datatype xsd:boolean; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:is-fda-regulated ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "is_fda_regulated_device"; rr:datatype xsd:boolean; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:has-expanded-access ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "has_expanded_access"; rr:datatype xsd:boolean; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:intervention-browse ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials18>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:participant-flow ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials19>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:baseline ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials24>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:outcome ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials26>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:reported-events ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials29>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:limitations-and-caveats ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "limitations_and_caveats"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials2>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.brief_summaries"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:brief-summary ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials3>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.detailed_descriptions"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:detailed_description ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials4>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.sponsors"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Organization;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-sponsor";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-sponsor]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-sponsor"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:organization ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "agency_class"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials5>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.conditions"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Condition;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-condition";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-condition]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "clinicaltrials_resource:{id}-condition"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials6>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.design_groups"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Arm;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/arm-group/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{nct_id} arm-group {id} [clinicaltrials_resource:{nct_id}/arm-group/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{nct_id} arm-group {id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/arm-group/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:description ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials7>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.interventions"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:{intervention_type};
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-intervention";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-intervention]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-intervention"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:intervention-name ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:intervention-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:arm-group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials6>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials8>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.eligibilities"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Eligibility;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-eligibility";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "eligibility for clinicaltrials:{nct_id} [clinicaltrials_resource:{id}-eligibility]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "eligibility for clinicaltrials:{nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-eligibility"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:text ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "criteria"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:gender ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "gender"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:healthy-volunteers ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "healthy_volunteers"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:maximum-age ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "maximum_age"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:minimum-age ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "minimum_age"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:study-population ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "population"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:sampling-method ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "sampling_method"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials9>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.overall_officials"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Contact;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-contact";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-contact]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-contact"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:last-name ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:affiliation ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials4>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials10>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.facilities"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Location;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-facility";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "name [clinicaltrials_resource:{id}-facility]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-facility"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:address ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{city} {state} {country}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:contact ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials11>;
+			rr:joinCondition [ rr:child "id"; rr:parent "facility_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:investigator ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials12>;
+			rr:joinCondition [ rr:child "id"; rr:parent "facility_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials11>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.facility_contacts"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Contact;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-contact";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-contact]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-contact"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:last-name ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:email ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "email"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:phone ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "phone"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials12>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.facility_investigators"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Contact;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-contact";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdf:type ];
+		rr:objectMap	[ rr:termType rr:IRI; rr:constant "ctv:Contact"; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name} [clinicaltrials_resource:{id}-contact]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-contact"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:role ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "role"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials13>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.study_references"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:reference ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "pubmed:{pmid}"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials14>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.links"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:url ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "url"; rr:datatype xsd:anyURI; ];
+	];
+
+.
+
+<TMclinicaltrials15>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.responsible_parties"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Responsible-Party;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-resparty";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name}, {title}, {affiliation}, {organization} [clinicaltrials_resource:{id}-resparty]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name}, {title}, {affiliation}, {organization}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-resparty"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:party-type ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "responsible_party_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:name-title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{name}, {title}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:organization ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "organization"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials16>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.keywords"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Clinical-Study;
+		rr:template "http://bio2rdf.org/clinicaltrials:{nct_id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:keyword ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "name"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials17>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.browse_conditions"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Term;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-term";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{mesh_term} [clinicaltrials_resource:{id}-term]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "mesh_term"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-term"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials18>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.browse_interventions"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Term
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-term";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{mesh_term} [clinicaltrials_resource:{id}-term]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "mesh_term"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-term"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials19>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.participant_flows"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:Class ctv:Participant-Flow;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-pflow";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "participant flow for clinicaltrials:{nct_id} [clinicaltrials_resource:{id}-pflow]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "participant flow for clinicaltrials:{nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-pflow"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:recruitment-details ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "recruitment_details"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:pre-assignment-details ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "pre_assignment_details"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:period ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials21>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials20>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.result_groups"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Group;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/group/{ctgov_group_code}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} [clinicaltrials_resource:{nct_id}/group/{ctgov_group_code}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "title"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/group/{ctgov_group_code}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group-id ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ctgov_group_code"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials21>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.milestones"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Period;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/period/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{period} for {nct_id} [clinicaltrials_resource:{nct_id}/period/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{period} for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/period/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:milestone ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials22>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials22>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.milestones"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Milestone;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/milestone/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} for {nct_id} [clinicaltrials_resource:{nct_id}/milestone/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/milestone/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "result_group_id"; rr:parent "id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:count ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "count"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:comment ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials23>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.drop_withdrawals"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Withdraw-Reason;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/withdraw/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{reason} [clinicaltrials_resource:{nct_id}/withdraw/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "reason"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/withdraw/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:count ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "count"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "result_group_id"; rr:parent "id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials24>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.baseline_measurements"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Baseline;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/baseline/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Baseline for {nct_id} [clinicaltrials_resource:{nct_id}/baseline/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Baseline for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/baseline/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "result_group_id"; rr:parent "id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:measurement ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials25>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+.
+
+<TMclinicaltrials25>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.baseline_measurements"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Measurement;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/measurement/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} measurement for {nct_id} [clinicaltrials_resource:{nct_id}/measurement/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} measurement for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/measurement/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:parameter ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:unit ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "units"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:category ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "category"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:value ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_value_num"; rr:datatype xsd:float; ];
+	];
+
+.
+
+<TMclinicaltrials26>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.outcomes"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Outcome;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/outcome/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} [clinicaltrials_resource:{nct_id}/outcome/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/outcome/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:analysis ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials28>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:measurement ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials27>;
+			rr:joinCondition [ rr:child "nct_id"; rr:parent "nct_id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:population ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "population"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:time-frame ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "time_frame"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:type ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "outcome_type"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials27>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.outcome_measurements"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Measurement;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/measurement/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} measurement for {nct_id} [clinicaltrials_resource:{nct_id}/measurement/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "{title} measurement for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/measurement/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:parameter ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:unit ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "units"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:category ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "category"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:value ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_value_num"; rr:datatype xsd:float; ];
+	];
+
+.
+
+<TMclinicaltrials28>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.outcome_analyses"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Analysis;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/analysis/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Analysis for {nct_id} [clinicaltrials_resource:{nct_id}/analysis/{id}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Analysis for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{nct_id}/analysis/{id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:ci-lower-limit ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ci_lower_limit"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:ci-n-sides ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ci_n_sides"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:ci-percent ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ci_percent"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:ci-upper-limit ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ci_upper_limit"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:method-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "method_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:param-type ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:param-value ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "param_value"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:non-inferiority-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "non_inferiority_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:groups-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "groups_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:method ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "method"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:non-inferiority ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "non_inferiority"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:p-value ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "p_value"; rr:datatype xsd:double; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:p-value-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "p_value_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:estimate-desc ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "estimate_description"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:dispersion-type ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "dispersion_type"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:dispersion-value ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "dispersion_value"; rr:datatype xsd:float; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:ci-upper-limit-na-comment ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "ci_upper_limit_na_comment"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials29>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.reported_events"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Reported-Events;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{id}-repevents";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdf:type ];
+		rr:objectMap	[ rr:termType rr:IRI; rr:constant "ctv:Reported-Events"; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Reported events for {nct_id} [clinicaltrials_resource:{id}-repevents]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Reported events for {nct_id}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "clinicaltrials_resource:{id}-repevents"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "result_group_id"; rr:parent "id"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdf:type ];
+		rr:objectMap	[ rr:termType rr:IRI; rr:template "ctv:{event_type}-event"; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:default-assessment ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "default_assessment"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:subjects-affected ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "subjects_affected"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:subjects-at-risk ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "subjects_at_risk"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:default-vocabulary ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "default_vocab"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:frequency-threshold ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "frequency_threshold"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:number-events ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "event_count"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:major-title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "vocab"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:sub-title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:column "assessment"; rr:datatype xsd:string; ];
+	];
+
+.
+
+<TMclinicaltrials30>
+
+	rr:logicalTable [
+		rr:tableName "ctgov.outcome_analyses_groups"
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class ctv:Resource;
+		rr:class ctv:Outcome;
+		rr:template "http://bio2rdf.org/clinicaltrials_resource:{nct_id}/outcome/{id}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant ctv:group ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMclinicaltrials20>;
+			rr:joinCondition [ rr:child "result_group_id"; rr:parent "id"; ];
+		];
+	];
+
+.

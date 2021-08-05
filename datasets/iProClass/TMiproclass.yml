@@ -1,0 +1,75 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ipcv: http://bio2rdf.org/iproclass_vocabulary:
+
+mappings:
+  TMiproclass1:
+    sources:
+      access: ftp://ftp.pir.georgetown.edu/databases/iproclass/iproclass.tb.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/iproclass:$(hid)
+    po:
+      - [rdf:type, ipcv:Resource]
+      - [rdfs:label, iproclass entry for uniprot:$(UniProtKB_accession)]
+      - [dcterms:identifier, iproclass:$(UniProtKB_accession)]
+      - [ipcv:x-uniprot, http://bio2rdf.org/uniprot:$(UniProtKB_accession)]
+      - [ipcv:x-uniprot, http://bio2rdf.org/uniprot:$(UniProtKB_ID)]
+      - [ipcv:x-uniprot, http://purl.uniprot.org/uniprot/$(UniProtKB_accession)]
+      - p: ipcv:x-ncbigene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(EntrezGene)]
+                - [str2, $(GeneID)]
+      - [ipcv:x-refseq, http://bio2rdf.org/refseq:$(RefSeq)]
+      - p: ipcv:x-taxon
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(NCBI_taxonomy)]
+                - [str2, $(tax_id)]
+      - [ipcv:x-gi, http://bio2rdf.org/gi:$(NCBI_GI_numer)]
+      - [ipcv:x-pdb, http://bio2rdf.org/pdb:$(PDB)]
+      - [ipcv:x-pfam, http://bio2rdf.org/pfam:$(Pfam)]
+      - p: ipcv:x-go
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "http://purl.obolibrary.org/obo/"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:replace
+                parameters:
+                  - [sql:valueParam, $(GO_ID)]
+                  - [sql:valueParam2, ":"]
+                  - [sql:valueParam3, "_"]
+      - [ipcv:x-go, http://bio2rdf.org/go:$(GP)]
+      - [ipcv:x-pirsf, http://bio2rdf.org/pirsf:$(PIRSF)]
+      - [ipcv:x-ipi, http://bio2rdf.org/ipi:$(IPI)]
+      - [rdfs:seeAlso, http://uniprot.org/uniref/$(UniRef100)]
+      - [rdfs:seeAlso, http://uniprot.org/uniref/$(UniRef90)]
+      - [rdfs:seeAlso, http://uniprot.org/uniref/$(UniRef50)]
+      - [ipcv:x-uniparc, http://bio2rdf.org/uniparc:$(UniParc)]
+      - [rdfs:seeAlso, http://uniprot.org/uniparc:$(UniParc)]
+      - [ipcv:x-omim, http://bio2rdf.org/omim:$(MIM)]
+      - [ipcv:x-unigene, http://bio2rdf.org/unigene:$(UniGene)]
+      - [ipcv:ensembl, http://bio2rdf.org/ensembl:$(Ensembl)]
+      - [ipcv:pubmed, http://bio2rdf.org/pubmed:$(PubMed_ID)]
+      - [ipcv:x-genbank, http://bio2rdf.org/genbank:$(EMBL/GenBank/DDBJ)]
+      - [ipcv:x-genbank, http://bio2rdf.org/genbank:$(EMBL_protein_id)]
+
+

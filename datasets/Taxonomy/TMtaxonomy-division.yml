@@ -1,0 +1,30 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  taxv: http://bio2rdf.org/taxonomy_vocabulary:
+
+mappings:
+  TMtaxonomy-division1:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip/division.dmp
+      referenceFormulation: csv
+    s: http://bio2rdf.org/taxonomy_resource:division-id-$(division_id)
+    po:
+      - [rdf:type, taxv:Division]
+      - [rdf:type, taxv:Division]
+      - [rdfs:label, $(division name) [taxonomy_resource:division-id-$(division_id)]]
+      - [dcterms:title, $(division name)]
+      - [dcterms:identifier, taxonomy_resource:division-id-$(division_id)]
+      - [taxv:division-code, $(division_cde)]
+      - [taxv:comment, $(comment)]
+
+

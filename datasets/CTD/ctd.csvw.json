@@ -1,0 +1,234 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "http://ctdbase.org/reports/CTD_chemicals.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "ChemicalID",
+      "rowTitles": ["ChemicalName", "ChemicalID", "CasRN", "Definition", "ParentIDs", "TreeNumbers", "ParentTreeNumbers", "Synonyms", "DrugBankIDs"],
+      "columns": [{
+        "titles": "CasRN",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_chem_gene_ixns.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "ChemicalID",
+      "rowTitles": ["ChemicalName", "ChemicalID", "CasRN", "GeneSymbol", "GeneID", "GeneForms", "Organism", "OrganismID", "Interaction", "InteractionActions", "PubMedIDs"],
+      "columns": [{
+        "titles": "GeneID",
+        "null": ""
+      },{
+        "titles": "CasRN",
+        "null": ""
+      },{
+        "titles": "Organism",
+        "null": ""
+      },{
+        "titles": "OrganismID",
+        "null": ""
+      },{
+        "titles": "Interaction",
+        "null": ""
+      },{
+        "titles": "InteractionActions",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "PubMedIDs",
+        "null": "",
+        "separator": "|"
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_chemicals_diseases.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "ChemicalID",
+      "rowTitles": ["ChemicalName", "ChemicalID", "CasRN", "DiseaseName", "DiseaseID", "DirectEvidence", "InferenceGeneSymbol", "InferenceScore", "OmimIDs", "PubMedIDs"],
+      "columns": [{
+        "titles": "DiseaseName",
+        "null": ""
+      },{
+        "titles": "DiseaseID",
+        "null": ""
+      },{
+        "titles": "CasRN",
+        "null": ""
+      },{
+        "titles": "DirectEvidence",
+        "null": ""
+      },{
+        "titles": "InferenceGeneSymbol",
+        "null": ""
+      },{
+        "titles": "InferenceScore",
+        "null": ""
+      },{
+        "titles": "OmimIDs",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "PubMedIDs",
+        "null": "",
+        "separator": "|"
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_chem_pathways_enriched.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "ChemicalID",
+      "rowTitles": ["ChemicalName", "ChemicalID", "CasRN", "PathwayName", "PathwayID", "PValue", "CorrectedPValue", "TargetMatchQty", "TargetTotalQty", "BackgroundMatchQty", "BackgroundTotalQty"],
+      "columns": [{
+        "titles": "PathwayID",
+        "null": ""
+      },{
+        "titles": "CorrectedPValue",
+        "null": "",
+        "datatype": {
+          "base": "float"
+        }
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_diseases.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "DiseaseID",
+      "rowTitles": ["DiseaseName", "DiseaseID", "AltDiseaseIDs", "Definition", "ParentIDs", "TreeNumbers", "ParentTreeNumbers", "Synonyms", "SlimMappings"],
+      "columns": [{
+        "titles": "Definition",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_diseases_pathways.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "DiseaseID",
+      "rowTitles": ["DiseaseName", "DiseaseID", "PathwayName", "PathwayID", "InferenceGeneSymbol"]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_genes_diseases.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "rowTitles": ["GeneSymbol", "GeneID", "DiseaseName", "DiseaseID", "DirectEvidence", "InferenceChemicalName", "InferenceScore", "OmimIDs", "PubMedIDs"],
+      "columns": [{
+        "titles": "OmimIDs",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "PubMedIDs",
+        "null": "",
+        "separator": "|"
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_genes_pathways.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "rowTitles": ["GeneSymbol", "GeneID", "PathwayName", "PathwayID"]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_pathways.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "PathwayID",
+      "rowTitles": ["PathwayName", "PathwayID"]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_genes.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "GeneID",
+      "rowTitles": ["GeneSymbol", "GeneName", "GeneID", "AltGeneIDs", "Synonyms", "BioGRIDIDs", "PharmGKBIDs", "UniProtIDs"],
+      "columns": [{
+        "titles": "GeneName",
+        "null": ""
+      },{
+        "titles": "GeneSymbol",
+        "null": ""
+      },{
+        "titles": "AltGeneIDs",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "Synonyms",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "BioGRIDIDs",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "PharmGKBIDs",
+        "null": "",
+        "separator": "|"
+      },{
+        "titles": "UniProtIDs",
+        "null": "",
+        "separator": "|"
+      }]
+    }
+  },{
+    "url": "http://ctdbase.org/reports/CTD_chem_go_enriched.tsv.gz",
+    "dialect": {
+      "delimiter": "\t",
+      "header": false,
+      "skipRows": 29
+    },
+    "tableSchema":{
+      "primaryKey": "ChemicalID",
+      "rowTitles": ["ChemicalName", "ChemicalID", "CasRN", "Ontology", "GOTermName", "GOTermID", "HighestGOLevel", "PValue", "CorrectedPValue", "TargetMatchQty", "TargetTotalQty", "BackgroundMatchQty", "BackgroundTotalQty"],
+      "columns": [{
+        "titles": "GoTermName",
+        "null": ""
+      }]
+    }
+  }]
+}

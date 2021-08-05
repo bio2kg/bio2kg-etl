@@ -1,0 +1,218 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  iriv: http://bio2rdf.org/irefindex_vocabulary:
+  dc: http://purl.org/dc/elements/1.1/
+
+mappings:
+  TMirefindex1:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: "http://bio2rdf.org/irefindex.$(interactionIdentifier)"
+    po:
+      - [rdf:type, <FunctionMap3>]
+      - [iriv:method, $(method)]
+      - [rdfs:seeAlso, http://wodaklab.org/iRefWeb/interaction/show/$(icrigid)]
+      - [iriv:interactor-a, $(uidA)]
+      - [iriv:interactor-b, $(uidB)]
+      - [iriv:interactor-a-biological-role, $(biological_role_B)]
+      - [iriv:interactor-b-biological-role, $(biological_role_A)]
+      - [iriv:interactor-a-experimental-role, $(experimental_role_B)]
+      - [iriv:interactor-b-experimental-role, $(experimental_role_A)]
+      - [iriv:type, $(interactor_type_A)]
+      - [iriv:type, $(interactor_type_B)]
+      - [iriv:type, $(interactionType)]
+      - [iriv:article, $(pmids)]
+      - [iriv:source, sourcedb]
+      - [iriv:expansion-method, $(expansion)]
+      - p: iriv:host-organism
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - parameter: str1
+                  value:
+                    function: sql:regexp_like
+                  parameters:
+                    - [sql:valueParam, $(Host_organism_taxid)]
+                    - [sql:valueParam2, "[0-9]+"]
+                    - [sql:valueParam3, "c"]
+                - [str2, $(tax_id)]
+      - [dc:created, $(Creation_date)]
+      - p: iriv:taxon-sequence-identical-interaction
+        o:
+          - mapping: TMirefindex4
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Checksum_Interaction)]
+                - [str2, $(Checksum_Interaction)]
+
+
+  TMirefindex2:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.$(Checksum_A)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Identical-Group]
+      - [rdfs:label, [irefindex.$(Checksum_A)]]
+      - [dcterms:identifier, irefindex.$(Checksum_A)]
+      - [iriv:has-member, $(altA)]
+      - [iriv:has-member, $(aliasA)]
+      - p: iriv:x-taxonomy
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - parameter: str1
+                  value:
+                    function: sql:regexp_like
+                  parameters:
+                    - [sql:valueParam, $(taxa)]
+                    - [sql:valueParam2, "[0-9]+"]
+                    - [sql:valueParam3, "c"]
+                - [str2, $(tax_id)]
+      - [iriv:irogid, irefindex.irogid:$(irogida)]
+      - p: iriv:canonical-group
+        o:
+          - mapping: TMirefindex6
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(crogida)]
+                - [str2, $(crogida)]
+
+
+  TMirefindex3:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.$(Checksum_B)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Identical-Group]
+      - [rdfs:label, [irefindex.$(Checksum_B)]]
+      - [dcterms:identifier, irefindex.$(Checksum_B)]
+      - [iriv:has-member, $(altB)]
+      - [iriv:has-member, $(aliasB)]
+      - p: iriv:x-taxonomy
+        o:
+          - mapping: TMtaxonomy-names1
+            condition:
+              function: equal
+              parameters:
+                - parameter: str1
+                  value:
+                    function: sql:regexp_like
+                  parameters:
+                    - [sql:valueParam, $(taxb)]
+                    - [sql:valueParam2, "[0-9]+"]
+                    - [sql:valueParam3, "c"]
+                - [str2, $(tax_id)]
+      - [iriv:irogid, irefindex.irogid:$(irogidb)]
+      - p: iriv:canonical-group
+        o:
+          - mapping: TMirefindex7
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(crogidb)]
+                - [str2, $(crogidb)]
+
+
+  TMirefindex4:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.$(Checksum_Interaction)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Identical-Interaction]
+      - [dcterms:identifier, irefindex.$(Checksum_Interaction)]
+      - [iriv:irigid, irefindex.irigid:$(irigid)]
+      - p: iriv:interactor-a
+        o:
+          - mapping: TMirefindex2
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Checksum_A)]
+                - [str2, $(Checksum_A)]
+      - p: iriv:interactor-b
+        o:
+          - mapping: TMirefindex3
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(Checksum_B)]
+                - [str2, $(Checksum_B)]
+      - p: iriv:taxon-sequence-similar-interaction
+        o:
+          - mapping: TMirefindex5
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(crigid)]
+                - [str2, $(crigid)]
+
+
+  TMirefindex5:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.crigid:$(crigid)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Canonical-Interaction]
+      - [dcterms:identifier, irefindex.crigid:$(crigid)]
+      - [iriv:icrigid, irefindex.icrigid:$(icrigid)]
+      - p: iriv:interactor-a-canonical-group
+        o:
+          - mapping: TMirefindex6
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(crogida)]
+                - [str2, $(crogida)]
+      - p: iriv:interactor-b-canonical-group
+        o:
+          - mapping: TMirefindex7
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(crogidb)]
+                - [str2, $(crogidb)]
+
+
+  TMirefindex6:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.crogid:$(crogida)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Similar-Group]
+      - [dcterms:identifier, irefindex.crogid:$(crogida)]
+      - [iriv:icrogid, irefindex.icrogid:$(icrogida)]
+
+
+  TMirefindex7:
+    sources:
+      access: http://irefindex.org/download/irefindex/data/archive/release_15.0/psi_mitab/MITAB2.6/All.mitab.22012018.txt.zip
+      referenceFormulation: csv
+    s: http://bio2rdf.org/irefindex.crogid:$(crogidb)
+    po:
+      - [rdf:type, iriv:Taxon-Sequence-Similar-Group]
+      - [dcterms:identifier, irefindex.crogid:$(crogidb)]
+      - [iriv:icrogid, irefindex.icrogid:$(icrogidb)]
+
+

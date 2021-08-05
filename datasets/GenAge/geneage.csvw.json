@@ -1,0 +1,97 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "http://genomics.senescence.info/genes/human_genes.zip~genage_human.csv",
+    "dialect": {
+      "delimiter": ",",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "symbol",
+        "null": ""
+      },{
+        "titles": "aliases",
+        "separator": " ",
+        "null": ""
+      },{
+        "titles": "name",
+        "null": ""
+      },{
+        "titles": "entrez gene id",
+        "null": ""
+      },{
+        "titles": "uniprot",
+        "null": ""
+      },{
+        "titles": "why",
+        "separator": ",",
+        "null": ""
+      },{
+        "titles": "band",
+        "null": ""
+      },{
+        "titles": "location start",
+        "null": "",
+           "datatype": {
+               "base": "integer"
+            }
+      },{
+        "titles": "location end",
+        "null": "",
+           "datatype": {
+               "base": "integer"
+            }
+      },{
+        "titles": "orientation",
+        "null": ""
+      },{
+        "titles": "acc promoter",
+        "null": ""
+      },{
+        "titles": "acc orf",
+        "null": ""
+      },{
+        "titles": "acc cds",
+        "null": ""
+      },{
+        "titles": "references",
+        "separator": ",",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "http://genomics.senescence.info/genes/models_genes.zip~genage_models.csv",
+    "dialect": {
+      "delimiter": ",",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "symbol",
+        "null": ""
+      },{
+        "titles": "name",
+        "null": ""
+      },{
+        "titles": "organism",
+        "null": ""
+      },{
+        "titles": "entrez gene id",
+        "null": ""
+      },{
+        "titles": "avg lifespan change (max obsv)",
+        "null": "",
+        "datatype": {
+          "base": "float"
+        }
+      },{
+        "titles": "lifespan effect",
+        "null": ""
+      },{
+        "titles": "longevity influence",
+        "null": ""
+      }]
+    }
+  }]
+}

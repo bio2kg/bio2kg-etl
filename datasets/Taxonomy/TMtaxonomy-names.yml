@@ -1,0 +1,38 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  taxv: http://bio2rdf.org/taxonomy_vocabulary:
+
+mappings:
+  TMtaxonomy-names1:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip/names.dmp
+      referenceFormulation: csv
+    s: http://bio2rdf.org/taxonomy:$(tax_id)
+    po:
+      - [rdf:type, taxv:Resource]
+      - p:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "taxv:"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:replace
+                parameters:
+                  - [sql:valueParam, $(name_class)]
+                  - [sql:valueParam2, " "]
+                  - [sql:valueParam3, "-"]
+        o: $(name_txt)
+      - [taxv:unique-name, $(tax_id)]
+      - [dcterms:identifier, taxonomy:$(tax_id)]
+
+

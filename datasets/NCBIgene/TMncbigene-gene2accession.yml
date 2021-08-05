@@ -1,0 +1,89 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ncbiv: http://bio2rdf.org/ncbigene_vocabulary:
+  faldo: http://biohackathon.org/resource/faldo#
+
+mappings:
+  TMncbigene-gene2accession1:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene:$(GeneID)
+    po:
+      - [rdf:type, ncbiv:Resource]
+      - p: faldo:location
+        o:
+          - mapping: TMncbigene-gene2accession2
+            condition:
+              function: equal
+              parameters:
+                - [str1, $($(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)-$(end_position_on_the_genomic_accession))]
+                - [str2, $($(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)-$(end_position_on_the_genomic_accession))]
+
+
+  TMncbigene-gene2accession2:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene_resource:$(genomic nucleotide accession.version)/$(start position on the genomic accession)-$(end position on the genomic accession)
+    po:
+      - [rdf:type, faldo:Region]
+      - [rdfs:label, location of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version) [ncbigene_resource:$(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)-$(end_position_on_the_genomic_accession)]]
+      - [dcterms:title, location of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version)]
+      - [dcterms:identifier, [ncbigene_resource:$(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)-$(end_position_on_the_genomic_accession)]
+      - p: faldo:begin
+        o:
+          - mapping: TMncbigene-gene2accession3
+            condition:
+              function: equal
+              parameters:
+                - [str1, $($(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession))]
+                - [str2, $($(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession))]
+      - p: faldo:end
+        o:
+          - mapping: TMncbigene-gene2accession4
+            condition:
+              function: equal
+              parameters:
+                - [str1, $($(genomic_nucleotide_accession.version)/$(end_position_on_the_genomic_accession))]
+                - [str2, $($(genomic_nucleotide_accession.version)/$(end_position_on_the_genomic_accession))]
+
+
+  TMncbigene-gene2accession3:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene_resource:$(genomic nucleotide accession.version)/$(start position on the genomic accession)
+    po:
+      - [rdf:type, faldo:ExactPosition]
+      - [rdfs:label, start of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version) [ncbigene_resource:$(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)]]
+      - [dcterms:title, start of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version)]
+      - [dcterms:identifier, ncbigene_resource:$(genomic_nucleotide_accession.version)/$(start_position_on_the_genomic_accession)]
+      - [faldo:position, $(start_position_on_the_genomic_accession)]
+      - [faldo:reference, http://bio2rdf.org/refseq:$(genomic_nucleotide_accession.version)]
+
+
+  TMncbigene-gene2accession4:
+    sources:
+      access: ftp://ftp.ncbi.nih.gov/gene/DATA/gene2accession.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ncbigene_resource:$(genomic nucleotide accession.version)/$(end position on the genomic accession)
+    po:
+      - [rdf:type, faldo:ExactPosition]
+      - [rdfs:label, stop of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version) [ncbigene_resource:$(genomic_nucleotide_accession.version)/$(end_position_on_the_genomic_accession)]]
+      - [dcterms:title, stop of ncbigene:$(GeneID) on $(genomic_nucleotide_accession.version)]
+      - [dcterms:identifier, ncbigene_resource:$(genomic_nucleotide_accession.version)/$(end_position_on_the_genomic_accession)]
+      - [faldo:position, $(end_position_on_the_genomic_accession)]
+      - [faldo:reference, http://bio2rdf.org/refseq:$(genomic_nucleotide_accession.version)]
+
+

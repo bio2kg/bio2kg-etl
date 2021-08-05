@@ -1,0 +1,75 @@
+prefixes:
+  rr: http://www.w3.org/ns/r2rml#
+  rml: http://semweb.mmlab.be/ns/rml#
+  ql: http://semweb.mmlab.be/ns/ql#
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  owl: http://www.w3.org/2002/07/owl#
+  dcterms: http://purl.org/dc/terms/
+  xsd: http://www.w3.org/2001/XMLSchema#
+  fno: http://w3id.org/function/ontology#
+  sql: http://dchaves.oeg-upm.net/resources/function/sql.ttl#
+  bv: http://bio2rdf.org/bio2rdf_vocabulary:
+  ctdv: http://bio2rdf.org/ctd_vocabulary:
+
+mappings:
+  TMctd-genes_diseases1:
+    sources:
+      access: http://ctdbase.org/reports/CTD_genes_diseases.tsv.gz
+      referenceFormulation: csv
+    s: http://bio2rdf.org/ctd_resource:$(GeneID)_$(DiseaseID)
+    po:
+      - [rdf:type, ctdv:Resource]
+      - [rdf:type, ctdv:Chemical-Disease-Association]
+      - p: rdfs:label
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "Association between {GeneSymbol} ({GeneID}) - {DiseaseName} ({DiseaseID}) association [ctd_resource:{GeneID}"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:regexp_like
+                parameters:
+                  - [sql:valueParam, $(DiseaseID)]
+                  - [sql:valueParam2, "[^:]*$"]
+                  - [sql:valueParam3, "c"]
+      - [dcterms:title, Association between $(GeneSymbol) ($(GeneID)) - $(DiseaseName) ($(DiseaseID)) association]
+      - p: dcterms:identifier
+        o:
+        - function: sql:concat
+          parameters:
+            - [sql:valueParam, "ctd_resource:{GeneID}"]
+            - parameter: sql:valueParam2 
+              value:
+                function: sql:regexp_like
+                parameters:
+                  - [sql:valueParam, $(DiseaseID)]
+                  - [sql:valueParam2, "[^:]*$"]
+                  - [sql:valueParam3, "c"]
+      - p: ctdv:disease
+        o:
+          - mapping: TMctd-diseases1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(OmimIDs)]
+                - [str2, $(AltDiseaseIDs)]
+      - p: ctdv:disease
+        o:
+          - mapping: TMctd-diseases1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(DiseaseID)]
+                - [str2, $(DiseaseID)]
+      - p: ctdv:gene
+        o:
+          - mapping: TMncbigene-gene_info1
+            condition:
+              function: equal
+              parameters:
+                - [str1, $(GeneID)]
+                - [str2, $(GeneID)]
+      - [ctdv:article, http://bio2rdf.org/pubmed:$(PubMedIDs)]
+
+

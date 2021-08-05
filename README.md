@@ -208,3 +208,7 @@ Register a workflow:
 ```bash
 python3 workflows/prefect-workflow.py
 ```
+
+## Credits
+
+We reused the RML mappings from this publication: https://doi.org/10.5281/zenodo.3552369

@@ -1,4 +1,5 @@
-FROM quay.io/redhat-github-actions/runner:latest as runner
+FROM quay.io/redhat-github-actions/k8s-tools-runner:latest as runner
+# FROM quay.io/redhat-github-actions/runner:latest as runner
 
 LABEL org.opencontainers.image.source https://github.com/bio2kg/bio2kg-etl
 

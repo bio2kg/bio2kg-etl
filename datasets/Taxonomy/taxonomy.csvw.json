@@ -1,0 +1,105 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip~names.dmp",
+    "dialect": {
+      "delimiter": "\t|\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["tax_id", "name_txt", "unique_name", "name_class"],
+      "primaryKey": "tax_id",
+      "columns": [{
+        "titles": "name_txt",
+        "null": ""
+      },{
+        "titles": "unique_name",
+        "null": ""
+      },{
+        "titles": "name_class",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip~nodes.dmp",
+    "dialect": {
+      "delimiter": "\t|\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["tax_id", "parent_tax_id", "rank", "embl_code", "division_id", "inherited_div_flag", "genetic_code_id", "inherited_GC_flag", "mitochondrial_genetic_code_id", "inherited_MGC_flag", "GenBank_hidden_flag", "hidden_subtree_root_flag", "comments"],
+      "primaryKey": "tax_id",
+      "columns": [{
+        "titles": "parent_tax_id",
+        "null": ""
+      },{
+        "titles": "rank",
+        "null": ""
+      },{
+        "titles": "embl_code",
+        "null": ""
+      },{
+        "titles": "division_id",
+        "null": ""
+      },{
+        "titles": "inherited_div_flag",
+        "null": ""
+      },{
+        "titles": "genetic_code_id",
+        "null": ""
+      },{
+        "titles": "inherited_GC_flag",
+        "null": ""
+      },{
+        "titles": "mitochondrial_genetic_code_id",
+        "null": ""
+      },{
+        "titles": "inherited_MGC_flag",
+        "null": ""
+      },{
+        "titles": "GenBank_hidden_flag",
+        "null": ""
+      },{
+        "titles": "hidden_subtree_root_flag",
+        "null": ""
+      },{
+        "titles": "comments",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip~division.dmp",
+    "dialect": {
+      "delimiter": "\t|\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["division_id", "division_cde", "division_name", "comments"],
+      "primaryKey": "division_id",
+      "columns": [{
+        "titles": "comments",
+        "null": ""
+      }]
+    }
+  },{
+    "url": "ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdmp.zip~gencode.dmp",
+    "dialect": {
+      "delimiter": "\t|\t",
+      "header": false
+    },
+    "tableSchema":{
+      "rowTitles": ["genetic_code_id", "abbreviation", "name", "cde", "starts"],
+      "primaryKey": "genetic_code_id",
+      "columns": [{
+        "titles": "abbreviation",
+        "null": ""
+      },{
+        "titles": "cde",
+        "null": ""
+      },{
+        "titles": "starts",
+        "null": ""
+      }]
+    }
+  }]
+}

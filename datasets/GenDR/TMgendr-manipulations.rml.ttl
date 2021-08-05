@@ -1,0 +1,111 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fno: <http://w3id.org/function/ontology#> .
+@prefix sql: <http://dchaves.oeg-upm.net/resources/function/sql.ttl#> .
+@prefix bv: <http://bio2rdf.org/bio2rdf_vocabulary:> .
+@prefix gendrv: <http://bio2rdf.org/homologene_vocabulary:> .
+
+<TMgendr-manipulations1>
+
+	rml:logicalSource [
+		rml:source "http://genomics.senescence.info/diet/dataset.zip" ;
+		rml:referenceFormulation ql:CSV ;
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class gendrv:Resource;
+		rr:template "http://bio2rdf.org/gendr:{GenDR_ID}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdf:type ];
+		rr:objectMap	[ rr:termType rr:IRI; rr:constant "gendrv:Dietary-Restriction-Life-Extension-Related-Gene"; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Dietary restriction life extension related gene{GenDR_ID} [gendr-manipulations:{GenDR_ID}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Dietary restriction life extension related gene{GenDR_ID}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "[gendr-manipulations:{GenDR_ID}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:x-ncbigene ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMncbigene-gene_info1>;
+			rr:joinCondition [ rr:child "entrez_gene_id"; rr:parent "GeneID"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:gene-name ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "gene_name"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:gene-symbol ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "gene_symbol"; rr:datatype xsd:string; ];
+	];
+
+.
+
+
+<TMgendr-manipulations2>
+
+	rml:logicalSource [
+		rml:source "http://genomics.senescence.info/diet/dataset.zip" ;
+		rml:referenceFormulation ql:CSV ;
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class gendrv:Gene-Phenotype-Association;
+		rr:template "http://bio2rdf.org/gendr:{GenDR ID}_{entrez_gene_id}_association";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Association between {gene_symbol} and variation in life span extension induced by dietary restriction"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:gene ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMgendr-manipulations1>;
+			rr:joinCondition [ rr:child "GenDR_ID"; rr:parent "GenDR_ID"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:phenotype ];
+		rr:objectMap	[ rr:termType rr:IRI; rr:constant "gendrv:Diet-Induced-Life-Span-Variant"; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant gendrv:x-taxid ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMtaxonomy-names1>;
+			rr:joinCondition [ rr:child "species"; rr:parent "name_txt"; ];
+		];
+	];
+
+.
+

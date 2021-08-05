@@ -1,0 +1,25 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw"],
+  "tables": [{
+    "url": "http://genomics.senescence.info/diet/dataset.zip~gendr_manipulations.csv",
+    "dialect": {
+      "delimiter": ",",
+      "header": true
+    },
+    "tableSchema":{
+      "columns": [{
+        "titles": "gene symbol",
+        "null": ""
+      },{
+        "titles": "species",
+        "null": ""
+      },{
+        "titles": "entrez gene id",
+        "null": ""
+      },{
+        "titles": "gene name",
+        "null": ""
+      }]
+    }
+  }]
+}

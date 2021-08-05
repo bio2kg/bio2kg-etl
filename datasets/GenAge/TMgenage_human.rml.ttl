@@ -1,0 +1,117 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix fnml: <http://semweb.mmlab.be/ns/fnml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fno: <http://w3id.org/function/ontology#> .
+@prefix sql: <http://dchaves.oeg-upm.net/resources/function/sql.ttl#> .
+@prefix bv: <http://bio2rdf.org/bio2rdf_vocabulary:> .
+@prefix genagev: <http://bio2rdf.org/genage_vocabulary:> .
+
+<TMgenage_human1>
+
+	rml:logicalSource [
+		rml:source "http://genomics.senescence.info/genes/human_genes.zip" ;
+		rml:referenceFormulation ql:CSV ;
+	];
+
+	rr:subjectMap [
+		a rr:Subject;
+		rr:termType rr:IRI;
+		rr:class genagev:Resource;
+		rr:class genagev:Human-Aging-Related-Gene;
+		rr:template "http://bio2rdf.org/hagr:{GenAge_ID}";
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant rdfs:label ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Human aging related gene {GenAge_ID} [genage-human:{GenAge_ID}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:title ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "Human aging related gene {GenAge_ID}"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant dcterms:identifier ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "[genage-human:{GenAge_ID}]"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:alias ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "aliases"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:x-hgnc.symbol ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMhgnc1>;
+			rr:joinCondition [ rr:child "symbol"; rr:parent "Approved_Symbol"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:x-ncbigene ];
+		rr:objectMap	[
+			rr:parentTriplesMap <TMncbigene-gene_info1>;
+			rr:joinCondition [ rr:child "entrez gene id"; rr:parent "GeneID"; ];
+		];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:inclusion-criteria ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "why"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:cytogenetic-band ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "band"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:gene-start-position ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "location_start"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:gene-end-position ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "location_end"; rr:datatype xsd:integer; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:strand-orientation ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "orientation"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:x-uniprot ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "uniprot"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:promoter-accession ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "acc_promoter"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:cds-accession ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "acc_cds"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:orf-accession ];
+		rr:objectMap	[ rr:termType rr:Literal; rml:reference "acc_orf"; rr:datatype xsd:string; ];
+	];
+
+	rr:predicateObjectMap [
+		rr:predicateMap	[ rr:constant genagev:article ];
+		rr:objectMap	[ rr:termType rr:Literal; rr:template "http://bio2rdf.org/pubmed:{references}"; rr:datatype xsd:string; ];
+	];
+
+.
+

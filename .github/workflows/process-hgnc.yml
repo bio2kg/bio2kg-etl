@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/hgnc/*'
+    - 'datasets/HGNC/*'
     - '.github/workflows/process-hgnc.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
@@ -24,7 +24,7 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/hgnc
+        cd datasets/HGNC
         ./run.sh
         curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-hgnc.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
@@ -32,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/hgnc/data/bio2kg-hgnc.ttl
+        path: datasets/HGNC/data/bio2kg-hgnc.ttl
