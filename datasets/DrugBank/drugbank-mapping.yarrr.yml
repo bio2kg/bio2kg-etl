@@ -1,0 +1,105 @@
+prefixes:
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  pubmed: "https://identifiers.org/pubmed:"
+
+mappings:
+  publications:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/general-references/articles/article]
+    s: https://identifiers.org/$(pubmed-id)
+    po:
+      - [a, bl:Publication]
+      # - ["ex:test$(@id)", "$(tag/@v)"]
+      # - p: bl:id
+      #   o: https://identifiers.org/$(hgnc_id)~iri
+      - p: bl:name
+        o: $(citation)
+      # - p: bl:provided_by
+      #   o: d2s:graph/hgnc~iri
+      # - p: bl:update_date
+      #   o: $(date_modified)
+      # - p: bl:same_as
+      #   o: https://identifiers.org/hgnc.symbol:$(symbol)~iri
+      # - p: bl:same_as
+      #   o: https://www.ncbi.nlm.nih.gov/gene/$(entrez_id)~iri
+      # - p: bl:same_as
+      #   o: https://identifiers.org/ensembl:$(ensembl_gene_id)~iri
+
+      # - p: bl:has_gene_product
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "$(uniprot_ids)"]
+      #   # Transcripts
+      # - p: bl:publications
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "$(pubmed_id)"]
+      #       type: iri
+      # - p: bl:has_gene_product
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://www.ncbi.nlm.nih.gov/nuccore:$(refseq_accession)"]
+      #       type: iri
+      # - p: bl:located_in
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/ccds:$(ccds_id)"]
+      #       type: iri
+      # - p: bl:gene_associated_with_condition
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/mim:$(ccds_id)"]
+      #       type: iri
+
+        # Getting status URI require to do a replace
+        # Gene product from UniProt
+      # - p: bl:has_gene_product
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/uniprot:$(uniprot_ids)"]
+      #       type: iri
+      #   # Transcripts
+      # - p: bl:has_gene_product
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://www.ncbi.nlm.nih.gov/nuccore:$(refseq_accession)"]
+      #       type: iri
+      # - p: bl:publications
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/pubmed:$(pubmed_id)"]
+      #       type: iri
+      # - p: bl:located_in
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/ccds:$(ccds_id)"]
+      #       type: iri
+      # - p: bl:gene_associated_with_condition
+      #   o:
+      #       function: grel:string_split
+      #       parameters:
+      #           - [grel:p_string_sep, "\|"]
+      #           - [grel:valueParameter, "https://identifiers.org/mim:$(ccds_id)"]
+      #       type: iri

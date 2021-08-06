@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Check if input file exist, download it if absent
 if [ ! -f "data/hgnc.csv" ]; then
     echo "data/hgnc.csv does not exist, downloading."
     mkdir -p data
@@ -11,13 +12,14 @@ if [ ! -f "data/hgnc.csv" ]; then
 fi
 
 echo "Running YARRRML parser"
-# yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
-yarrrml-parser -i TMhgnc.yml -o data/TMhgnc.rml.ttl
+yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
+# yarrrml-parser -i TMhgnc.yml -o data/TMhgnc.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
-# java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle
-java -jar /opt/rmlmapper.jar -m data/TMhgnc.rml.ttl -o data/bio2rdf-hgnc.ttl -s turtle
+rm data/bio2kg-hgnc.ttl
+java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle -f ../functions_ids.ttl 
 
+head -n 40 data/bio2kg-hgnc.ttl
 
 
 ##Example to run quick python scripts:

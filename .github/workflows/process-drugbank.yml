@@ -35,3 +35,18 @@ jobs:
       with:
         name: output
         path: datasets/DrugBank/data/drugbank_processed.csv
+
+    # Now with the RML mappings
+    - name: Run RML mapper ETL
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+      run: |
+        cd datasets/DrugBank
+        ./run.sh "-Xms32g -Xmx32g"
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+
+    - name: Upload RDF output
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: datasets/DrugBank/data/bio2kg-drugbank.ttl

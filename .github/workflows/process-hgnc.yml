@@ -1,11 +1,11 @@
 name: Process HGNC
 on:
   workflow_dispatch:
-  push:
-    branches: [ main ]
-    paths:
-    - 'datasets/HGNC/*'
-    - '.github/workflows/process-hgnc.yml'
+  # push:
+  #   branches: [ main ]
+  #   paths:
+  #   - 'datasets/HGNC/*'
+  #   - '.github/workflows/process-hgnc.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
