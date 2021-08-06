@@ -8,29 +8,6 @@ prefixes:
   pubmed: "https://identifiers.org/pubmed:"
 
 mappings:
-  drugs:
-    sources:
-      - [data/full database.xml~xpath, /drugbank/drug]
-    s: 
-      function: idlab:decide
-      parameters:
-          - [idlab:str, $(drugbank-id/@primary)]
-          - [idlab:expectedStr, "true"]
-          - [idlab:result, $(drugbank-id)]
-      type: iri
-    # https://identifiers.org/drugbank:$(drugbank-id/@primary=true)
-    #   condition:
-    #     function: equal
-    #     parameters:
-    #       - [str1, $(drugbank-id/@primary)]
-    #       - [str2, "true"]
-    po:
-      - [a, bl:Drug]
-      - p: bl:name
-        o: $(name)
-      # - ["ex:test$(@id)", "$(tag/@v)"]
-      # - p: bl:id
-      #   o: https://identifiers.org/$(hgnc_id)~iri
 
   publications:
     sources:
@@ -41,5 +18,27 @@ mappings:
       - p: bl:name
         o: $(citation)
       # - ["ex:test$(@id)", "$(tag/@v)"]
-      # - p: bl:id
-      #   o: https://identifiers.org/$(hgnc_id)~iri
+
+  # drugs:
+  #   sources:
+  #     - [data/full database.xml~xpath, /drugbank/drug]
+  #   s: 
+  #     function: idlab:decide
+  #     parameters:
+  #         - [idlab:str, $(drugbank-id/@primary)]
+  #         - [idlab:expectedStr, "true"]
+  #         - [idlab:result, $(drugbank-id)]
+  #     type: iri
+  #   # https://identifiers.org/drugbank:$(drugbank-id/@primary=true)
+  #   #   condition:
+  #   #     function: equal
+  #   #     parameters:
+  #   #       - [str1, $(drugbank-id/@primary)]
+  #   #       - [str2, "true"]
+  #   po:
+  #     - [a, bl:Drug]
+  #     - p: bl:name
+  #       o: $(name)
+  #     # - ["ex:test$(@id)", "$(tag/@v)"]
+  #     # - p: bl:id
+  #     #   o: https://identifiers.org/$(hgnc_id)~iri
