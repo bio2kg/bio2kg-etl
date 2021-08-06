@@ -26,6 +26,7 @@ jobs:
 
     - name: Run ETL script
       env:
+        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
       run: |
         python datasets/DrugBank/load_drugbank.py
@@ -40,6 +41,9 @@ jobs:
     - name: Run RML mapper ETL
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+        DRUGBANK_VERSION: 5-1-8
       run: |
         cd datasets/DrugBank
         ./run.sh "-Xms32g -Xmx32g"

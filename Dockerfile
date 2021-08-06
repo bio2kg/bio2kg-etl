@@ -42,7 +42,7 @@ RUN export download_url=$(curl -s https://api.github.com/repos/conda-forge/minif
 RUN conda install --quiet -y \
     conda \
     pip \
-    wget \
+    wget unzip \
     nodejs \
     yarn \
     openjdk \

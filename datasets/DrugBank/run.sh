@@ -1,16 +1,18 @@
 #!/bin/bash
 
-# if [ ! -f "data/hgnc.csv" ]; then
-#     echo "data/hgnc.csv does not exist, downloading."
-#     mkdir -p data
-#     cd data
-#     wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
-#     # Convert TSV to CSV for RML Mapper
-#     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' hgnc_complete_set.txt > hgnc.csv
-#     cd ..
-# fi
+DRUGBANK_VERSION="${DRUGBANK_VERSION:=5-1-8}"
 
-echo "Running YARRRML parser"
+if [ ! -f "data/full database.xml" ]; then
+    echo "data/full database.xml does not exist, downloading version $DRUGBANK_VERSION"
+    mkdir -p data
+    cd data
+    curl -Lfs -o drugbank.zip -u $DRUGBANK_USERNAME:$DRUGBANK_PASSWORD https://go.drugbank.com/releases/$DRUGBANK_VERSION/downloads/all-full-database
+    unzip drugbank.zip
+    # mv full\ database.xml drugbank.xml
+    cd ..
+fi
+
+echo "Convert YARRRML to RML mappings"
 yarrrml-parser -i drugbank-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
