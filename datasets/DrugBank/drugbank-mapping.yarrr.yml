@@ -6,6 +6,7 @@ prefixes:
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   pubmed: "https://identifiers.org/pubmed:"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
 
 mappings:
 
