@@ -23,7 +23,7 @@ if [ ! -f "data/CTD_chem_gene_ixns.csv" ]; then
     cd ..
 fi
 
-PROCESS_FILE="${1:=ctd-chemical-gene.yarrr.yml}"
+PROCESS_FILE="${1:-ctd-chemical-gene.yarrr.yml}"
 
 # pip install rdfizer
 # rdfizer -c rdfizer.ini

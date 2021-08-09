@@ -26,7 +26,7 @@ jobs:
       run: |
         cd datasets/snap-biodata
         ./run.sh
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-snap-biodata.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: snap-biodata" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-snap-biodata.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: snap-biodata" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2

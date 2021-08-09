@@ -7,7 +7,7 @@ if [ ! -f "data/mim2gene_medgen" ]; then
     # https://ftp.ncbi.nlm.nih.gov/gene/DATA/
     wget -N https://ftp.ncbi.nlm.nih.gov/gene/DATA/mim2gene_medgen
     echo "Download gene_info.gz (600MB), can take some time..."
-    wget -N https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz
+    # wget -N https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz
     gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper
@@ -20,7 +20,7 @@ if [ ! -f "data/mim2gene_medgen" ]; then
     cd ..
 fi
 
-PROCESS_FILE="${1:=ncbigene-mim2gene.yarrr.yml}"
+PROCESS_FILE="${1:-ncbigene-mim2gene.yarrr.yml}"
 # ncbigene-geneinfo.yarrr.yml
 
 echo "Converting YARRRML mappings to RML"

@@ -27,10 +27,11 @@ jobs:
         cd datasets/CTD
         ./run.sh ctd-chemical-gene.yarrr.yml
         ./run.sh ctd-chemical-disease.yarrr.yml
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-disease.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-disease" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
-    # - name: Upload RDF output
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: output
-    #     path: datasets/CTD/data/bio2kg-ctd.ttl
+    - name: Upload RDF output
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: datasets/CTD/data/bio2kg-*.ttl

@@ -22,11 +22,11 @@ mappings:
   chemical-gene-interactions:
     sources:
       - ['data/disease-chemical.csv~csv']
-    s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH))
+    s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH\))
     po:
       - [a, sio:chemical-disease-assocation]
       - [rdf:subject, https://identifiers.org/$(Chemical)~iri]
-      - [rdf:object, https://identifiers.org/$(# Disease(MESH))~iri]
+      - [rdf:object, https://identifiers.org/$(# Disease(MESH\))~iri]
       - [rdf:predicate, sio:to-interact-with]
 
       - [sio:has-provider, bio2kg:graph/snap-biodata~iri]
@@ -42,6 +42,6 @@ mappings:
   diseases:
     sources:
       - ['data/disease-chemical.csv~csv']
-    s: https://identifiers.org/$(# Disease(MESH))
+    s: https://identifiers.org/$(# Disease(MESH\))
     po:
       - [a, sio:disease]

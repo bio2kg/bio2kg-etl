@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if input file exist, download it if absent
-if [ ! -f "data/CTD_chem_gene_ixns.csv" ]; then
-    echo "data/CTD_chem_gene_ixns.csv does not exist, downloading."
+if [ ! -f "data/disease-chemical.csv" ]; then
+    echo "data/disease-chemical.csv does not exist, downloading."
     mkdir -p data && cd data
     # http://ctdbase.org/downloads/
     wget -N https://snap.stanford.edu/biodata/datasets/10004/files/DCh-Miner_miner-disease-chemical.tsv.gz
@@ -19,7 +19,7 @@ if [ ! -f "data/CTD_chem_gene_ixns.csv" ]; then
     cd ..
 fi
 
-PROCESS_FILE="${1:=snap-biodata-mapping.yarrr.yml}"
+PROCESS_FILE="${1:-snap-biodata-mapping.yarrr.yml}"
 
 echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl

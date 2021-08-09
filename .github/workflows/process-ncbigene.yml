@@ -1,10 +1,10 @@
-name: Process NCBIGene
+name: Process NCBIgene
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/NCBIGene/*'
+    - 'datasets/NCBIgene/*'
     - '.github/workflows/process-ncbigene.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
@@ -24,12 +24,12 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/NCBIGene
-        ./run.sh
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ncbigene.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ncbigene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        cd datasets/NCBIgene
+        ./run.sh ncbigene-mim2gene.yarrr.yml
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ncbigene-mim2gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: mim2gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/NCBIGene/data/bio2kg-ncbigene.ttl
+        path: datasets/NCBIgene/data/bio2kg-*.ttl
