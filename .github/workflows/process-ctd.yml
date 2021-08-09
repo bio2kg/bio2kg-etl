@@ -1,0 +1,36 @@
+name: Process CTD
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+    - 'datasets/CTD/*'
+    - '.github/workflows/process-ctd.yml'
+  # schedule:
+  #   - cron:  '00 01 * * *'
+  # Everyday at 01:00am GMT+1
+
+jobs:
+
+  process:
+    runs-on: ["self-hosted", "dsri", "bio2kg" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Run RML mapper ETL
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+      run: |
+        cd datasets/CTD
+        ./run.sh ctd-chemical-gene.yarrr.yml
+        ./run.sh ctd-chemical-disease.yarrr.yml
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+
+    # - name: Upload RDF output
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: output
+    #     path: datasets/CTD/data/bio2kg-ctd.ttl

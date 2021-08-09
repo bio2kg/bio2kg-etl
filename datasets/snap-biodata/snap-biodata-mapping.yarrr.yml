@@ -1,0 +1,47 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  omim: "https://identifiers.org/mim:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  b2kbiodata: "https://w3id.org/bio2kg/data/biodata/"
+
+mappings:
+  chemical-gene-interactions:
+    sources:
+      - ['data/disease-chemical.csv~csv']
+    s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH))
+    po:
+      - [a, sio:chemical-disease-assocation]
+      - [rdf:subject, https://identifiers.org/$(Chemical)~iri]
+      - [rdf:object, https://identifiers.org/$(# Disease(MESH))~iri]
+      - [rdf:predicate, sio:to-interact-with]
+
+      - [sio:has-provider, bio2kg:graph/snap-biodata~iri]
+
+
+  chemicals:
+    sources:
+      - ['data/disease-chemical.csv~csv']
+    s: https://identifiers.org/$(Chemical)
+    po:
+      - [a, sio:drug]
+
+  diseases:
+    sources:
+      - ['data/disease-chemical.csv~csv']
+    s: https://identifiers.org/$(# Disease(MESH))
+    po:
+      - [a, sio:disease]

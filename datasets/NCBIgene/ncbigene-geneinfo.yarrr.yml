@@ -1,0 +1,84 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+
+mappings:
+  chemical-gene-interactions:
+    sources:
+      - ['data/mim2gene_medgen.csv~csv']
+    # s: "https://identifiers.org/$(ctd_id)"
+    s: bio2kg:ctd/interaction/$(ChemicalID)-$(GeneID)
+    po:
+      - [a, sio:chemical-gene-assocation]
+      - [rdf:subject, mesh:$(ChemicalID)]
+      - [rdf:object, ncbigene:$(GeneID)]
+      # - [rdf:predicate, "sio:chemical-gene-assocation"] # TODO: improve
+      - p: rdf:predicate
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(InteractionActions)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:find, "\\\\u005"]
+              - [idsf:replace, "-"]
+              - [idsf:format_for, "uri"]
+              - [idsf:add_prefix, "bio2kg:ctd/action/"]
+          type: iri
+
+      - [sio:description, $(Interaction)]
+      - [sio:affects, ncbitaxon:$(OrganismID)]  # 9606
+      - [sio:has-provider, bio2kg:graph/ctd~iri]
+
+      - [sio:is-manifested-as, bio2kg:ctd/$(GeneForms)]
+      # values: protein, gene, mRNA, enhancer, promoter
+
+      - p: sio:is-supported-by
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(PubMedIDs)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "pubmed:"]
+          type: iri
+
+      # - p: sio:modified
+      #   o: $(date_modified)
+
+  chemicals:
+    sources:
+      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+    s: mesh:$(ChemicalID)
+    po:
+      - [a, sio:chemical-entity]
+      - [sio:title, $(# ChemicalName)]
+      - p: sio:seeAlso
+        o: https://identifiers.org/cas:$(CasRN)~iri
+
+  genes:
+    sources:
+      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+    s: ncbigene:$(GeneID)
+    po:
+      - [a, sio:gene]
+      
+  organims:
+    sources:
+      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+    s: ncbitaxon:$(OrganismID)
+    po:
+      - [a, sio:organism]
+      - [sio:title, $(Organism)]

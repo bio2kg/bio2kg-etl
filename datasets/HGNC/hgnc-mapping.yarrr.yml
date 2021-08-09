@@ -1,11 +1,18 @@
 prefixes:
-  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
-  xsd: "http://www.w3.org/2001/XMLSchema#"
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
-  pubmed: "https://identifiers.org/pubmed:"
-  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  bio2kg: "https://w3id.org/bio2kg/data/"
 
 mappings:
   genes:
@@ -24,21 +31,21 @@ mappings:
           - [idsf:replace, ":"]
       type: iri
     po:
-      - [a, bl:Gene]
-      - p: bl:id
+      - [a, sio:gene]
+      - p: sio:has-unique-identifier # bl:id
         o: 
           function: idsf:string_process
           parameters:
             - [idsf:input, "$(hgnc_id)"]
             - [idsf:find, "%3A"]
             - [idsf:replace, ":"]
-      - p: bl:name
+      - p: sio:title # bl:name
         o: $(name)
-      - p: bl:provided_by
-        o: d2s:graph/hgnc~iri
-      - p: bl:update_date
+      - p: sio:has-provider # bl:provided_by
+        o: bio2kg:graph/hgnc~iri
+      - p: sio:modified # bl:update_date
         o: $(date_modified)
-      - p: bl:status
+      - p: sio:comment # bl:status
         # TODO: mostly "Approved"
         o: 
           function: idsf:string_process
@@ -48,13 +55,14 @@ mappings:
               - [idsf:add_prefix, "https://w3id.org/bio2kg/hgnc/status/"]
           type: iri
 
-      - p: bl:same_as
+      # bl:same_as
+      - p: sio:similarTo
         o: https://identifiers.org/hgnc.symbol:$(symbol)~iri
-      - p: bl:same_as
+      - p: sio:similarTo
         o: https://www.ncbi.nlm.nih.gov/gene/$(entrez_id)~iri
-      - p: bl:same_as
+      - p: sio:similarTo
         o: https://identifiers.org/ensembl:$(ensembl_gene_id)~iri
-      - p: bl:same_as
+      - p: sio:similarTo
         o:
           function: idsf:string_process
           parameters:
@@ -62,7 +70,7 @@ mappings:
               - [idsf:split_on, "\|"]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
-      - p: bl:same_as
+      - p: sio:similarTo
         o:
           function: idsf:string_process
           parameters:
@@ -70,7 +78,9 @@ mappings:
               - [idsf:split_on, "\|"]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
-      - p: bl:has_gene_product
+
+
+      - p: sio:has-concretization # bl:has_gene_product
         o:
           function: idsf:string_process
           parameters:
@@ -79,7 +89,16 @@ mappings:
               - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
           type: iri
 
-      - p: bl:publications
+      - p: sio:is-expression-of # bl:has_gene_product?
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(refseq_accession)"]
+                - [idsf:split_on, "|"]
+                - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
+            type: iri
+
+      - p: sio:is-supported-by # sio:has-evidence / bl:publications
         o:
           function: idsf:string_process
           parameters:
@@ -88,7 +107,7 @@ mappings:
               - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
           type: iri
 
-      - p: bl:located_in
+      - p: sio:is-located-in # bl:located_in
         o:
             function: idsf:string_process
             parameters:
@@ -97,7 +116,7 @@ mappings:
                 - [idsf:add_prefix, "https://identifiers.org/ccds:"]
             type: iri
 
-      - p: bl:gene_associated_with_condition
+      - p: sio:is-associated-with # bl:gene_associated_with_condition
         o:
             function: idsf:string_process
             parameters:
@@ -106,7 +125,7 @@ mappings:
                 - [idsf:add_prefix, "https://identifiers.org/mim:"]
             type: iri
 
-      - p: bl:category
+      - p: sio:narrowerThan # bl:category
         o:
             function: idsf:string_process
             parameters:
@@ -116,12 +135,3 @@ mappings:
                 - [idsf:format_for, "uri"]
                 - [idsf:add_prefix, "https://w3id.org/bio2g/data/gene-family/"]
             type: iri
-
-      # - p: bl:has_gene_product
-      #   o:
-      #       function: idsf:string_process
-      #       parameters:
-      #           - [idsf:input, "$(refseq_accession)"]
-      #           - [idsf:split_on, "|"]
-      #           - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
-      #       type: iri

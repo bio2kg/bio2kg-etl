@@ -23,6 +23,13 @@ All temporary files are put in the `data/` folder
 
 > If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
+### Checkout new mappers
+
+* https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run
+
+* https://github.com/carml/carml
+* https://github.com/semantifyit/RocketRML
+
 ## Run workflows on DSRI with GitHub Actions
 
 You can define GitHub Actions workflows in the folder `.github/workflows` to run on the DSRI:

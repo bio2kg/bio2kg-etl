@@ -1,17 +1,20 @@
 prefixes:
   rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
   grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
   idlab: "http://example.com/idlab/function/"
-  xsd: "http://www.w3.org/2001/XMLSchema#"
-  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
-  bl: "https://w3id.org/biolink/vocab/"
-  d2s: "https://w3id.org/d2s/"
-  schema: "https://schema.org/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
   mesh: "https://identifiers.org/mesh:"
-  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  uniprot: "https://identifiers.org/uniprot:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"
+  b2kdrugbank: "https://w3id.org/bio2kg/vocab/drugbank/"
 
 # Existing SPARQL mappings for d2s: https://github.com/MaastrichtU-IDS/d2s-project-template/blob/master/datasets/drugbank/mapping/drugbank-drug_infos.rq
 
@@ -21,71 +24,79 @@ mappings:
       - [data/drugbank.xml~xpath, /drugbank/drug]
     s: https://identifiers.org/drugbank:$(drugbank-id-primary)
     po:
-      - [a, bl:Drug]
-      - p: bl:name
-        o: $(name)
-      - p: bl:description
-        o: $(description)
-      - p: bl:seeAlso
-        o: https://identifiers.org/cas:$(cas-number)~iri
-      - p: bl:seeAlso
-        o: https://identifiers.org/unii:$(unii)~iri
+      - [a, sio:drug]
+      - [sio:title, $(name)]
+      - [sio:description, $(description)]
+      - [sio:seeAlso, https://identifiers.org/cas:$(cas-number)~iri]
+      - [sio:seeAlso, https://identifiers.org/unii:$(unii)~iri]
+      - [sio:hasSynonym, $(synonyms/synonym)] 
+      # Extract lang? $(synonyms/synonym@language)
 
-      - p: bl:publications
+      - p: sio:is-supported-by
         o: "pubmed:$(general-references/articles/article/pubmed-id)~iri"
-      - p: bl:category
+      - p: sio:narrowerThan # bl:category
         o: "mesh:$(categories/category/mesh-id)~iri"
-      - p: bl:organism
+      - p: sio:affects
         o: "$(affected-organisms/affected-organisms)"
-      - p: bl:group
-        # e.g. "approved"
+      - p: sio:comment
+        # TODO: improve (value: "approved")
         o: $(groups/group)
 
-      - [bl:state, $(state)]
-      - [bl:indication, $(indication)]
-      - [bl:pharmacodynamics, $(pharmacodynamics)]
-      - [bl:mechanism-of-action, $(mechanism-of-action)]
-      - [bl:metabolism, $(metabolism)]
-      - [bl:absorption, $(absorption)]
-      - [bl:half-life, $(half-life)]
+      - [b2kdrugbank:state, $(state)]
+      - [b2kdrugbank:indication, $(indication)]
+      - [b2kdrugbank:pharmacodynamics, $(pharmacodynamics)]
+      - [b2kdrugbank:mechanism-of-action, $(mechanism-of-action)]
+      - [b2kdrugbank:metabolism, $(metabolism)]
+      - [b2kdrugbank:absorption, $(absorption)]
+      - [b2kdrugbank:half-life, $(half-life)]
       # Time could be extracted, e.g. Approximately 1.3 hours
-      - [bl:indication, $(indication)]
-      - [bl:indication, $(indication)]
 
-      - p: bl:food-interaction
+      # TODO: more properties
+      # classification/class
+
+      - p: b2kdrugbank:food-interaction
         o: "$(food-interactions/food-interaction)"
 
       # - ["ex:test$(@id)", "$(tag/@v)"]
   
-  drugs-interactions:
+  drug-interactions:
     sources:
       - [data/drugbank.xml~xpath, /drugbank/drug/drug-interactions/drug-interaction]
-    s: bio2kg:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+    s: b2kdrugbank:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
     po:
-      - [a, bl:Association]
+      - [a, sio:association]
       - p: rdf:subject
         o: drugbank:$(../../drugbank-id-primary)~iri
-      - p: rdf:predicate
-        o: "bl:drug-drug-interaction"
       - p: rdf:object
         o: "drugbank:$(drugbank-id)~iri"
-      - p: bl:name
+      - p: rdf:predicate
+        o: "b2kdrugbank:drug-drug-interaction"
+
+      - p: sio:description
         o: "$(description)"
 
 
-  targets-interactions:
+  target-interactions:
     sources:
       - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
-    s: bio2kg:target/$(../../drugbank-id-primary)-$(id)
+    s: b2kdrugbank:target/$(../../drugbank-id-primary)-$(id)
     po:
-      - [a, bl:Association]
+      - [a, sio:chemical-gene-association]
       - p: rdf:subject
         o: drugbank:$(../../drugbank-id-primary)~iri
-      - p: rdf:predicate
-        o: "bl:targets"
       - p: rdf:object
         o: "drugbank:$(id)~iri"
-      - p: bl:publications
+      - p: rdf:predicate
+        # Or use sio:has-role?
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(actions/action)"]
+              - [idsf:format_for, "uri"]
+              - [idsf:add_prefix, "b2kdrugbank:action/"]
+          type: iri
+
+      - p: sio:is-supported-by
         o: "pubmed:$(references/articles/article/pubmed-id)~iri"
 
   targets:
@@ -93,28 +104,29 @@ mappings:
       - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
     s: drugbank:$(id)
     po:
-      - [a, bl:BiologicalEntity]
-      - p: bl:name
+      - [a, sio:biological-entity]
+      - p: sio:title
         o: $(name)
-      - p: bl:targets
-        o: "drugbank:$(targets/target/id)~iri"
-  
+      - p: sio:has-unique-identifier
+        o: "drugbank:$(id)~iri"
+
+      - p: sio:similarTo
+        o: "uniprot:$(polypeptide/@id)~iri"
 
   publications:
     sources:
       - [data/drugbank.xml~xpath, /drugbank/drug/general-references/articles/article]
     s: pubmed:$(pubmed-id)
     po:
-      - [a, bl:Publication]
-      - p: bl:name
+      - [a, sio:peer-reviewed-article]
+      - p: sio:title
         o: $(citation)
-      # - ["ex:test$(@id)", "$(tag/@v)"]
 
   mesh-categories:
     sources:
       - [data/drugbank.xml~xpath, /drugbank/drug/categories/category]
     s: mesh:$(mesh-id)
     po:
-      - [a, bl:Category]
-      - p: bl:name
+      - [a, sio:category]
+      - p: sio:title
         o: $(category)
