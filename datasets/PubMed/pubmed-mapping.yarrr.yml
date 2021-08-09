@@ -1,0 +1,119 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  uniprot: "https://identifiers.org/uniprot:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  b2kdrugbank: "https://w3id.org/bio2kg/vocab/drugbank/"
+
+# Existing SPARQL mappings for d2s: https://github.com/MaastrichtU-IDS/d2s-project-template/blob/master/datasets/drugbank/mapping/drugbank-drug_infos.rq
+
+mappings:
+  drugs:
+    sources:
+      - [data/pubmed21n0001.xml~xpath, /drugbank/drug]
+    s: https://identifiers.org/drugbank:$(drugbank-id-primary)
+    po:
+      - [a, sio:drug]
+      - [sio:title, $(name)]
+      - [sio:description, $(description)]
+      - [sio:seeAlso, https://identifiers.org/cas:$(cas-number)~iri]
+      - [sio:seeAlso, https://identifiers.org/unii:$(unii)~iri]
+      - [sio:hasSynonym, $(synonyms/synonym)] 
+      # Extract lang? $(synonyms/synonym@language)
+
+      - p: sio:is-supported-by
+        o: "pubmed:$(general-references/articles/article/pubmed-id)~iri"
+      - p: sio:narrowerThan # bl:category
+        o: "mesh:$(categories/category/mesh-id)~iri"
+      - p: sio:affects
+        o: "$(affected-organisms/affected-organisms)"
+      - p: sio:comment
+        # TODO: improve (value: "approved")
+        o: $(groups/group)
+
+      - [b2kdrugbank:state, $(state)]
+      - [b2kdrugbank:indication, $(indication)]
+      - [b2kdrugbank:pharmacodynamics, $(pharmacodynamics)]
+      - [b2kdrugbank:mechanism-of-action, $(mechanism-of-action)]
+      - [b2kdrugbank:metabolism, $(metabolism)]
+      - [b2kdrugbank:absorption, $(absorption)]
+      - [b2kdrugbank:half-life, $(half-life)]
+      # Time could be extracted, e.g. Approximately 1.3 hours
+
+      # TODO: more properties
+      # classification/class
+
+      - [b2kdrugbank:food-interaction, "$(food-interactions/food-interaction)"]
+
+      # - ["ex:test$(@id)", "$(tag/@v)"]
+  
+  drug-interactions:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/drug-interactions/drug-interaction]
+    s: b2kdrugbank:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+    po:
+      - [a, sio:association]
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(drugbank-id)~iri"]
+      - [rdf:predicate, "b2kdrugbank:drug-drug-interaction"]
+
+      - [sio:description, "$(description)"]
+
+
+  target-interactions:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+    s: b2kdrugbank:target/$(../../drugbank-id-primary)-$(id)
+    po:
+      - [a, sio:chemical-gene-association]
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(id)~iri"]
+      - p: rdf:predicate
+        # Or use sio:has-role?
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(actions/action)"]
+              - [idsf:format_for, "uri"]
+              - [idsf:add_prefix, "b2kdrugbank:action/"]
+          type: iri
+
+      - [sio:is-supported-by, "pubmed:$(references/articles/article/pubmed-id)~iri"]
+
+  targets:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+    s: drugbank:$(id)
+    po:
+      - [a, sio:biological-entity]
+      - [sio:title, $(name)]
+      - [sio:has-unique-identifier, "drugbank:$(id)~iri"]
+
+      - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
+
+  publications:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/general-references/articles/article]
+    s: pubmed:$(pubmed-id)
+    po:
+      - [a, sio:peer-reviewed-article]
+      - [sio:title, $(citation)]
+
+  mesh-categories:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/categories/category]
+    s: mesh:$(mesh-id)
+    po:
+      - [a, sio:category]
+      - [sio:title, $(category)]

@@ -1,0 +1,137 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+
+mappings:
+  genes:
+    sources:
+      - ['data/hgnc.csv~csv']
+      # https://www.genenames.org/help/statistics-and-downloads/
+      # "hgnc_id","symbol","name","locus_group","locus_type","status","location","location_sortable","alias_symbol","alias_name","prev_symbol","prev_name","gene_family","gene_family_id","date_approved_reserved","date_symbol_changed","date_name_changed","date_modified","entrez_id","ensembl_gene_id","vega_id","ucsc_id","ena","refseq_accession","ccds_id","uniprot_ids","pubmed_id","mgd_id","rgd_id","lsdb","cosmic","omim_id","mirbase","homeodb","snornabase","bioparadigms_slc","orphanet","pseudogene.org","horde_id","merops","imgt","iuphar","kznf_gene_catalog","mamit-trnadb","cd","lncrnadb","enzyme_id","intermediate_filament_db","rna_central_ids","lncipedia","gtrnadb","agr"
+      # "HGNC:5","A1BG","alpha-1-B glycoprotein","protein-coding gene","gene with protein product","Approved","19q13.43","19q13.43","","","","","Immunoglobulin like domain containing","594","1989-06-30","","","2015-07-13","1","ENSG00000121410","OTTHUMG00000183507","uc002qsd.5","","NM_130786","CCDS12976","P04217","2591067","MGI:2152878","RGD:69417","","A1BG","138670","","","","","","","","I43.950","","","","","","","","","","","","HGNC:5"
+      # "HGNC:7","A2M","alpha-2-macroglobulin","protein-coding gene","gene with protein product","Approved","12p13.31","12p13.31","FWP007|S863-7|CPAMD5","","","","C3 and PZP like, alpha-2-macroglobulin domain containing","1234","1986-01-01","","","2018-05-03","2","ENSG00000175899","OTTHUMG00000150267","uc001qvk.2","BX647329|X68728|M11313","NM_000014","CCDS44827","P01023","2408344|9697696","MGI:2449119","RGD:2004","","A2M","103950","","","","","","","","I39.001","","","","","","","","","","","","HGNC:7"
+    # s: "https://identifiers.org/$(hgnc_id)"
+    s:
+      function: idsf:string_process
+      parameters:
+          - [idsf:input, "https://identifiers.org/$(hgnc_id)"]
+          - [idsf:find, "%3A"]
+          - [idsf:replace, ":"]
+      type: iri
+    po:
+      - [a, sio:gene]
+      - p: sio:has-unique-identifier # bl:id
+        o: 
+          function: idsf:string_process
+          parameters:
+            - [idsf:input, "$(hgnc_id)"]
+            - [idsf:find, "%3A"]
+            - [idsf:replace, ":"]
+      - p: sio:title # bl:name
+        o: $(name)
+      - p: sio:has-provider # bl:provided_by
+        o: bio2kg:graph/hgnc~iri
+      - p: sio:modified # bl:update_date
+        o: $(date_modified)
+      - p: sio:comment # bl:status
+        # TODO: mostly "Approved"
+        o: 
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(status)"]
+              - [idsf:format_for, "lowercase"]
+              - [idsf:add_prefix, "https://w3id.org/bio2kg/hgnc/status/"]
+          type: iri
+
+      # bl:same_as
+      - p: sio:similarTo
+        o: https://identifiers.org/hgnc.symbol:$(symbol)~iri
+      - p: sio:similarTo
+        o: https://www.ncbi.nlm.nih.gov/gene/$(entrez_id)~iri
+      - p: sio:similarTo
+        o: https://identifiers.org/ensembl:$(ensembl_gene_id)~iri
+      - p: sio:similarTo
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(mgd_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/"]
+          type: iri
+      - p: sio:similarTo
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(rgd_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/"]
+          type: iri
+
+
+      - p: sio:has-concretization # bl:has_gene_product
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(uniprot_ids)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
+          type: iri
+
+      - p: sio:is-expression-of # bl:has_gene_product?
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(refseq_accession)"]
+                - [idsf:split_on, "|"]
+                - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
+            type: iri
+
+      - p: sio:is-supported-by # sio:has-evidence / bl:publications
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(pubmed_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
+          type: iri
+
+      - p: sio:is-located-in # bl:located_in
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(ccds_id)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:add_prefix, "https://identifiers.org/ccds:"]
+            type: iri
+
+      - p: sio:is-associated-with # bl:gene_associated_with_condition
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(omim_id)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:add_prefix, "https://identifiers.org/mim:"]
+            type: iri
+
+      - p: sio:narrowerThan # bl:category
+        o:
+            function: idsf:string_process
+            parameters:
+              # Receptor tyrosine kinases|Protein phosphatase 1 regulatory subunits|MicroRNA protein coding host genes
+                - [idsf:input, "$(gene_family)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:format_for, "uri"]
+                - [idsf:add_prefix, "https://w3id.org/bio2g/data/gene-family/"]
+            type: iri

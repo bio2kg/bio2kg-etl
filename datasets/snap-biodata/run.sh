@@ -11,15 +11,12 @@ if [ ! -f "data/disease-chemical.csv" ]; then
     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' DCh-Miner_miner-disease-chemical.tsv > disease-chemical.csv
 
     # The next lines are used to produce a sample for development, comment them to process the complete files
-    # mv CTD_chem_gene_ixns.csv CTD_chem_gene_ixns-full.csv
-    # mv CTD_chemicals_diseases.csv CTD_chemicals_diseases-full.csv
-    # head -n 1000 CTD_chem_gene_ixns-full.csv > CTD_chem_gene_ixns.csv
-    # head -n 1000 CTD_chemicals_diseases-full.csv > CTD_chemicals_diseases.csv
-
+    # mv disease-chemical.csv disease-chemical-full.csv
+    # head -n 1000 disease-chemical-full.csv > disease-chemical.csv
     cd ..
 fi
 
-PROCESS_FILE="${1:-snap-biodata-mapping.yarrr.yml}"
+PROCESS_FILE="${1:-pharmgkb-mapping.yarrr.yml}"
 
 echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl
@@ -27,7 +24,7 @@ yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl
 ls -alh data/
 
 echo "Running RML mapper, output to data/ folder"
-rm data/bio2kg-snap-biodata.ttl
-java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-snap-biodata.ttl -s turtle -f ../functions_ids.ttl 
+rm data/bio2kg-pharmgkb.ttl
+java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-pharmgkb.ttl -s turtle -f ../functions_ids.ttl 
 
-# head -n 40 data/bio2kg-snap-biodata.ttl
+# head -n 40 data/bio2kg-pharmgkb.ttl

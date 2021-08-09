@@ -90,7 +90,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set-string githubPat=$GITHUB_PAT \
     --set-string githubOwner=bio2kg \
     --set runnerLabels="{ dsri, bio2kg }" \
-    --set replicas=3 \
+    --set replicas=20 \
     --set serviceAccountName=anyuid \
     --set memoryRequest="512Mi" \
     --set memoryLimit="100Gi" \

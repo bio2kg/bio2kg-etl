@@ -1,0 +1,48 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  b2kstitch: "https://w3id.org/bio2kg/data/stitch/"
+
+mappings:
+  genes:
+    sources:
+      - ['data/chemical_chemical.csv~csv']
+      # "chemical1","chemical2","similarity","experimental","database","textmining","combined_score"
+      # "CIDm00024759","CIDs00024759","0","0","900","0","900"
+      # "CIDs91758695","CIDs00107694","0","0","0","230","230"
+    s: "b2kstitch:chemical-chemical-interaction/$(chemical1)-$(chemical2)"
+    po:
+      - [a, sio:association]
+      - [sio:has-provider, bio2kg:graph/stitch~iri]
+
+      - p: rdf:subject
+        o: 
+          function: idsf:string_process
+          parameters:
+            - [idsf:input, "$(chemical1)"]
+            - [idsf:find, "CID[ms]"]
+            - [idsf:replace, "https://identifiers.org/pubchem.compound:"]
+          type: iri
+      - p: rdf:object
+        o: 
+          function: idsf:string_process
+          parameters:
+            - [idsf:input, "$(chemical2)"]
+            - [idsf:find, "CID[ms]"]
+            - [idsf:replace, "https://identifiers.org/pubchem.compound:"]
+          type: iri
+
+      - [sio:is-supported-by, "$(combined_score)", xsd:integer]
+

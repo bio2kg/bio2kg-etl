@@ -1,4 +1,4 @@
-name: Process SNAP BioData
+name: Process HuRI
 on:
   workflow_dispatch:
   push:

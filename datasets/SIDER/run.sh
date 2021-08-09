@@ -4,12 +4,13 @@
 if [ ! -f "data/meddra_all_label_se.csv" ]; then
     echo "data/meddra_all_label_se.csv does not exist, downloading..."
     mkdir -p data && cd data
+
     # http://sideeffects.embl.de/download/
     # TODO: find the columns docs
     wget -N http://sideeffects.embl.de/media/download/meddra_all_label_se.tsv.gz
-    # ftp://xi.embl.de/SIDER/latest/meddra_all_indications.tsv.gz
-    # ftp://xi.embl.de/SIDER/latest/meddra_all_se.tsv.gz
-    # ftp://xi.embl.de/SIDER/latest/meddra_freq.tsv.gz
+    wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_indications.tsv.gz
+    wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_se.tsv.gz
+    wget -N ftp://xi.embl.de/SIDER/latest/meddra_freq.tsv.gz
 
     gzip -d *.gz
 

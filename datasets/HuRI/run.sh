@@ -18,7 +18,7 @@ if [ ! -f "data/huri.csv" ]; then
 fi
 
 echo "Converting YARRRML mappings to RML"
-yarrrml-parser -i mapping.yarrr.yml -o data/mapping.rml.ttl
+yarrrml-parser -i huri-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-huri.ttl
