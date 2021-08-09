@@ -52,5 +52,5 @@ jobs:
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
-        name: output
+        name: rdf-output
         path: datasets/DrugBank/data/bio2kg-drugbank.ttl

@@ -6,7 +6,7 @@ if [ ! -f "data/iproclass.csv" ]; then
     mkdir -p data && cd data
     # https://proteininformationresource.org/pirwww/download/
     # Download 11G:
-    wget -N ftp://ftp.proteininformationresource.org/databases/iproclass/iproclass.tb.gz
+    wget -q -N ftp://ftp.proteininformationresource.org/databases/iproclass/iproclass.tb.gz
     gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper

@@ -1,0 +1,143 @@
+@prefix cc:      <http://creativecommons.org/ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+@prefix fno:     <https://w3id.org/function/ontology#> .
+@prefix fnoi:    <https://w3id.org/function/vocabulary/implementation#> .
+@prefix fnom:    <https://w3id.org/function/vocabulary/mapping#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix grel:    <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix grelm:   <http://fno.io/grel/rmlmapping#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix idsf:    <https://w3id.org/um/ids/rmlfunctions.ttl#> .
+
+idsf:void
+    a                 void:DatasetDescription ;
+    dcterms:title     "A VoID Description of the IDS Fno Descriptions Dataset" ;
+    dcterms:creator   <https://ben.de-meester.org/#me> ;
+    foaf:primaryTopic idsf:dataset ;
+.
+
+<https://github.com/vemonet>
+    rdf:type  foaf:Person ;
+    foaf:mbox "mailto:vincent.emonet@gmail.com" ;
+    foaf:name "Vincent Emonet"@en .
+
+idsf:dataset
+    a                    void:Dataset ;
+    foaf:homepage        <https://github.com/OpenRefine/OpenRefine/wiki/General-Refine-Expression-Language> ;
+    foaf:homepage        <https://fno.io> ;
+    dcterms:title        "IDS Fno Descriptions"@en ;
+    dcterms:description  "The FnO descriptions of IDS RML functions" ;
+    dcterms:contributor  <https://github.com/vemonet> ;
+    dcterms:modified     "2020-01-20"^^xsd:date ;
+    cc:license           <http://creativecommons.org/license/by/3.0/> ;
+    dcterms:issued       "2016-12-15"^^xsd:date ;
+    dcterms:rights       "Copyright © Vincent Emonet"@en ;
+    dcterms:subject      <http://dbpedia.org/resource/Function_(mathematics)> ;
+    dcterms:subject      <http://dbpedia.org/resource/Function_model> ;
+    void:feature         <http://www.w3.org/ns/formats/Turtle> ;
+    void:exampleResource grel:boolean_and ;
+    void:vocabulary      <https://w3id.org/function/ontology#> .
+
+# Contents:
+# - Parameters (per java) param_{var} with predicate p_{type}_{var}
+# - Outputs (per java) output_{type} with predicate o_{type}
+# - Problems (per java) prob_{var}
+#   - Functions (per java)
+
+grel:param_any_e
+    a             fno:Parameter ;
+    fno:name      "e" ;
+    rdfs:label    "e" ;
+    fno:predicate grel:p_any_e ;
+    fno:type      xsd:any ;
+    fno:required  "true"^^xsd:boolean .
+
+grel:output_array
+    a             fno:Output ;
+    fno:name      "array" ;
+    rdfs:label    "array" ;
+    fno:predicate grel:o_array ;
+    fno:type      rdf:List .
+
+
+## IDS string processing
+
+idsf:param_input
+    a             fno:Parameter ;
+    fno:name      "input value" ;
+    rdfs:label    "input value" ;
+    fno:predicate idsf:input ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+idsf:param_split
+    a             fno:Parameter ;
+    fno:name      "split" ;
+    rdfs:label    "split" ;
+    fno:predicate idsf:split_on ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+idsf:param_prefix
+    a             fno:Parameter ;
+    fno:name      "prefix" ;
+    rdfs:label    "prefix" ;
+    fno:predicate idsf:add_prefix ;
+    fno:type      xsd:string ;
+    fno:required  "false"^^xsd:boolean .
+
+idsf:param_find
+    a             fno:Parameter ;
+    fno:name      "find" ;
+    rdfs:label    "find" ;
+    fno:predicate idsf:find ;
+    fno:type      xsd:string ;
+    fno:required  "false"^^xsd:boolean .
+
+idsf:param_replace
+    a             fno:Parameter ;
+    fno:name      "replace" ;
+    rdfs:label    "replace" ;
+    fno:predicate idsf:replace ;
+    fno:type      xsd:string ;
+    fno:required  "false"^^xsd:boolean .
+
+idsf:param_format
+    a             fno:Parameter ;
+    fno:name      "format" ;
+    rdfs:label    "format" ;
+    fno:predicate idsf:format_for ;
+    fno:type      xsd:string ;
+    fno:required  "false"^^xsd:boolean .
+
+idsf:string_process
+    a                   fno:Function ;
+    fno:name            "string_process" ;
+    dcterms:description "process string" ;
+    fno:expects         ( idsf:param_input idsf:param_split idsf:param_prefix 
+                            idsf:param_find idsf:param_replace idsf:param_format ) ;
+    fno:returns         ( grel:output_array ) .
+
+
+## Java mappings
+
+grelm:javaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "IdsRmlFunctions.jar" ;
+    fnoi:class-name    "org.semanticscience.d2s.functions.StringFunctions" .
+
+grelm:stringProcessMapping
+    a                    fnoi:Mapping ;
+    fno:function         idsf:string_process ;
+    fno:implementation   grelm:javaString ;
+# TODO if not clear
+    fno:parameterMapping [ ] ;
+# TODO if not clear
+    fno:returnMapping    [ ] ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "stringProcess" ] ;
+.

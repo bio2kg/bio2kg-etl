@@ -14,5 +14,5 @@ data/
 **/.ipynb_checkpoints
 .DS_Store
 
-*.jar
-datasets/*.ttl
+# *.jar
+# datasets/*.ttl
