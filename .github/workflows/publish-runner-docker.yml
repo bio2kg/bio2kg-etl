@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: Publish workflow-runner image
 # To MaastrichtU-IDS GitHub Container Registry
 # https://github.com/orgs/MaastrichtU-IDS/packages
 on:
@@ -21,7 +21,7 @@ jobs:
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  push:
+  build-publish:
     runs-on: ubuntu-latest
     # if: github.event_name == 'push'
 

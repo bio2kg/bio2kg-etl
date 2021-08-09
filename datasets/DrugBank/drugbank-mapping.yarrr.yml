@@ -1,45 +1,120 @@
 prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
   idlab: "http://example.com/idlab/function/"
   xsd: "http://www.w3.org/2001/XMLSchema#"
   rdfs: "http://www.w3.org/2000/01/rdf-schema#"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
+  schema: "https://schema.org/"
   pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
   idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+
+# Existing SPARQL mappings for d2s: https://github.com/MaastrichtU-IDS/d2s-project-template/blob/master/datasets/drugbank/mapping/drugbank-drug_infos.rq
 
 mappings:
+  drugs:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug]
+    s: https://identifiers.org/drugbank:$(drugbank-id-primary)
+    po:
+      - [a, bl:Drug]
+      - p: bl:name
+        o: $(name)
+      - p: bl:description
+        o: $(description)
+      - p: bl:seeAlso
+        o: https://identifiers.org/cas:$(cas-number)~iri
+      - p: bl:seeAlso
+        o: https://identifiers.org/unii:$(unii)~iri
+
+      - p: bl:publications
+        o: "pubmed:$(general-references/articles/article/pubmed-id)~iri"
+      - p: bl:category
+        o: "mesh:$(categories/category/mesh-id)~iri"
+      - p: bl:organism
+        o: "$(affected-organisms/affected-organisms)"
+      - p: bl:group
+        # e.g. "approved"
+        o: $(groups/group)
+
+      - [bl:state, $(state)]
+      - [bl:indication, $(indication)]
+      - [bl:pharmacodynamics, $(pharmacodynamics)]
+      - [bl:mechanism-of-action, $(mechanism-of-action)]
+      - [bl:metabolism, $(metabolism)]
+      - [bl:absorption, $(absorption)]
+      - [bl:half-life, $(half-life)]
+      # Time could be extracted, e.g. Approximately 1.3 hours
+      - [bl:indication, $(indication)]
+      - [bl:indication, $(indication)]
+
+      - p: bl:food-interaction
+        o: "$(food-interactions/food-interaction)"
+
+      # - ["ex:test$(@id)", "$(tag/@v)"]
+  
+  drugs-interactions:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/drug-interactions/drug-interaction]
+    s: bio2kg:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+    po:
+      - [a, bl:Association]
+      - p: rdf:subject
+        o: drugbank:$(../../drugbank-id-primary)~iri
+      - p: rdf:predicate
+        o: "bl:drug-drug-interaction"
+      - p: rdf:object
+        o: "drugbank:$(drugbank-id)~iri"
+      - p: bl:name
+        o: "$(description)"
+
+
+  targets-interactions:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+    s: bio2kg:target/$(../../drugbank-id-primary)-$(id)
+    po:
+      - [a, bl:Association]
+      - p: rdf:subject
+        o: drugbank:$(../../drugbank-id-primary)~iri
+      - p: rdf:predicate
+        o: "bl:targets"
+      - p: rdf:object
+        o: "drugbank:$(id)~iri"
+      - p: bl:publications
+        o: "pubmed:$(references/articles/article/pubmed-id)~iri"
+
+  targets:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+    s: drugbank:$(id)
+    po:
+      - [a, bl:BiologicalEntity]
+      - p: bl:name
+        o: $(name)
+      - p: bl:targets
+        o: "drugbank:$(targets/target/id)~iri"
+  
 
   publications:
     sources:
-      - [data/full database.xml~xpath, /drugbank/drug/general-references/articles/article]
-    s: https://identifiers.org/pubmed:$(pubmed-id)
+      - [data/drugbank.xml~xpath, /drugbank/drug/general-references/articles/article]
+    s: pubmed:$(pubmed-id)
     po:
       - [a, bl:Publication]
       - p: bl:name
         o: $(citation)
       # - ["ex:test$(@id)", "$(tag/@v)"]
 
-  # drugs:
-  #   sources:
-  #     - [data/full database.xml~xpath, /drugbank/drug]
-  #   s: 
-  #     function: idlab:decide
-  #     parameters:
-  #         - [idlab:str, $(drugbank-id/@primary)]
-  #         - [idlab:expectedStr, "true"]
-  #         - [idlab:result, $(drugbank-id)]
-  #     type: iri
-  #   # https://identifiers.org/drugbank:$(drugbank-id/@primary=true)
-  #   #   condition:
-  #   #     function: equal
-  #   #     parameters:
-  #   #       - [str1, $(drugbank-id/@primary)]
-  #   #       - [str2, "true"]
-  #   po:
-  #     - [a, bl:Drug]
-  #     - p: bl:name
-  #       o: $(name)
-  #     # - ["ex:test$(@id)", "$(tag/@v)"]
-  #     # - p: bl:id
-  #     #   o: https://identifiers.org/$(hgnc_id)~iri
+  mesh-categories:
+    sources:
+      - [data/drugbank.xml~xpath, /drugbank/drug/categories/category]
+    s: mesh:$(mesh-id)
+    po:
+      - [a, bl:Category]
+      - p: bl:name
+        o: $(category)

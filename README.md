@@ -2,7 +2,28 @@
 
 [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) [![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml)
 
-## Use GitHub Actions on the DSRI
+## Run workflows locally
+
+A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large dataset though). Checking a dataset workflow definition is a good way to see exactly the process to transform a dataset.
+
+Checkout the `prepare_local.sh` script to see if you need to install additional packages like `wget` and `unzip`, and run it to install dependencies to run the ETL scripts locally:
+
+```bash
+./prepare_local.sh
+```
+
+Go to the folder of the dataset you want to process, e.g. to run `HGNC`:
+
+```bash
+cd datasets/HGNC
+./run.sh
+```
+
+All temporary files are put in the `data/` folder
+
+> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+
+## Run workflows on DSRI with GitHub Actions
 
 You can define GitHub Actions workflows in the folder `.github/workflows` to run on the DSRI:
 
@@ -17,12 +38,14 @@ You can install anything you want with conda, pip, yarn, npm, maven.
 
 ### Build the GitHub Actions runner image
 
-For the latest miniforge conda versions, checkout https://github.com/conda-forge/miniforge/releases
+[![Publish Docker image](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml)
+
+The latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) is downloaded automatically.
 
 Build:
 
 ```bash
-docker build --build-arg conda_version=4.10.3 --build-arg miniforge_python=Mambaforge -t ghcr.io/bio2kg/workflow-runner:latest .
+docker build -t ghcr.io/bio2kg/workflow-runner:latest .
 ```
 
 Quick try:
@@ -37,7 +60,7 @@ Push:
 docker push ghcr.io/bio2kg/workflow-runner:latest
 ```
 
-### Deploy a GitHub Actions runner on the DSRI
+### Start a GitHub Actions runner on DSRI
 
 You can easily start a GitHub Actions workflow runner in your project on the DSRI:
 
@@ -143,7 +166,7 @@ See the Flink docs for more details on running jobs using the [CLI](https://ci.a
 
 cf. more Flink [docs for Kubernetes deployment](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/standalone/kubernetes/)
 
-## Deploy Prefect workflows
+## Deploy Prefect workflows on DSRI
 
 Experimental.
 
@@ -187,7 +210,7 @@ Uninstall:
 helm uninstall prefect
 ```
 
-### Run Prefect workflow
+### Run a Prefect workflow
 
 On your laptop, change the host in the configuration file `~/.prefect/config.toml` (cf. [docs](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server#connecting-to-your-server))
 
@@ -211,4 +234,4 @@ python3 workflows/prefect-workflow.py
 
 ## Credits
 
-We reused the RML mappings from this publication: https://doi.org/10.5281/zenodo.3552369
+We reused some RML mappings from this publication: https://doi.org/10.5281/zenodo.3552369

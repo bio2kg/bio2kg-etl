@@ -21,6 +21,8 @@ oc exec $pod_id -- isql -U dba -P $DBA_PASSWORD exec="vad_install ('ods_briefcas
 # Create /DAV/ldp folder: http://docs.openlinksw.com/virtuoso/fn_dav_api_add/
 oc exec $pod_id -- isql -U dba -P $DBA_PASSWORD exec="select DB.DBA.DAV_COL_CREATE ('/DAV/ldp/','110100100R', 'dav','dav','dav', '${DBA_PASSWORD}');"
 
+# Install fct VAD package
+oc exec $pod_id -- isql -U dba -P $DBA_PASSWORD exec="vad_install ('/opt/virtuoso-opensource/vad/fct_dav.vad', 0);"
 
 # Test the LDP
 # echo "<http://subject.org> <http://pred.org> <http://object.org> ." > test-rdf.ttl

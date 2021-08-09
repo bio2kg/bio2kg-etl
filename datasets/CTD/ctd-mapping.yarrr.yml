@@ -1,0 +1,123 @@
+prefixes:
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  pubmed: "https://identifiers.org/pubmed:"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+
+mappings:
+  genes:
+    sources:
+      - ['data/ctd.csv~csv']
+    # s: "https://identifiers.org/$(ctd_id)"
+    s:
+      function: idsf:string_process
+      parameters:
+          - [idsf:input, "https://identifiers.org/$(ctd_id)"]
+          - [idsf:find, "%3A"]
+          - [idsf:replace, ":"]
+      type: iri
+    po:
+      - [a, bl:Gene]
+      - p: bl:id
+        o: 
+          function: idsf:string_process
+          parameters:
+            - [idsf:input, "$(ctd_id)"]
+            - [idsf:find, "%3A"]
+            - [idsf:replace, ":"]
+      - p: bl:name
+        o: $(name)
+      - p: bl:provided_by
+        o: d2s:graph/ctd~iri
+      - p: bl:update_date
+        o: $(date_modified)
+      - p: bl:status
+        # TODO: mostly "Approved"
+        o: 
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(status)"]
+              - [idsf:format_for, "lowercase"]
+              - [idsf:add_prefix, "https://w3id.org/bio2kg/ctd/status/"]
+          type: iri
+
+      - p: bl:same_as
+        o: https://identifiers.org/ctd.symbol:$(symbol)~iri
+      - p: bl:same_as
+        o: https://www.ncbi.nlm.nih.gov/gene/$(entrez_id)~iri
+      - p: bl:same_as
+        o: https://identifiers.org/ensembl:$(ensembl_gene_id)~iri
+      - p: bl:same_as
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(mgd_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/"]
+          type: iri
+      - p: bl:same_as
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(rgd_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/"]
+          type: iri
+      - p: bl:has_gene_product
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(uniprot_ids)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
+          type: iri
+
+      - p: bl:publications
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(pubmed_id)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
+          type: iri
+
+      - p: bl:located_in
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(ccds_id)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:add_prefix, "https://identifiers.org/ccds:"]
+            type: iri
+
+      - p: bl:gene_associated_with_condition
+        o:
+            function: idsf:string_process
+            parameters:
+                - [idsf:input, "$(omim_id)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:add_prefix, "https://identifiers.org/mim:"]
+            type: iri
+
+      - p: bl:category
+        o:
+            function: idsf:string_process
+            parameters:
+              # Receptor tyrosine kinases|Protein phosphatase 1 regulatory subunits|MicroRNA protein coding host genes
+                - [idsf:input, "$(gene_family)"]
+                - [idsf:split_on, "\|"]
+                - [idsf:format_for, "uri"]
+                - [idsf:add_prefix, "https://w3id.org/bio2g/data/gene-family/"]
+            type: iri
+
+      # - p: bl:has_gene_product
+      #   o:
+      #       function: idsf:string_process
+      #       parameters:
+      #           - [idsf:input, "$(refseq_accession)"]
+      #           - [idsf:split_on, "|"]
+      #           - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
+      #       type: iri
