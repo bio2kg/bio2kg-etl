@@ -1,0 +1,31 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ensembl: "https://identifiers.org/ensembl:"
+
+
+mappings:
+  interactions:
+    sources:
+      - ['data/huri.csv~csv']
+    s: bio2kg:huri/interaction/$(geneA)-$(geneB)
+    po:
+      - [a, sio:association]
+      - [rdf:subject, ensembl:$(geneB)]
+      - [rdf:object, ensembl:$(geneA)]
+      - [rdf:predicate, sio:to-interact-with]
+
+      - [sio:has-provider, bio2kg:graph/huri~iri]
+

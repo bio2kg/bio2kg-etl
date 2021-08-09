@@ -7,7 +7,7 @@ if [ ! -f "data/iproclass.csv" ]; then
     # https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/README
     wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data
     wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.xml.gz
-    # gzip -d *.gz
+    gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper
     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' iproclass.tb > iproclass.csv
@@ -23,7 +23,7 @@ if [ ! -f "data/iproclass.csv" ]; then
     cd ..
 fi
 
-PROCESS_FILE="${1:=iproclass-mapping.yarrr.yml}"
+PROCESS_FILE="${1:-homologene-mapping.yarrr.yml}"
 
 echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl

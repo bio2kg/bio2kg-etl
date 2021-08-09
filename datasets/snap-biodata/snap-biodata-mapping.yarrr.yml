@@ -25,7 +25,7 @@ mappings:
     s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH\))
     po:
       - [a, sio:chemical-disease-assocation]
-      - [rdf:subject, https://identifiers.org/$(Chemical)~iri]
+      - [rdf:subject, drugbank:$(Chemical)]
       - [rdf:object, https://identifiers.org/$(# Disease(MESH\))~iri]
       - [rdf:predicate, sio:to-interact-with]
 
@@ -35,7 +35,7 @@ mappings:
   chemicals:
     sources:
       - ['data/disease-chemical.csv~csv']
-    s: https://identifiers.org/$(Chemical)
+    s: drugbank:$(Chemical)
     po:
       - [a, sio:drug]
 

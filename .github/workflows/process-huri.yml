@@ -1,0 +1,35 @@
+name: Process SNAP BioData
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+    - 'datasets/huri/*'
+    - '.github/workflows/process-huri.yml'
+  # schedule:
+  #   - cron:  '00 01 * * *'
+  # Everyday at 01:00am GMT+1
+
+jobs:
+
+  process:
+    runs-on: ["self-hosted", "dsri", "bio2kg" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Run RML mapper ETL
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+      run: |
+        cd datasets/HuRI
+        ./run.sh
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-huri.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: huri" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+
+    - name: Upload RDF output
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: datasets/HuRI/data/bio2kg-huri.ttl

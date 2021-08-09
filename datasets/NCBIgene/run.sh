@@ -26,6 +26,8 @@ PROCESS_FILE="${1:-ncbigene-mim2gene.yarrr.yml}"
 echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl
 
+ls -alh data/
+
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-$PROCESS_FILE.ttl
 java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 

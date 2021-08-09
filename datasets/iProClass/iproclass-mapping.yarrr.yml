@@ -21,13 +21,12 @@ mappings:
   proteins:
     sources:
       - ['data/iproclass.csv~csv']
-    # s: "https://identifiers.org/$(ctd_id)"
     s: uniprot:$(UniProtKB accession)
     po:
       - [a, sio:protein]
-      - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
       - [sio:has-provider, bio2kg:graph/iproclass~iri]
 
+      - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
 
       - p: sio:is-associated-with
         o:

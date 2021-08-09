@@ -54,8 +54,7 @@ mappings:
       # TODO: more properties
       # classification/class
 
-      - p: b2kdrugbank:food-interaction
-        o: "$(food-interactions/food-interaction)"
+      - [b2kdrugbank:food-interaction, "$(food-interactions/food-interaction)"]
 
       # - ["ex:test$(@id)", "$(tag/@v)"]
   
@@ -65,15 +64,11 @@ mappings:
     s: b2kdrugbank:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
     po:
       - [a, sio:association]
-      - p: rdf:subject
-        o: drugbank:$(../../drugbank-id-primary)~iri
-      - p: rdf:object
-        o: "drugbank:$(drugbank-id)~iri"
-      - p: rdf:predicate
-        o: "b2kdrugbank:drug-drug-interaction"
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(drugbank-id)~iri"]
+      - [rdf:predicate, "b2kdrugbank:drug-drug-interaction"]
 
-      - p: sio:description
-        o: "$(description)"
+      - [sio:description, "$(description)"]
 
 
   target-interactions:
@@ -82,10 +77,8 @@ mappings:
     s: b2kdrugbank:target/$(../../drugbank-id-primary)-$(id)
     po:
       - [a, sio:chemical-gene-association]
-      - p: rdf:subject
-        o: drugbank:$(../../drugbank-id-primary)~iri
-      - p: rdf:object
-        o: "drugbank:$(id)~iri"
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(id)~iri"]
       - p: rdf:predicate
         # Or use sio:has-role?
         o:
@@ -96,8 +89,7 @@ mappings:
               - [idsf:add_prefix, "b2kdrugbank:action/"]
           type: iri
 
-      - p: sio:is-supported-by
-        o: "pubmed:$(references/articles/article/pubmed-id)~iri"
+      - [sio:is-supported-by, "pubmed:$(references/articles/article/pubmed-id)~iri"]
 
   targets:
     sources:
@@ -105,13 +97,10 @@ mappings:
     s: drugbank:$(id)
     po:
       - [a, sio:biological-entity]
-      - p: sio:title
-        o: $(name)
-      - p: sio:has-unique-identifier
-        o: "drugbank:$(id)~iri"
+      - [sio:title, $(name)]
+      - [sio:has-unique-identifier, "drugbank:$(id)~iri"]
 
-      - p: sio:similarTo
-        o: "uniprot:$(polypeptide/@id)~iri"
+      - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
 
   publications:
     sources:
@@ -119,8 +108,7 @@ mappings:
     s: pubmed:$(pubmed-id)
     po:
       - [a, sio:peer-reviewed-article]
-      - p: sio:title
-        o: $(citation)
+      - [sio:title, $(citation)]
 
   mesh-categories:
     sources:
@@ -128,5 +116,4 @@ mappings:
     s: mesh:$(mesh-id)
     po:
       - [a, sio:category]
-      - p: sio:title
-        o: $(category)
+      - [sio:title, $(category)]

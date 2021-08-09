@@ -7,6 +7,10 @@ if [ ! -f "data/meddra_all_label_se.csv" ]; then
     # http://sideeffects.embl.de/download/
     # TODO: find the columns docs
     wget -N http://sideeffects.embl.de/media/download/meddra_all_label_se.tsv.gz
+    # ftp://xi.embl.de/SIDER/latest/meddra_all_indications.tsv.gz
+    # ftp://xi.embl.de/SIDER/latest/meddra_all_se.tsv.gz
+    # ftp://xi.embl.de/SIDER/latest/meddra_freq.tsv.gz
+
     gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper
