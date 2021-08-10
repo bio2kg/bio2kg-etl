@@ -244,6 +244,38 @@ Register a workflow:
 python3 workflows/prefect-workflow.py
 ```
 
+## Run Argo workflows
+
+[Install Argo workflows](https://github.com/argoproj/argo-helm/tree/master/charts/argo-workflows) using Helm charts:
+
+```bash
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+```
+
+Start Argo workflows in the current project on DSRI:
+
+```bash
+helm install argo-workflows argo/argo-workflows \
+    --set workflow.serviceAccount.create=true \
+    --set workflow.serviceAccount.rbac.create=true \
+    --set workflow.serviceAccount.name="anyuid" \
+    --set controller.serviceAccount.create=true \
+    --set controller.serviceAccount.rbac.create=true \
+    --set controller.serviceAccount.name="anyuid" \
+    --set server.serviceAccount.create=true \
+    --set server.serviceAccount.rbac.create=true \
+    --set server.serviceAccount.name="anyuid" 
+```
+
+Delete Argo workflows:
+
+```bash
+helm uninstall argo-workflows 
+```
+
+Maybe fix with [adding SCC for hostpath](https://docs.openshift.com/container-platform/3.11/admin_guide/manage_scc.html#use-the-hostpath-volume-plugin)
+
 ## Credits
 
 We reused some RML mappings from this publication: https://doi.org/10.5281/zenodo.3552369
