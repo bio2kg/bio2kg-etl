@@ -59,6 +59,7 @@ jobs:
     #     insecure_skip_tls_verify: true
     #     namespace: bio2kg
 
+    ## org.w3c.dom.DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
     # - name: Run RML Streamer ETL
     #   env:
     #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}

@@ -1,0 +1,35 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  homologenevocab: "https://w3id.org/bio2kg/vocab/homologene/"
+  homologenedata: "https://w3id.org/bio2kg/data/homologene/"
+
+mappings:
+  genes:
+    sources:
+      - ['data/homologene.csv~csv']
+      # HomoloGene group id,Taxonomy ID,Gene ID,Gene Symbol,Protein gi,Protein accession
+      # "3","9606","34","ACADM","4557231","NP_000007.1"
+      # "3","9598","469356","ACADM","160961497","NP_001104286.1"
+    s: homologenedata:group/$(HomoloGene group id)
+    po:
+      - [a, sio:Group] # TODO
+      - [sio:hasProvider, bio2kg:graph/homologene]
+
+      - [sio:affects, ncbitaxon:$(Taxonomy ID)]
+      - [homologenevocab:gene-id, $(Gene ID)]
+      - [homologenevocab:gene-symbol, $(Gene Symbol)]
+      - [homologenevocab:protein-gi, $(Protein gi)]
+      - [homologenevocab:protein-accession, $(Protein accession)]

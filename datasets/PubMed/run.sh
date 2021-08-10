@@ -18,9 +18,9 @@ if [ ! -f "data/pubmed21n0001.xml" ]; then
     # wget -N -r -A xml.gz -nH --cut-dirs=1 ftp://ftp.ncbi.nlm.nih.gov/pubmed/updatefiles/
 
     ## Unzip all files in subdir with name of the zip file
-    # find . -name "*.gz" -exec gzip -d  {} +
+    find . -name "*.gz" -exec gzip -d  {} +
 
-    gzip -d *.gz
+    # gzip -d *.gz
     cd ..
 fi
 

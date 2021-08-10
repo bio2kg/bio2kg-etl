@@ -21,10 +21,10 @@ if [ ! -f "data/iproclass.csv" ]; then
     cd ..
 fi
 
-PROCESS_FILE="${1:-iproclass-mapping.yarrr.yml}"
+# PROCESS_FILE="${1:-iproclass-mapping.yarrr.yml}"
 
 echo "Converting YARRRML mappings to RML"
-yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl
+yarrrml-parser -i iproclass-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-iproclass.ttl

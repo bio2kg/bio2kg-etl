@@ -25,7 +25,7 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         cd datasets/STITCH
-        ./run.sh
+        ./run.sh "-Xms64g -Xmx64g"
         curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-stitch.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: stitch" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output

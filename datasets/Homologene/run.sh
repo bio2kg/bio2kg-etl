@@ -5,15 +5,15 @@ if [ ! -f "data/iproclass.csv" ]; then
     echo "data/iproclass.csv does not exist, downloading (11G)"
     mkdir -p data && cd data
     # https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/README
-    wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data
-    wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.xml.gz
+    # wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data
+    # wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.xml.gz
     gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper
-    sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' iproclass.tb > iproclass.csv
+    sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' homologene.data > homologene.csv
 
-    # Add columns labels based on ftp://ftp.proteininformationresource.org/databases/iproclass/iproclass.tb.readme
-    sed -i '1s/^/UniProtKB accession,UniProtKB ID,EntrezGene,RefSeq,NCBI GI number,PDB,Pfam,GO,PIRSF,IPI,UniRef100,UniRef90,UniRef50,UniParc,PIR-PSD accession,NCBI taxonomy,MIM,UniGene,Ensembl,PubMed ID,EMBL GenBank DDBJ,EMBL protein_id\n/' iproclass.csv
+    # Add columns labels based on https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/README
+    sed -i '1s/^/HomoloGene group id,Taxonomy ID,Gene ID,Gene Symbol,Protein gi,Protein accession\n/' homologene.csv
 
 
     # The next lines are used to produce a sample for development, comment them to process the complete files

@@ -7,7 +7,9 @@ prefixes:
   idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
-  mesh: "https://identifiers.org/mesh:"
+  MESH: "https://identifiers.org/mesh:"
+  HGNC: "https://identifiers.org/HGNC:"
+  MGI: "https://identifiers.org/MGI:"
   schema: "https://schema.org/"
   sio: "http://semantiscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
@@ -15,69 +17,38 @@ prefixes:
   bio2kg: "https://w3id.org/bio2kg/data/"
   ncbigene: "https://identifiers.org/ncbigene:"
   ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  ncbigenevocab: "https://w3id.org/bio2kg/vocab/ncbigene/"
+  ncbigenedata: "https://w3id.org/bio2kg/data/ncbigene/"
+
+# "#tax_id","GeneID","Symbol","LocusTag","Synonyms","dbXrefs","chromosome","map_location","description","type_of_gene","Symbol_from_nomenclature_authority","Full_name_from_nomenclature_authority","Nomenclature_status","Other_designations","Modification_date","Feature_type"
+# "7","5692769","NEWENTRY","-","-","-","-","-","Record to support submission of GeneRIFs for a gene not in Gene (Azotirhizobium caulinodans.  Use when strain, subtype, isolate, etc. is unspecified, or when different from all specified ones in Gene.).","other","-","-","-","-","20210407","-"
 
 mappings:
-  chemical-gene-interactions:
+  gene-info:
     sources:
-      - ['data/mim2gene_medgen.csv~csv']
-    # s: "https://identifiers.org/$(ctd_id)"
-    s: bio2kg:ctd/interaction/$(ChemicalID)-$(GeneID)
-    po:
-      - [a, sio:ChemicalGeneAssocation]
-      - [rdf:subject, mesh:$(ChemicalID)]
-      - [rdf:object, ncbigene:$(GeneID)]
-      - p: rdf:predicate
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(InteractionActions)"]
-              - [idsf:split_on, "\|"]
-              - [idsf:find, "\\\\u005"]
-              - [idsf:replace, "-"]
-              - [idsf:format_for, "uri"]
-              - [idsf:add_prefix, "bio2kg:ctd/action/"]
-          type: iri
-
-      - [sio:description, $(Interaction)]
-      - [sio:affects, ncbitaxon:$(OrganismID)]  # 9606
-      - [sio:hasProvider, bio2kg:graph/ctd~iri]
-
-      - [sio:isManifestedAs, bio2kg:ctd/$(GeneForms)]
-      # values: protein, gene, mRNA, enhancer, promoter
-
-      - p: sio:isSupportedBy
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(PubMedIDs)"]
-              - [idsf:split_on, "\|"]
-              - [idsf:add_prefix, "pubmed:"]
-          type: iri
-
-      # - p: sio:modified
-      #   o: $(date_modified)
-
-  chemicals:
-    sources:
-      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
-    s: mesh:$(ChemicalID)
-    po:
-      - [a, sio:ChemicalEntity]
-      - [sio:title, $(# ChemicalName)]
-      - p: sio:seeAlso
-        o: https://identifiers.org/cas:$(CasRN)~iri
-
-  genes:
-    sources:
-      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+      - ['data/gene_info.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]
-      
-  organims:
-    sources:
-      - ['data/CTD_chem_gene_ixns-processed.csv~csv']
-    s: ncbitaxon:$(OrganismID)
-    po:
-      - [a, sio:Organism]
-      - [sio:title, $(Organism)]
+      - [sio:hasProvider, bio2kg:graph/ncbigene~iri]
+
+      - [sio:description, $(description)]
+      - [sio:isPartOf, ncbigenevocab:type/$(type_of_gene)] # TODO: protein-coding, other, tRNA
+      - [sio:modified, $(Modification_date)]
+      - [sio:isLocatedIn, $(LocusTag)] # TODO: pMF1.19c
+      - [sio:affects, ncbitaxon:$(#tax_id)] # e.g. 7
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Synonyms)"]
+              - [idsf:split_on, "\|"]
+
+  # organims:
+  #   sources:
+  #     - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+  #   s: ncbitaxon:$(OrganismID)
+  #   po:
+  #     - [a, sio:Organism]
+  #     - [sio:title, $(Organism)]
