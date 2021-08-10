@@ -9,6 +9,7 @@ prefixes:
   drugbank: "https://identifiers.org/drugbank:"
   mesh: "https://identifiers.org/mesh:"
   uniprot: "https://identifiers.org/uniprot:"
+  omim: "https://identifiers.org/mim:"
   schema: "https://schema.org/"
   sio: "http://semantiscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
@@ -28,20 +29,20 @@ mappings:
 
       - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
 
-      - p: sio:isAssociatedWith
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(MIM)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "omim:"]
-          type: iri
+      # - p: sio:isAssociatedWith
+      #   o:
+      #     function: idsf:string_process
+      #     parameters:
+      #         - [idsf:input, "$(MIM)"]
+      #         - [idsf:split_on, "; "]
+      #         - [idsf:add_prefix, "omim:"]
+      #     type: iri
 
-      - p: sio:isSupportedBy
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(PubMed ID)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "pubmed:"]
-          type: iri
+      # - p: sio:isSupportedBy
+      #   o:
+      #     function: idsf:string_process
+      #     parameters:
+      #         - [idsf:input, "$(PubMed ID)"]
+      #         - [idsf:split_on, "; "]
+      #         - [idsf:add_prefix, "pubmed:"]
+      #     type: iri

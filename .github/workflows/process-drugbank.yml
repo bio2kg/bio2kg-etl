@@ -24,30 +24,30 @@ jobs:
     #   run: |
     #     conda install -y --file requirements.txt
 
-    - name: Run python ETL script
-      env:
-        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
-        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
-      run: |
-        python datasets/DrugBank/load_drugbank.py
+    # - name: Run python ETL script
+    #   env:
+    #     DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+    #     DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+    #   run: |
+    #     python datasets/DrugBank/load_drugbank.py
 
-    - name: Upload CSV output
-      uses: actions/upload-artifact@v2
-      with:
-        name: output
-        path: datasets/DrugBank/data/drugbank_processed.csv
+    # - name: Upload CSV output
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: output
+    #     path: datasets/DrugBank/data/drugbank_processed.csv
 
-    # Run with the RML mapper, seems to time out
-    - name: Run RML mapper ETL
-      env:
-        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
-        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
-        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
-        DRUGBANK_VERSION: 5-1-8
-      run: |
-        cd datasets/DrugBank
-        ./run.sh "-Xms100g -Xmx100g"
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+    # # Run with the RML mapper, seems to time out
+    # - name: Run RML mapper ETL
+    #   env:
+    #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+    #     DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+    #     DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+    #     DRUGBANK_VERSION: 5-1-8
+    #   run: |
+    #     cd datasets/DrugBank
+    #     ./run.sh "-Xms100g -Xmx100g"
+    #     curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     # # https://github.com/redhat-actions/oc-login#readme
     # - name: Log in to OpenShift
@@ -59,7 +59,7 @@ jobs:
     #     insecure_skip_tls_verify: true
     #     namespace: bio2kg
 
-    ## org.w3c.dom.DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
+    # # org.w3c.dom.DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
     # - name: Run RML Streamer ETL
     #   env:
     #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
@@ -73,9 +73,22 @@ jobs:
     #     head -n 100 data/bio2kg-drugbank.ttl
     #     # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         
+    
+    - name: Run RocketRML mapper ETL
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+        DRUGBANK_VERSION: 5-1-8
+      run: |
+        cd datasets/DrugBank
+        ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
+        node rocketrml.js
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: rdf-output
-        path: datasets/DrugBank/data/bio2kg-drugbank.ttl
+        path: datasets/DrugBank/data/bio2kg-*.n3

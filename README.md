@@ -98,7 +98,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set replicas=20 \
     --set serviceAccountName=anyuid \
     --set memoryRequest="512Mi" \
-    --set memoryLimit="100Gi" \
+    --set memoryLimit="200Gi" \
     --set cpuRequest="100m" \
     --set cpuLimit="60" \
     --set runnerImage=ghcr.io/bio2kg/workflow-runner \
@@ -151,7 +151,7 @@ Create the Flink cluster:
 
 ```bash
 oc new-app apache-flink -p APPLICATION_NAME=flink \
-  -p STORAGE_SIZE=100Gi \
+  -p STORAGE_SIZE=500Gi \
   -p WORKER_COUNT="4" \
   -p TASKS_SLOTS="64" \
   -p CPU_LIMIT="32" \
