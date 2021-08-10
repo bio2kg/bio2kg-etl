@@ -18,11 +18,10 @@ prefixes:
   drugbankdata: "https://w3id.org/bio2kg/data/drugbank/"
 
 # Existing SPARQL mappings for d2s: https://github.com/MaastrichtU-IDS/d2s-project-template/blob/master/datasets/drugbank/mapping/drugbank-drug_infos.rq
-
 mappings:
   drugs:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug]
+      - ["data/drugbank.xml~xpath", /drugbank/drug]
     s: drugbank:$(drugbank-id-primary)
     po:
       - [a, sio:Drug]
@@ -61,7 +60,7 @@ mappings:
   
   drug-interactions:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug/drug-interactions/drug-interaction]
+      - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
     s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
     po:
       - [a, sio:Association]
@@ -74,7 +73,7 @@ mappings:
 
   target-interactions:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
     s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
     po:
       - [a, sio:ChemicalGeneAssociation]
@@ -94,7 +93,7 @@ mappings:
 
   targets:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug/targets/target]
+      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
     s: drugbank:$(id)
     po:
       - [a, sio:BiologicalEntity]
@@ -105,16 +104,16 @@ mappings:
 
   publications:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug/general-references/articles/article]
+      - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
     s: pubmed:$(pubmed-id)
     po:
-      - [a, sio:peer-reviewed-article]
+      - [a, sio:PeerReviewedArticle]
       - [sio:title, $(citation)]
 
   mesh-categories:
     sources:
-      - [data/drugbank.xml~xpath, /drugbank/drug/categories/category]
+      - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
     s: mesh:$(mesh-id)
     po:
-      - [a, sio:category]
+      - [a, sio:Category]
       - [sio:title, $(category)]

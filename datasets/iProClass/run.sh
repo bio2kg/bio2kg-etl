@@ -28,6 +28,6 @@ yarrrml-parser -i $PROCESS_FILE -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-iproclass.ttl
-java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-iproclass.ttl -s turtle -f ../functions_ids.ttl 
+java $1 -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-iproclass.ttl -s turtle -f ../functions_ids.ttl 
 
 # head -n 40 data/bio2kg-ctd.ttl

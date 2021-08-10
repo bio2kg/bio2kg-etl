@@ -18,7 +18,7 @@ yarrrml-parser -i drugbank-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-drugbank.ttl
-java $1 -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-drugbank.ttl -s turtle -f ../functions_ids.ttl 
+java $1 -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-drugbank.ttl -s turtle -f ../functions_ids.ttl || { echo 'RML mapper failed' ; exit 1; }
 
 
 # echo "Run ShEx validation with shex.js"
