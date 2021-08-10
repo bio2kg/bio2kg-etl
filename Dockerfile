@@ -68,3 +68,4 @@ ENV PATH="$PATH:$HOME/.yarn/bin"
 RUN yarn global add @rmlio/yarrrml-parser rocketrml
 
 RUN yarn --cwd /opt add shex
+RUN npm install rocketrml
