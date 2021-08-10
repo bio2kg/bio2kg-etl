@@ -6,8 +6,8 @@ if [ ! -f "data/protein_chemical.csv" ]; then
     mkdir -p data
     cd data
     # http://stitch.embl.de/cgi/download.pl
-    # wget -N http://stitch.embl.de/download/chemical_chemical.links.detailed.v5.0.tsv.gz
-    wget -N http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0.tsv.gz
+    wget -N http://stitch.embl.de/download/chemical_chemical.links.detailed.v5.0.tsv.gz
+    # wget -N http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0.tsv.gz
 
     gzip -d *.gz
     # Convert TSV to CSV for RML Mapper
@@ -18,7 +18,6 @@ fi
 
 echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i stitch-mapping.yarrr.yml -o data/mapping.rml.ttl
-# yarrrml-parser -i TMstitch.yml -o data/TMstitch.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-stitch.ttl

@@ -50,70 +50,68 @@ mappings:
       - [drugbankvocab:absorption, $(absorption)]
       - [drugbankvocab:half-life, $(half-life)]
       # Time could be extracted, e.g. Approximately 1.3 hours
+      - [drugbankvocab:food-interaction, "$(food-interactions/food-interaction)"]
 
       # TODO: more properties
       # classification/class
-
-      - [drugbankvocab:food-interaction, "$(food-interactions/food-interaction)"]
-
       # - ["ex:test$(@id)", "$(tag/@v)"]
   
-  drug-interactions:
-    sources:
-      - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
-    s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
-    po:
-      - [a, sio:Association]
-      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
-      - [rdf:object, "drugbank:$(drugbank-id)~iri"]
-      - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
+  # drug-interactions:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
+  #   s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+  #   po:
+  #     - [a, sio:Association]
+  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+  #     - [rdf:object, "drugbank:$(drugbank-id)~iri"]
+  #     - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
 
-      - [sio:description, "$(description)"]
+  #     - [sio:description, "$(description)"]
 
 
-  target-interactions:
-    sources:
-      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
-    s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
-    po:
-      - [a, sio:ChemicalGeneAssociation]
-      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
-      - [rdf:object, "drugbank:$(id)~iri"]
-      - p: rdf:predicate
-        # Or use sio:has-role?
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(actions/action)"]
-              - [idsf:format_for, "uri"]
-              - [idsf:add_prefix, "drugbankvocab:action/"]
-          type: iri
+  # target-interactions:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
+  #   s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
+  #   po:
+  #     - [a, sio:ChemicalGeneAssociation]
+  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+  #     - [rdf:object, "drugbank:$(id)~iri"]
+  #     - p: rdf:predicate
+  #       # Or use sio:has-role?
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(actions/action)"]
+  #             - [idsf:format_for, "uri"]
+  #             - [idsf:add_prefix, "drugbankvocab:action/"]
+  #         type: iri
 
-      - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]
+  #     - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]
 
-  targets:
-    sources:
-      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
-    s: drugbank:$(id)
-    po:
-      - [a, sio:BiologicalEntity]
-      - [sio:title, $(name)]
-      - [sio:hasUniqueIdentifier, "drugbank:$(id)~iri"]
+  # targets:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
+  #   s: drugbank:$(id)
+  #   po:
+  #     - [a, sio:BiologicalEntity]
+  #     - [sio:title, $(name)]
+  #     - [sio:hasUniqueIdentifier, "drugbank:$(id)~iri"]
 
-      - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
+  #     - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
 
-  publications:
-    sources:
-      - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
-    s: pubmed:$(pubmed-id)
-    po:
-      - [a, sio:PeerReviewedArticle]
-      - [sio:title, $(citation)]
+  # publications:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
+  #   s: pubmed:$(pubmed-id)
+  #   po:
+  #     - [a, sio:PeerReviewedArticle]
+  #     - [sio:title, $(citation)]
 
-  mesh-categories:
-    sources:
-      - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
-    s: mesh:$(mesh-id)
-    po:
-      - [a, sio:Category]
-      - [sio:title, $(category)]
+  # mesh-categories:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
+  #   s: mesh:$(mesh-id)
+  #   po:
+  #     - [a, sio:Category]
+  #     - [sio:title, $(category)]

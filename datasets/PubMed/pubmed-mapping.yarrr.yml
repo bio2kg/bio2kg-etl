@@ -42,7 +42,7 @@ mappings:
     s: 
       function: idsf:string_process
       parameters:
-          - [idsf:input, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
+          - [idsf:input, "$(LastName)-$(Initials)-$(ForeName)"]
           - [idsf:add_prefix, "pubmeddata:"]
           - [idsf:format_for, "uri"]
     po:

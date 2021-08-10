@@ -13,7 +13,8 @@ prefixes:
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"
-  b2kstitch: "https://w3id.org/bio2kg/data/stitch/"
+  stitchvocab: "https://w3id.org/bio2kg/vocab/stitch/"
+  stitchdata: "https://w3id.org/bio2kg/data/stitch/"
 
 mappings:
   genes:
@@ -22,7 +23,7 @@ mappings:
       # "chemical1","chemical2","similarity","experimental","database","textmining","combined_score"
       # "CIDm00024759","CIDs00024759","0","0","900","0","900"
       # "CIDs91758695","CIDs00107694","0","0","0","230","230"
-    s: "b2kstitch:chemical-chemical-interaction/$(chemical1)-$(chemical2)"
+    s: "stitchdata:chemical-chemical-interaction/$(chemical1)-$(chemical2)"
     po:
       - [a, sio:Association]
       - [sio:hasProvider, bio2kg:graph/stitch~iri]

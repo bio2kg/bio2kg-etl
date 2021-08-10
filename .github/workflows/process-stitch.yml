@@ -1,11 +1,11 @@
-name: Process HuRI
+name: Process STITCH
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/HuRI/*'
-    - '.github/workflows/process-huri.yml'
+    - 'datasets/STITCH/*'
+    - '.github/workflows/process-stitch.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
@@ -24,12 +24,12 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/HuRI
+        cd datasets/STITCH
         ./run.sh
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-huri.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: huri" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-stitch.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: stitch" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/HuRI/data/bio2kg-huri.ttl
+        path: datasets/STITCH/data/bio2kg-stitch.ttl
