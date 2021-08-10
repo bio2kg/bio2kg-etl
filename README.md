@@ -1,6 +1,6 @@
 # ETL for the Bio2KG knowledge graph
 
-[![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) [![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml)
+[![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml) [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) [![Process NCBIgene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml) [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml)
 
 ## Run workflows locally
 
@@ -21,7 +21,7 @@ cd datasets/HGNC
 
 All temporary files are put in the `data/` folder
 
-> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run Bash scripts.
 
 ### Define mappings
 

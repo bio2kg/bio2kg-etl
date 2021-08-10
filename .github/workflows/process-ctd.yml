@@ -25,10 +25,14 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         cd datasets/CTD
-        ./run.sh ctd-chemical-gene.yarrr.yml
-        ./run.sh ctd-chemical-disease.yarrr.yml
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-disease.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-disease" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        ./run.sh
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        cd data
+        ls bio2kg-*.ttl | while read UPLOAD_FILE 
+        do
+            UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
+            curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        done
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
