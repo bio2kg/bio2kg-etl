@@ -8,7 +8,7 @@ prefixes:
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
   mesh: "https://identifiers.org/mesh:"
-  uniprot: "https://identifiers.org/uniprot:"
+  hgnc: "https://identifiers.org/HGNC:"
   schema: "https://schema.org/"
   sio: "http://semantiscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
@@ -16,32 +16,26 @@ prefixes:
   bio2kg: "https://w3id.org/bio2kg/data/"
   ncbigene: "https://identifiers.org/ncbigene:"
   ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  KEGG: "https://identifiers.org/HGNC:"
+  REACT: "https://identifiers.org/REACT:"
+  MESH: "https://identifiers.org/mesh:"
 
 mappings:
-  proteins:
+
+  pathways:
     sources:
-      - ['data/iproclass.csv~csv']
-    s: uniprot:$(UniProtKB accession)
+      - ['data/processed-CTD_diseases_pathways.csv~csv']
+    s: $(PathwayID)
     po:
-      - [a, sio:Protein]
-      - [sio:hasProvider, bio2kg:graph/iproclass~iri]
+      - [a, sio:Pathway]
+      - [sio:title, $(PathwayName)]
 
-      - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
-
-      - p: sio:isAssociatedWith
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(MIM)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "omim:"]
-          type: iri
-
-      - p: sio:isSupportedBy
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(PubMed ID)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "pubmed:"]
-          type: iri
+  diseases:
+    sources:
+      - ['data/processed-CTD_diseases_pathways.csv~csv']
+    s: $(DiseaseID)
+    po:
+      - [a, sio:Gene]
+      - [sio:title, $(# DiseaseName)]
+      - [sio:isConnectedTo, $(PathwayID)]
+      

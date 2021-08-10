@@ -24,12 +24,12 @@ mappings:
       - ['data/disease-chemical.csv~csv']
     s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH\))
     po:
-      - [a, sio:chemical-disease-assocation]
+      - [a, sio:ChemicalDiseaseAssocation]
       - [rdf:subject, drugbank:$(Chemical)]
       - [rdf:object, https://identifiers.org/$(# Disease(MESH\))~iri]
-      - [rdf:predicate, sio:to-interact-with]
+      - [rdf:predicate, sio:toInteractWith]
 
-      - [sio:has-provider, bio2kg:graph/snap-biodata~iri]
+      - [sio:hasProvider, bio2kg:graph/snap-biodata~iri]
 
 
   chemicals:
@@ -37,11 +37,11 @@ mappings:
       - ['data/disease-chemical.csv~csv']
     s: drugbank:$(Chemical)
     po:
-      - [a, sio:drug]
+      - [a, sio:Drug]
 
   diseases:
     sources:
       - ['data/disease-chemical.csv~csv']
     s: https://identifiers.org/$(# Disease(MESH\))
     po:
-      - [a, sio:disease]
+      - [a, sio:Disease]

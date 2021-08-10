@@ -20,12 +20,12 @@ mappings:
   interactions:
     sources:
       - ['data/huri.csv~csv']
-    s: bio2kg:huri/interaction/$(geneA)-$(geneB)
+    s: bio2kg:irefindex/interaction/$(geneA)-$(geneB)
     po:
-      - [a, sio:association]
+      - [a, sio:Association]
       - [rdf:subject, ensembl:$(geneB)]
       - [rdf:object, ensembl:$(geneA)]
-      - [rdf:predicate, sio:to-interact-with]
+      - [rdf:predicate, sio:toInteractWith]
 
-      - [sio:has-provider, bio2kg:graph/huri~iri]
+      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
 

@@ -46,7 +46,8 @@ RUN conda install --quiet -y \
     nodejs \
     yarn \
     openjdk \
-    maven
+    maven \
+    sbt
 RUN conda update --all --quiet -y && \
     conda clean --all -f -y 
 
@@ -65,3 +66,5 @@ ENV PATH="$PATH:$HOME/.yarn/bin"
 # RUN echo "export PATH=\"$PATH:$(yarn global bin)\"" >> .profile
 
 RUN yarn global add @rmlio/yarrrml-parser
+
+RUN yarn --cwd /opt add shex

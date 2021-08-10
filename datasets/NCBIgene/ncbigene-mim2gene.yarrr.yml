@@ -23,25 +23,25 @@ mappings:
       - ['data/mim2gene_medgen.csv~csv']
     s: bio2kg:ctd/interaction/OMIM:$(#MIM number)-$(GeneID)
     po:
-      - [a, sio:gene-disease-assocation] # TODO: check
+      - [a, sio:GeneDiseaseAssocation] # TODO: check
       - [rdf:subject, omim:$(#MIM number)]
       - [rdf:object, ncbigene:$(GeneID)]
       - p: rdf:predicate
-        o: sio:is-associated-with
+        o: sio:isAssociatedWith
 
       - [sio:comment, $(Comment)]
-      - [sio:has-provider, bio2kg:graph/ncbigene~iri]
+      - [sio:hasProvider, bio2kg:graph/ncbigene~iri]
 
   diseases:
     sources:
       - ['data/mim2gene_medgen.csv~csv']
     s: omim:$(#MIM number)
     po:
-      - [a, sio:disease]
+      - [a, sio:Disease]
 
   genes:
     sources:
       - ['data/mim2gene_medgen.csv~csv']
     s: ncbigene:$(GeneID)
     po:
-      - [a, sio:gene]
+      - [a, sio:Gene]

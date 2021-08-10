@@ -21,3 +21,10 @@ rm data/bio2kg-drugbank.ttl
 java $1 -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-drugbank.ttl -s turtle -f ../functions_ids.ttl 
 
 
+# echo "Run ShEx validation with shex.js"
+# /opt/node_modules/shex/bin/validate \
+#     -x ../bio2kg.shex \
+#     -d data/bio2kg-drugbank.ttl \
+#     -s https://w3id.org/bio2kg/shape/shex \
+#     -n https://identifiers.org/drugbank:DB00001
+#     # DB00001 is the node to validate

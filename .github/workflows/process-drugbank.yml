@@ -24,7 +24,7 @@ jobs:
     #   run: |
     #     conda install -y --file requirements.txt
 
-    - name: Run ETL script
+    - name: Run python ETL script
       env:
         DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
@@ -37,7 +37,7 @@ jobs:
         name: output
         path: datasets/DrugBank/data/drugbank_processed.csv
 
-    # Now with the RML mappings
+    # Now run with the RML mappings
     - name: Run RML mapper ETL
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
@@ -46,8 +46,8 @@ jobs:
         DRUGBANK_VERSION: 5-1-8
       run: |
         cd datasets/DrugBank
-        ./run.sh "-Xms32g -Xmx32g" || exit 1
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        ./run.sh "-Xms32g -Xmx32g"
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2

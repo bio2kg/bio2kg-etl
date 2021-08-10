@@ -23,10 +23,9 @@ mappings:
     # s: "https://identifiers.org/$(ctd_id)"
     s: bio2kg:ctd/interaction/$(ChemicalID)-$(GeneID)
     po:
-      - [a, sio:chemical-gene-assocation]
+      - [a, sio:ChemicalGeneAssocation]
       - [rdf:subject, mesh:$(ChemicalID)]
       - [rdf:object, ncbigene:$(GeneID)]
-      # - [rdf:predicate, "sio:chemical-gene-assocation"] # TODO: improve
       - p: rdf:predicate
         o:
           function: idsf:string_process
@@ -41,12 +40,12 @@ mappings:
 
       - [sio:description, $(Interaction)]
       - [sio:affects, ncbitaxon:$(OrganismID)]  # 9606
-      - [sio:has-provider, bio2kg:graph/ctd~iri]
+      - [sio:hasProvider, bio2kg:graph/ctd~iri]
 
-      - [sio:is-manifested-as, bio2kg:ctd/$(GeneForms)]
+      - [sio:isManifestedAs, bio2kg:ctd/$(GeneForms)]
       # values: protein, gene, mRNA, enhancer, promoter
 
-      - p: sio:is-supported-by
+      - p: sio:isSupportedBy
         o:
           function: idsf:string_process
           parameters:
@@ -63,7 +62,7 @@ mappings:
       - ['data/CTD_chem_gene_ixns-processed.csv~csv']
     s: mesh:$(ChemicalID)
     po:
-      - [a, sio:chemical-entity]
+      - [a, sio:ChemicalEntity]
       - [sio:title, $(# ChemicalName)]
       - p: sio:seeAlso
         o: https://identifiers.org/cas:$(CasRN)~iri
@@ -73,12 +72,12 @@ mappings:
       - ['data/CTD_chem_gene_ixns-processed.csv~csv']
     s: ncbigene:$(GeneID)
     po:
-      - [a, sio:gene]
+      - [a, sio:Gene]
       
   organims:
     sources:
       - ['data/CTD_chem_gene_ixns-processed.csv~csv']
     s: ncbitaxon:$(OrganismID)
     po:
-      - [a, sio:organism]
+      - [a, sio:Organism]
       - [sio:title, $(Organism)]

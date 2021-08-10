@@ -1,0 +1,67 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  omim: "https://identifiers.org/mim:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  b2kpreppi: "https://w3id.org/bio2kg/vocab/preppi/"
+
+mappings:
+  interactions:
+    sources:
+      - ['preppi.csv~csv']
+      ## TSV not working with RML mapper
+      # access: preppi.tsv
+      # referenceFormulation: csv
+      # delimiter: \t
+      # "prot1","prot2","str_score","protpep_score","str_max_score","red_score","ort_score","phy_score","coexp_score","go_score","total_score","dbs","pubs","exp_score","final_score"
+      # "Q13131","P14625","18.59","6.44772","18.59","4.2492","0.6153","2.416","9.4687","10.8","12008.4","","","","12008.4"
+      # "Q9Y2X7","Q9NPJ6","0","2.59","2.59","1.0145","0","2.416","1.5818","0","10.0415","BGDB|","pubmed:25281560|pubmed:25281575","957.82","9617.95"
+    s: bio2kg:preppi/interaction/$(prot1)-$(prot2)
+    po:
+      - [a, sio:Association]
+      - [sio:hasProvider, bio2kg:graph/preppi]
+
+      - [rdf:subject, https://identifiers.org/uniprot:$(prot1)~iri]
+      - [rdf:object, https://identifiers.org/uniprot:$(prot2)~iri]
+      - [rdf:predicate, sio:toInteractWith]
+
+      - [b2kpreppi:final_score, $(final_score), xsd:float]
+
+      - p: sio:isSupportedBy
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(pubs)"]
+              - [idsf:split_on, "\|"]
+              # - [idsf:add_prefix, "pubmed:"]
+          type: iri
+
+  # protpep_score:
+  #   sources:
+  #     - ['preppi.csv~csv']
+  #   s: d2s:data/preppi/interaction/$(prot1)_$(prot2)/protpep_score
+  #   po:
+  #     - [a, bl:ConfidenceLevel]
+  #     - p: rdfs:label
+  #       o: PrePPI protpep_score for association $(prot1)-$(prot2)
+  #     - p: bl:has_numeric_value
+  #       o:
+  #         value: $(protpep_score)
+  #         datatype: xsd:double
+  #     - p: bl:category
+  #       o: d2s:model/preppi/protpep_score~iri
+  #     - p: bl:provided_by
+  #       o: d2s:graph/preppi~iri

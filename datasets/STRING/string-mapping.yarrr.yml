@@ -31,8 +31,8 @@ mappings:
           - [idsf:replace, ":"]
       type: iri
     po:
-      - [a, sio:gene]
-      - p: sio:has-unique-identifier # bl:id
+      - [a, sio:Gene]
+      - p: sio:hasUniqueIdentifier # bl:id
         o: 
           function: idsf:string_process
           parameters:
@@ -41,7 +41,7 @@ mappings:
             - [idsf:replace, ":"]
       - p: sio:title # bl:name
         o: $(name)
-      - p: sio:has-provider # bl:provided_by
+      - p: sio:hasProvider # bl:provided_by
         o: bio2kg:graph/hgnc~iri
       - p: sio:modified # bl:update_date
         o: $(date_modified)
@@ -80,7 +80,7 @@ mappings:
           type: iri
 
 
-      - p: sio:has-concretization # bl:has_gene_product
+      - p: sio:hasConcretization # bl:has_gene_product
         o:
           function: idsf:string_process
           parameters:
@@ -89,7 +89,7 @@ mappings:
               - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
           type: iri
 
-      - p: sio:is-expression-of # bl:has_gene_product?
+      - p: sio:isExpressionOf # bl:has_gene_product?
         o:
             function: idsf:string_process
             parameters:
@@ -98,7 +98,7 @@ mappings:
                 - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
             type: iri
 
-      - p: sio:is-supported-by # sio:has-evidence / bl:publications
+      - p: sio:isSupportedBy # sio:hasEvidence / bl:publications
         o:
           function: idsf:string_process
           parameters:
@@ -107,7 +107,7 @@ mappings:
               - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
           type: iri
 
-      - p: sio:is-located-in # bl:located_in
+      - p: sio:isLocatedIn # bl:located_in
         o:
             function: idsf:string_process
             parameters:
@@ -116,7 +116,7 @@ mappings:
                 - [idsf:add_prefix, "https://identifiers.org/ccds:"]
             type: iri
 
-      - p: sio:is-associated-with # bl:gene_associated_with_condition
+      - p: sio:isAssociatedWith # bl:gene_associated_with_condition
         o:
             function: idsf:string_process
             parameters:

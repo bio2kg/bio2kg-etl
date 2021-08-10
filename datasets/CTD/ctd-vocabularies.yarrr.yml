@@ -1,0 +1,204 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  uniprot: "https://identifiers.org/uniprot:"
+  mesh: "https://identifiers.org/mesh:"
+  MESH: "https://identifiers.org/mesh:"
+  KEGG: "https://identifiers.org/HGNC:"
+  REACT: "https://identifiers.org/REACT:"
+  schema: "https://schema.org/"
+  sio: "http://semantiscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  ctdvocab: "https://w3id.org/bio2kg/vocab/ctd/"
+  ctddata: "https://w3id.org/bio2kg/data/ctd/"
+  pharmgkb: "https://identifiers.org/pharmgkb:"
+  
+
+mappings:
+  genes:
+    sources:
+      - ['data/processed-CTD_genes.csv~csv']
+    s: ncbigene:$(GeneID)
+    po:
+      - [a, sio:Gene]
+      - [sio:title, $(GeneName)]
+      - [sio:symbol, $(# GeneSymbol)]
+
+      - p: sio:alternative # TODO
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(AltGeneIDs)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Synonyms)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:seeAlso
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(BioGRIDIDs)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:seeAlso
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(PharmGKBIDs)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "pharmgkb:"]
+          type: iri
+
+      - p: sio:hasConcretization
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(UniProtIDs)"]
+              - [idsf:split_on, "\|"]
+              - [idsf:add_prefix, "uniprot:"]
+          type: iri
+
+
+  chemicals:
+    sources:
+      - ['data/processed-CTD_chemicals.csv~csv']
+    s: mesh:$(ChemicalID)
+    po:
+      - [a, sio:ChemicalEntity]
+      - [sio:title, $(# ChemicalName)]
+      - [sio:description, $(Definition)]
+      - p: sio:seeAlso
+        o: https://identifiers.org/cas:$(CasRN)~iri
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Synonyms)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:parents
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(ParentIDs)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:TreeNumbers
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(TreeNumbers)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+  
+  diseases:
+    sources:
+      - ['data/processed-CTD_diseases.csv~csv']
+    s: $(DiseaseID)
+    po:
+      - [a, sio:Disease]
+      - [sio:title, $(# DiseaseName)]
+      - [sio:description, $(Definition)]
+
+      - p: sio:AltDiseaseIDs
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(AltDiseaseIDs)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Synonyms)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:parents
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(ParentIDs)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:TreeNumbers
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(TreeNumbers)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:SlimMappings
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(SlimMappings)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+  anatomy:
+    sources:
+      - ['data/processed-CTD_anatomy.csv~csv']
+    s: mesh:$(AnatomyID)
+    po:
+      - [a, sio:Organism] # TODO
+      - [sio:title, $(# AnatomyName)]
+      - [sio:description, $(Definition)]
+      
+      - p: sio:AltAnatomyIDs # TODO
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(AltAnatomyIDs)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Synonyms)"]
+              - [idsf:split_on, "\|"]
+
+      - p: sio:parents
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(ParentIDs)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:TreeNumbers
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(TreeNumbers)"]
+              - [idsf:split_on, "\|"]
+          # type: iri
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(ExternalSynonyms)"]
+              - [idsf:split_on, "\|"]
+          # type: iri

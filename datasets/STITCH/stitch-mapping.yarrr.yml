@@ -24,8 +24,8 @@ mappings:
       # "CIDs91758695","CIDs00107694","0","0","0","230","230"
     s: "b2kstitch:chemical-chemical-interaction/$(chemical1)-$(chemical2)"
     po:
-      - [a, sio:association]
-      - [sio:has-provider, bio2kg:graph/stitch~iri]
+      - [a, sio:Association]
+      - [sio:hasProvider, bio2kg:graph/stitch~iri]
 
       - p: rdf:subject
         o: 
@@ -44,5 +44,5 @@ mappings:
             - [idsf:replace, "https://identifiers.org/pubchem.compound:"]
           type: iri
 
-      - [sio:is-supported-by, "$(combined_score)", xsd:integer]
+      - [sio:isSupportedBy, "$(combined_score)", xsd:integer]
 

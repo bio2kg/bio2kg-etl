@@ -8,40 +8,38 @@ prefixes:
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
   mesh: "https://identifiers.org/mesh:"
-  uniprot: "https://identifiers.org/uniprot:"
   schema: "https://schema.org/"
   sio: "http://semantiscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"
-  ncbigene: "https://identifiers.org/ncbigene:"
-  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  siderdata: "https://w3id.org/bio2kg/data/sider/"
 
 mappings:
-  proteins:
+  genes:
     sources:
-      - ['data/iproclass.csv~csv']
-    s: uniprot:$(UniProtKB accession)
+      - ['data/meddra_all_indications.csv~csv']
+    s: "siderdata:chemical-chemical-interaction/$(chemical1)-$(chemical2)"
     po:
-      - [a, sio:Protein]
-      - [sio:hasProvider, bio2kg:graph/iproclass~iri]
+      - [a, sio:Association]
+      - [sio:hasProvider, bio2kg:graph/sider~iri]
 
-      - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
-
-      - p: sio:isAssociatedWith
-        o:
+      - p: rdf:subject
+        o: 
           function: idsf:string_process
           parameters:
-              - [idsf:input, "$(MIM)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "omim:"]
+            - [idsf:input, "$(chemical1)"]
+            - [idsf:find, "CID"]
+            - [idsf:replace, "https://identifiers.org/pubchem.compound:"]
           type: iri
-
-      - p: sio:isSupportedBy
-        o:
+      - p: rdf:object
+        o: 
           function: idsf:string_process
           parameters:
-              - [idsf:input, "$(PubMed ID)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "pubmed:"]
+            - [idsf:input, "$(chemical2)"]
+            - [idsf:find, "CID"]
+            - [idsf:replace, "https://identifiers.org/pubchem.compound:"]
           type: iri
+
+      - [sio:isSupportedBy, "$(combined_score)", xsd:integer]
+

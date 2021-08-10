@@ -21,21 +21,21 @@ prefixes:
 mappings:
   chemical-gene-interactions:
     sources:
-      - ['data/CTD_chemicals_diseases-processed.csv~csv']
+      - ['data/processed-CTD_chemicals_diseases.csv~csv']
     # s: "https://identifiers.org/$(ctd_id)"
     s: bio2kg:ctd/interaction/$(ChemicalID)-$(DiseaseID)
     po:
-      - [a, sio:chemical-disease-assocation]
+      - [a, sio:ChemicalDiseaseAssocation]
       - [rdf:subject, mesh:$(ChemicalID)]
       - [rdf:object, https://identifiers.org/$(DiseaseID)~iri]
-      # - [rdf:predicate, "sio:chemical-gene-assocation"] # TODO: improve
+      # - [rdf:predicate, "sio:ChemicalGeneAssocation"] # TODO: improve
       - p: rdf:predicate
-        o: sio:to-interact-with
+        o: sio:toInteractWith
 
-      - [sio:has-evidence, $(InferenceScore), xsd:float] 
-      - [sio:has-provider, bio2kg:graph/ctd~iri]
+      - [sio:hasEvidence, $(InferenceScore), xsd:float] 
+      - [sio:hasProvider, bio2kg:graph/ctd~iri]
 
-      - p: sio:is-supported-by
+      - p: sio:isSupportedBy
         o:
           function: idsf:string_process
           parameters:
@@ -45,7 +45,7 @@ mappings:
               - [idsf:add_prefix, "pubmed:"]
           type: iri
 
-      - p: sio:is-supported-by
+      - p: sio:isSupportedBy
         o: b2kctd:$(DirectEvidence)
           function: idsf:string_process
           parameters:
@@ -60,20 +60,20 @@ mappings:
 
   chemicals:
     sources:
-      - ['data/CTD_chemicals_diseases-processed.csv~csv']
+      - ['data/processed-CTD_chemicals_diseases.csv~csv']
     s: mesh:$(ChemicalID)
     po:
-      - [a, sio:chemical-entity]
+      - [a, sio:ChemicalEntity]
       - [sio:title, $(# ChemicalName)]
       - p: sio:seeAlso
         o: https://identifiers.org/cas:$(CasRN)~iri
 
   diseases:
     sources:
-      - ['data/CTD_chemicals_diseases-processed.csv~csv']
+      - ['data/processed-CTD_chemicals_diseases.csv~csv']
     s: https://identifiers.org/$(DiseaseID)
     po:
-      - [a, sio:disease]
+      - [a, sio:Disease]
       - [sio:title, $(DiseaseName)]
       - p: sio:seeAlso
         o:

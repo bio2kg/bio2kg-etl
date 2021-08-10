@@ -7,6 +7,9 @@ curl -s https://api.github.com/repos/RMLio/rmlmapper-java/releases/latest \
 echo "Installing YARRRML parser"
 yarn global add @rmlio/yarrrml-parser
 
+echo "Installing ShEx"
+yarn --cwd /opt add shex
+
 echo "Install dependencies for python scripts"
 conda install --file requirements.txt
 # or use pip install -r requirements.txt

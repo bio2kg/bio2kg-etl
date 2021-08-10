@@ -23,6 +23,11 @@ All temporary files are put in the `data/` folder
 
 > If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
+### Define mappings
+
+1. Define a `run.sh` script to download the dataset, and run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
+2. You can browse existing SemanticScience classes and properties here: https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html
+
 ### Checkout new mappers
 
 * https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run

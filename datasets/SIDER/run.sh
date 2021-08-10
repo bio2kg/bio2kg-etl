@@ -6,7 +6,7 @@ if [ ! -f "data/meddra_all_label_se.csv" ]; then
     mkdir -p data && cd data
 
     # http://sideeffects.embl.de/download/
-    # TODO: find the columns docs
+    # Docs: http://sideeffects.embl.de/media/download/README
     wget -N http://sideeffects.embl.de/media/download/meddra_all_label_se.tsv.gz
     wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_indications.tsv.gz
     wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_se.tsv.gz
@@ -16,6 +16,8 @@ if [ ! -f "data/meddra_all_label_se.csv" ]; then
 
     # Convert TSV to CSV for RML Mapper
     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' meddra_all_label_se.tsv > meddra_all_label_se.csv
+
+    # TODO: add header
 
     # The next lines are used to produce a sample for development, comment them to process the complete files
     # mv meddra_all_label_se.csv meddra_all_label_se-full.csv

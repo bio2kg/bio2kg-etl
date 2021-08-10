@@ -20,16 +20,22 @@ if [ ! -f "data/pubmed21n0001.xml" ]; then
     ## Unzip all files in subdir with name of the zip file
     # find . -name "*.gz" -exec gzip -d  {} +
 
-
     gzip -d *.gz
     cd ..
 fi
 
-# echo "Converting YARRRML mappings to RML"
-# yarrrml-parser -i pubmed-mapping.yarrr.yml -o data/mapping.rml.ttl
-# # yarrrml-parser -i TMpubmed.yml -o data/TMpubmed.rml.ttl
+echo "Converting YARRRML mappings to RML"
+yarrrml-parser -i pubmed-mapping.yarrr.yml -o data/mapping.rml.ttl
 
-# echo "Running RML mapper, output to data/ folder"
-# rm data/bio2kg-pubmed.ttl
-# java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-pubmed.ttl -s turtle -f ../functions_ids.ttl 
+# rm data/bio2kg-*.ttl
 
+ls data/pubmed21n*.xml | while read PROCESS_FILE 
+do
+    PROCESS_FILE=$(echo $PROCESS_FILE | sed "s/data\///g")
+
+    echo "Preparing RML for $PROCESS_FILE"
+    sed "s/PUBMED_FILEPATH/$PROCESS_FILE/g" data/mapping.rml.ttl > data/$PROCESS_FILE.rml.ttl
+
+    echo "Running RML mapper, output to data/ folder"
+    java -jar /opt/rmlmapper.jar -m data/$PROCESS_FILE.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 
+done
