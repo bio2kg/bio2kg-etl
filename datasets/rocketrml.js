@@ -25,7 +25,14 @@ const doMapping = async () => {
             'http://users.ugent.be/~bjdmeest/function/grel.ttl#createDescription': function (data) {
                 let result=data[0]+' is '+data[1]+ ' years old.'; 
                 return result;
-            }
+            },
+            'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
+            //     tring s, String split, 
+    		// String prefix, String find, String replace, String format
+                console.log(data);
+                let result=data[0]+' is '+data[1]+ ' years old.'; 
+                return 'https://test-process';
+            },
         }
         // https://github.com/semantifyit/RocketRML
     };

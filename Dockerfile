@@ -65,7 +65,7 @@ ENV PATH="$PATH:$HOME/.yarn/bin"
 
 # RUN echo "export PATH=\"$PATH:$(yarn global bin)\"" >> .profile
 
-RUN yarn global add @rmlio/yarrrml-parser rocketrml
+RUN yarn global add @rmlio/yarrrml-parser
 
 RUN yarn --cwd /opt add shex
-RUN npm install rocketrml
+RUN npm install -g rocketrml

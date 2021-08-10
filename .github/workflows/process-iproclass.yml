@@ -27,7 +27,7 @@ jobs:
       run: |
         cd datasets/iProClass
         ./download.sh
-        npm install rocketrml
+        npm install -g rocketrml
         ./run.sh
         # ./run.sh "-Xms100g -Xmx100g"
         curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-iproclass.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: iproclass" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
