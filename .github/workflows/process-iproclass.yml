@@ -26,29 +26,31 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         cd datasets/iProClass
-        ./run.sh "-Xms100g -Xmx100g"
+        ./download.sh
+        ./run.sh
+        # ./run.sh "-Xms100g -Xmx100g"
         curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-iproclass.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: iproclass" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
-    # https://github.com/redhat-actions/oc-login#readme
-    - name: Log in to OpenShift
-      uses: redhat-actions/oc-login@v1
-      with:
-        openshift_server_url: https://api.dsri2.unimaas.nl:6443
-        openshift_username: ${{ secrets.OPENSHIFT_USERNAME }}
-        openshift_password: ${{ secrets.OPENSHIFT_PASSWORD }}
-        insecure_skip_tls_verify: true
-        namespace: bio2kg
+    # # https://github.com/redhat-actions/oc-login#readme
+    # - name: Log in to OpenShift
+    #   uses: redhat-actions/oc-login@v1
+    #   with:
+    #     openshift_server_url: https://api.dsri2.unimaas.nl:6443
+    #     openshift_username: ${{ secrets.OPENSHIFT_USERNAME }}
+    #     openshift_password: ${{ secrets.OPENSHIFT_PASSWORD }}
+    #     insecure_skip_tls_verify: true
+    #     namespace: bio2kg
 
-    # org.w3c.dom.DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
-    - name: Run RML Streamer ETL
-      env:
-        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
-      run: |
-        cd datasets/iProClass
-        # oc login --username=${{ secrets.OPENSHIFT_USERNAME }} --password=${{ secrets.OPENSHIFT_PASSWORD }} --server=https://api.dsri2.unimaas.nl:6443
-        ./run_rmlstreamer.sh
-        # head -n 100 data/bio2kg-drugbank.ttl
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+    # # org.w3c.dom.DOMException: NAMESPACE_ERR: An attempt is made to create or change an object in a way which is incorrect with regard to namespaces.
+    # - name: Run RML Streamer ETL
+    #   env:
+    #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+    #   run: |
+    #     cd datasets/iProClass
+    #     # oc login --username=${{ secrets.OPENSHIFT_USERNAME }} --password=${{ secrets.OPENSHIFT_PASSWORD }} --server=https://api.dsri2.unimaas.nl:6443
+    #     ./run_rmlstreamer.sh
+    #     # head -n 100 data/bio2kg-drugbank.ttl
+    #     # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         
 
     - name: Upload RDF output
