@@ -7,6 +7,8 @@ echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-drugbank.ttl
 java $1 -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-drugbank.ttl -s turtle -f ../functions_ids.ttl || { echo 'RML mapper failed' ; exit 1; }
 
+echo "Running RocketRML"
+node ../rocketrml.js
 
 # echo "Run ShEx validation with shex.js"
 # /opt/node_modules/shex/bin/validate \

@@ -5,8 +5,7 @@ on:
   workflow_dispatch:
   push:
     # Publish `master` as Docker `latest` image.
-    branches:
-    - master
+    branches: [ main ]
     paths:
     - 'Dockerfile'
     - '.github/workflows/publish-runner-docker.yml'

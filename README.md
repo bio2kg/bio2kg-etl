@@ -100,7 +100,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set memoryRequest="512Mi" \
     --set memoryLimit="200Gi" \
     --set cpuRequest="100m" \
-    --set cpuLimit="60" \
+    --set cpuLimit="128" \
     --set runnerImage=ghcr.io/bio2kg/workflow-runner \
     --set runnerTag=latest
 ```
