@@ -47,8 +47,8 @@ RUN conda install --quiet -y \
     yarn \
     openjdk \
     maven \
-    sbt \
-    pugixml
+    sbt
+    # pugixml
 RUN conda update --all --quiet -y && \
     conda clean --all -f -y 
 
