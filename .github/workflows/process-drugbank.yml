@@ -81,9 +81,9 @@ jobs:
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
         DRUGBANK_VERSION: 5-1-8
       run: |
+        yarn add rocketrml
         cd datasets/DrugBank
         ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
-        npm install -g rocketrml
         ./run.sh
         # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         
