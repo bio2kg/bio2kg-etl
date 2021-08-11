@@ -6,8 +6,8 @@ LABEL org.opencontainers.image.source https://github.com/bio2kg/bio2kg-etl
 USER root
 
 # dnf not working, use conda instead
-# RUN dnf -y upgrade --security && \
-#     dnf -y install wget
+# RUN yum -y upgrade
+RUN dnf -y install pugixml
 
 RUN chown -R $UID:$GID /opt
 USER $UID
@@ -52,7 +52,7 @@ RUN conda install --quiet -y \
 RUN conda update --all --quiet -y && \
     conda clean --all -f -y 
 
-ADD requirements.txt .
+ADD ../requirements.txt .
 RUN conda install --file requirements.txt && \
     rm requirements.txt
 

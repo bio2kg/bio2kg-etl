@@ -71,26 +71,26 @@ mappings:
   #     - [sio:description, "$(description)"]
 
 
-  # target-interactions:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
-  #   s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
-  #   po:
-  #     - [a, sio:ChemicalGeneAssociation]
-  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
-  #     - [rdf:object, "drugbank:$(id)~iri"]
-  #     - p: rdf:predicate
-  #       # Or use sio:has-role?
-  #       o:
-  #         function: idsf:string_process
-  #         parameters:
-  #             - [idsf:input, "$(actions/action)"]
-  #             # - [idsf:split_on, "null"]
-  #             - [idsf:add_prefix, "drugbankvocab:action/"]
-  #             # - [idsf:find, "null"]
-  #             # - [idsf:replace, "null"]
-  #             - [idsf:format_for, "uri"]
-  #         type: iri
+  target-interactions:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
+    s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
+    po:
+      - [a, sio:ChemicalGeneAssociation]
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(id)~iri"]
+      - p: rdf:predicate
+        # Or use sio:has-role?
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(actions/action)"]
+              # - [idsf:split_on, "null"]
+              - [idsf:add_prefix, "drugbankvocab:action/"]
+              # - [idsf:find, "null"]
+              # - [idsf:replace, "null"]
+              - [idsf:format_for, "uri"]
+          type: iri
 
   #     - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]
 

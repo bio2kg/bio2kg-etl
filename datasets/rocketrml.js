@@ -28,7 +28,6 @@ const doMapping = async () => {
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
                 const idfs = 'https://w3id.org/um/ids/rmlfunctions.ttl#'
                 console.log(data);
-                console.log(data_array);
                 s = String(data[idfs + 'input']) || null
                 split = data[idfs + 'split_on'] || null
                 prefix = data[idfs + 'add_prefix'] || null
