@@ -18,7 +18,7 @@ const doMapping = async () => {
         // removeNameSpace: {xmlns:"https://xmlnamespace.xml"},
         // Choose xpath evaluator library, available options: pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) 
         // fontoxpath (xpath 3.1 engine) | default | xpath (same as default)
-        xpathLib: "fontoxpath",
+        xpathLib: "pugixml",
         // xmlPerformanceMode: true,
         // ignore input values that are empty string (or whitespace only) (only use a value from the input if value.trim() !== '') (default false)
         ignoreEmptyStrings: true,
@@ -28,15 +28,16 @@ const doMapping = async () => {
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
                 const idfs = 'https://w3id.org/um/ids/rmlfunctions.ttl#'
                 console.log(data);
-                s = String(data[idfs + 'input'])
-                split = data[idfs + 'split_on']
+                console.log(data_array);
+                s = String(data[idfs + 'input']) || null
+                split = data[idfs + 'split_on'] || null
                 prefix = data[idfs + 'add_prefix'] || null
                 find = data[idfs + 'find'] || null
                 replace = data[idfs + 'replace'] || null
                 format = data[idfs + 'format_for'] || null
                 
                 if(!s) {
-                    return null;
+                    return undefined;
                 }
                 
                 resultList = [];
