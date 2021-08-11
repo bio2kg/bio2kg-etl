@@ -43,8 +43,11 @@ mappings:
           function: idsf:string_process
           parameters:
             - [idsf:input, "$(hgnc_id)"]
+            # - [idsf:split_on, ""]
+            # - [idsf:add_prefix, ""]
             - [idsf:find, "%3A"]
             - [idsf:replace, ":"]
+            # - [idsf:format_for, ""]
       - [sio:title, $(name)]
       - [sio:modified, $(date_modified)]
       - p: sio:comment # TODO: mostly "Approved"

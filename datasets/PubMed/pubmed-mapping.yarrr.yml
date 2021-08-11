@@ -26,33 +26,45 @@ mappings:
       - [a, sio:PeerReviewedArticle]
       - [sio:title, $(MedlineCitation/Article/ArticleTitle)]
 
-      - p: sio:contributor # or sio:creator
+      - [pubmedvocab:mesh-headings, mesh:$(MedlineCitation/MeshHeadingList/MeshHeading/DescriptorName/@UI)]
+
+      - [sio:contributor, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
+
+      ## For some reason the function is not working for this file with RocketRML (works with drugbank XML though)
+      - p: sio:creator
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
+              - [idsf:split_on, "eeee"]
               - [idsf:add_prefix, "pubmeddata:"]
-              - [idsf:format_for, "uri"]
+              # - [idsf:find, "null"]
+              # - [idsf:replace, "null"]
+              # - [idsf:format_for, "uri"]
+      #       type: iri       
 
-      - [pubmedvocab:mesh-headings, mesh:$(MedlineCitation/MeshHeadingList/MeshHeading/DescriptorName/@UI)]
+  # authors:
+  #   sources:
+  #     - [data/PUBMED_FILEPATH~xpath, /PubmedArticleSet/PubmedArticle/MedlineCitation/Article/AuthorList/Author]
+  #   s: 
+  #     function: idsf:string_process
+  #     parameters:
+  #         - [idsf:input, "$(LastName)-$(Initials)-$(ForeName)"]
+  #         - [idsf:split_on, "null"]
+  #         - [idsf:add_prefix, "pubmeddata:"]
+  #         # - [idsf:find, ""]
+  #         # - [idsf:replace, ""]
+  #         # - [idsf:format_for, "uri"]
+  #     type: iri
 
-  authors:
-    sources:
-      - [data/PUBMED_FILEPATH~xpath, /PubmedArticleSet/PubmedArticle/MedlineCitation/Article/AuthorList/Author]
-    s: 
-      function: idsf:string_process
-      parameters:
-          - [idsf:input, "$(LastName)-$(Initials)-$(ForeName)"]
-          - [idsf:add_prefix, "pubmeddata:"]
-          - [idsf:format_for, "uri"]
-    po:
-      - [a, sio:Person]
-      - [sio:title, "$(LastName) $(Initials) $(ForeName)"]
+  #   po:
+  #     - [a, sio:Person]
+  #     - [sio:title, "$(LastName) $(Initials) $(ForeName)"]
 
-  mesh-categories:
-    sources:
-      - [data/PUBMED_FILEPATH~xpath, /PubmedArticleSet/PubmedArticle/MedlineCitation/MeshHeadingList/MeshHeading]
-    s: mesh:$(DescriptorName/@UI)
-    po:
-      - [a, sio:Category]
-      - [sio:title, $(DescriptorName)]
+  # mesh-categories:
+  #   sources:
+  #     - [data/PUBMED_FILEPATH~xpath, /PubmedArticleSet/PubmedArticle/MedlineCitation/MeshHeadingList/MeshHeading]
+  #   s: mesh:$(DescriptorName/@UI)
+  #   po:
+  #     - [a, sio:Category]
+  #     - [sio:title, $(DescriptorName)]

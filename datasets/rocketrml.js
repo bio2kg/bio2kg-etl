@@ -1,10 +1,13 @@
 const parser = require('rocketrml');
 
+// https://github.com/semantifyit/RocketRML
+// npm install -g rocketrml
 const doMapping = async () => {
 
     const args = process.argv.slice(2);
     const mapping_path = args[0] || './data/mapping.rml.ttl'
     const output_path = args[1] || './data/bio2kg-rocketml.n3';
+    console.log(mapping_path);
 
     const options = {
         verbose: false,
@@ -22,25 +25,55 @@ const doMapping = async () => {
 
         // You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
         functions : {
-            'http://users.ugent.be/~bjdmeest/function/grel.ttl#createDescription': function (data) {
-                let result=data[0]+' is '+data[1]+ ' years old.'; 
-                return result;
-            },
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
-            //     tring s, String split, 
-    		// String prefix, String find, String replace, String format
                 console.log(data);
-                let result=data[0]+' is '+data[1]+ ' years old.'; 
-                return 'https://test-process';
-            },
+                s = String(data[0])
+                split = data[1]
+                prefix = data[2] || null
+                find = data[3] || null
+                replace = data[4] || null
+                format = data[5] || null
+                
+                if(!s) {
+                    return null;
+                }
+                
+                resultList = [];
+                if(split) {
+                    resultList = s.split(split);
+                } else {
+                    resultList.push(s);
+                }
+                
+                if(prefix || replace || format) {
+                    resultList.forEach(function (value, i) {
+                        if(format && format.toLowerCase() == "uri") { 
+                            resultList[i] = resultList[i].replace(" ", "-")
+                                    .replace(",", "-").replace(".", "-").toLowerCase();
+                        }
+                        if(format && format.toLowerCase() == "lowercase") {
+                            resultList[i] = resultList[i].toLowerCase();
+                        }
+                        if(format && format.toLowerCase() == "uppercase") {
+                            resultList[i] = resultList[i].toUpperCase();
+                        }
+                        if(prefix) { 
+                            resultList[i] = prefix + resultList[i];
+                        }
+                        if(find && replace) { 
+                            resultList[i] = resultList[i].replaceAll(find, replace);
+                        }
+                    });
+                }
+                return resultList;
+            }
         }
-        // https://github.com/semantifyit/RocketRML
     };
+    console.log(mapping_path);
     const result = await parser.parseFile(mapping_path, output_path, options).catch((err) => { console.log(err); });
     console.log(result);
 };
 
-
 doMapping();
 
-// node rocketrml.js
+// node ../rocketrml.js

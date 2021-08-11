@@ -25,6 +25,7 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         cd datasets/PubMed
+        ./download.sh
         ./run.sh
         curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-pubmed.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: pubmed" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
@@ -32,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/PubMed/data/bio2kg-pubmed.ttl
+        path: datasets/PubMed/data/bio2kg-*.ttl

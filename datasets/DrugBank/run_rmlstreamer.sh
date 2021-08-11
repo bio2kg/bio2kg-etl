@@ -6,7 +6,6 @@
 export DATASET=DrugBank
 export DATASET_PATH=/mnt/$DATASET
 export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name)
-DRUGBANK_VERSION="${DRUGBANK_VERSION:=5-1-8}"
 
 # echo "Run script to download dataset on DSRI"
 # oc cp download.sh $FLINK_POD:$DATASET_PATH/
