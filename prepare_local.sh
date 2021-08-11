@@ -11,7 +11,7 @@ echo "Installing ShEx"
 yarn --cwd /opt add shex
 
 echo "Installing RocketRML"
-npm install -g rocketrml
+yarn
 
 echo "Install dependencies for python scripts"
 conda install --file requirements.txt

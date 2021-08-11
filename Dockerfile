@@ -47,7 +47,8 @@ RUN conda install --quiet -y \
     yarn \
     openjdk \
     maven \
-    sbt
+    sbt \
+    pugixml
 RUN conda update --all --quiet -y && \
     conda clean --all -f -y 
 
@@ -68,4 +69,4 @@ ENV PATH="$PATH:$HOME/.yarn/bin"
 RUN yarn global add @rmlio/yarrrml-parser
 
 RUN yarn --cwd /opt add shex
-RUN npm install -g rocketrml
+# RUN yarn add rocketrml

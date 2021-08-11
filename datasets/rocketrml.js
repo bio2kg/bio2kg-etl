@@ -1,13 +1,12 @@
 const parser = require('rocketrml');
 
 // https://github.com/semantifyit/RocketRML
-// npm install -g rocketrml
+// yarn add vemonet/RocketRML
 const doMapping = async () => {
 
     const args = process.argv.slice(2);
     const mapping_path = args[0] || './data/mapping.rml.ttl'
     const output_path = args[1] || './data/bio2kg-rocketml.n3';
-    console.log(mapping_path);
 
     const options = {
         verbose: false,
@@ -17,8 +16,9 @@ const doMapping = async () => {
         
         // You can delete namespaces to make the xpath simpler.
         // removeNameSpace: {xmlns:"https://xmlnamespace.xml"},
-        // Choose xpath evaluator library, available options: pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) | fontoxpath (xpath 3.1 engine) | default | xpath (same as default)
-        xpathLib: "pugixml",
+        // Choose xpath evaluator library, available options: pugixml (cpp xpath implementation, previously xmlPerformanceMode:true) 
+        // fontoxpath (xpath 3.1 engine) | default | xpath (same as default)
+        xpathLib: "fontoxpath",
         // xmlPerformanceMode: true,
         // ignore input values that are empty string (or whitespace only) (only use a value from the input if value.trim() !== '') (default false)
         ignoreEmptyStrings: true,
@@ -26,13 +26,14 @@ const doMapping = async () => {
         // You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
         functions : {
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
+                const idfs = 'https://w3id.org/um/ids/rmlfunctions.ttl#'
                 console.log(data);
-                s = String(data[0])
-                split = data[1]
-                prefix = data[2] || null
-                find = data[3] || null
-                replace = data[4] || null
-                format = data[5] || null
+                s = String(data[idfs + 'input'])
+                split = data[idfs + 'split_on']
+                prefix = data[idfs + 'add_prefix'] || null
+                find = data[idfs + 'find'] || null
+                replace = data[idfs + 'replace'] || null
+                format = data[idfs + 'format_for'] || null
                 
                 if(!s) {
                     return null;
@@ -61,7 +62,8 @@ const doMapping = async () => {
                             resultList[i] = prefix + resultList[i];
                         }
                         if(find && replace) { 
-                            resultList[i] = resultList[i].replaceAll(find, replace);
+                            // resultList[i] = resultList[i].replaceAll(find, replace);
+                            resultList[i] = resultList[i].replace(find, replace);
                         }
                     });
                 }

@@ -16,3 +16,6 @@ data/
 
 # *.jar
 # datasets/*.ttl
+
+node_modules/
+yarn.lock

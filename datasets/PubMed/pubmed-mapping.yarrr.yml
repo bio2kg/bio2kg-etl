@@ -28,19 +28,20 @@ mappings:
 
       - [pubmedvocab:mesh-headings, mesh:$(MedlineCitation/MeshHeadingList/MeshHeading/DescriptorName/@UI)]
 
-      - [sio:contributor, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
+      # - [sio:contributor, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
 
       ## For some reason the function is not working for this file with RocketRML (works with drugbank XML though)
       - p: sio:creator
         o:
           function: idsf:string_process
           parameters:
+              # - [idsf:input, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
               - [idsf:input, "$(MedlineCitation/Article/AuthorList/Author/LastName)-$(MedlineCitation/Article/AuthorList/Author/Initials)-$(MedlineCitation/Article/AuthorList/Author/ForeName)"]
-              - [idsf:split_on, "eeee"]
+              # - [idsf:split_on, "eeee"]
               - [idsf:add_prefix, "pubmeddata:"]
               # - [idsf:find, "null"]
               # - [idsf:replace, "null"]
-              # - [idsf:format_for, "uri"]
+              - [idsf:format_for, "uri"]
       #       type: iri       
 
   # authors:

@@ -81,7 +81,8 @@ jobs:
         DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
         DRUGBANK_VERSION: 5-1-8
       run: |
-        yarn add rocketrml
+        conda install -y pugixml
+        yarn
         cd datasets/DrugBank
         ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
         ./run.sh

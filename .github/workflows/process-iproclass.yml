@@ -25,7 +25,7 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        yarn add rocketrml
+        yarn
         cd datasets/iProClass
         ./download.sh
         ./run.sh

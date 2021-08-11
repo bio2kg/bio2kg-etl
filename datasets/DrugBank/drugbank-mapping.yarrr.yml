@@ -85,11 +85,11 @@ mappings:
   #         function: idsf:string_process
   #         parameters:
   #             - [idsf:input, "$(actions/action)"]
-  #             - [idsf:split_on, "null"]
+  #             # - [idsf:split_on, "null"]
   #             - [idsf:add_prefix, "drugbankvocab:action/"]
-  #             # - [idsf:find, ""]
-  #             # - [idsf:replace, ""]
-  #             # - [idsf:format_for, "uri"]
+  #             # - [idsf:find, "null"]
+  #             # - [idsf:replace, "null"]
+  #             - [idsf:format_for, "uri"]
   #         type: iri
 
   #     - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]

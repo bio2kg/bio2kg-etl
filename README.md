@@ -35,6 +35,26 @@ All temporary files are put in the `data/` folder
 * https://github.com/carml/carml
 * https://github.com/semantifyit/RocketRML
 
+### Use RocketRML
+
+Install our custom RocketRML directly from GitHub:
+
+```bash
+yarn add vemonet/RocketRML
+```
+
+Or install from a local folder:
+
+```bash
+yarn add file:$HOME/sandbox/RocketRML
+```
+
+Update:
+
+```bash
+yarn upgrade file:$HOME/sandbox/RocketRML
+```
+
 ## Run workflows on DSRI with GitHub Actions
 
 You can define GitHub Actions workflows in the folder `.github/workflows` to run on the DSRI:
