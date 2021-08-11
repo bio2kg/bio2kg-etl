@@ -57,3 +57,8 @@ do
     rm data/bio2kg-$PROCESS_FILE.ttl 
     java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 
 done
+
+
+# Run SDM-RDFizer
+# docker run -d -p 4000:4000 -v $(pwd):/data rdfizer
+# curl localhost:4000/graph_creation/data/rdfizer.ini

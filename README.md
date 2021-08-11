@@ -30,10 +30,10 @@ All temporary files are put in the `data/` folder
 
 ### Checkout new mappers
 
-* https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run
+* https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run (check `datasets/CTD`)
 
 * https://github.com/carml/carml
-* https://github.com/semantifyit/RocketRML
+* https://github.com/semantifyit/RocketRML (check `datasets/DrugBank` and `datasets/iProClass`)
 
 ### Use RocketRML
 
@@ -43,7 +43,7 @@ Install our custom RocketRML directly from GitHub:
 yarn add vemonet/RocketRML
 ```
 
-Or install from a local folder:
+Or install from a local folder to develop RocketRML:
 
 ```bash
 yarn add file:$HOME/sandbox/RocketRML
@@ -77,7 +77,7 @@ The latest version of [miniforge conda](https://github.com/conda-forge/miniforge
 Build:
 
 ```bash
-docker build -t ghcr.io/bio2kg/workflow-runner:latest .
+docker build -t ghcr.io/bio2kg/workflow-runner:latest workflows
 ```
 
 Quick try:
