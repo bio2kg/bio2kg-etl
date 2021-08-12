@@ -1,0 +1,67 @@
+@prefix b2kshape: <https://w3id.org/bio2kg/shape/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix sio:   <http://semanticscience.org/resource/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sioshape: <http://semanticscience.org/shape/> .
+
+sioshape:Gene  a              sh:NodeShape ;
+        sh:closed             false ;
+        sh:ignoredProperties  ( rdf:type ) ;
+        sh:property           []  ;
+        sh:property           [ sh:nodeKind  sh:IRI ;
+                                sh:path      sio:seeAlso
+                              ] ;
+        sh:property           [ sh:datatype  xsd:string ;
+                                sh:path      sio:description
+                              ] ;
+        sh:property           [ sh:datatype  xsd:string ;
+                                sh:maxCount  1 ;
+                                sh:path      sio:title
+                              ] ;
+        sh:targetClass        sio:Gene .
+
+sioshape:Drug  a              sh:NodeShape ;
+        sh:closed             false ;
+        sh:ignoredProperties  ( rdf:type ) ;
+        sh:property           [ sh:class     sio:Article ;
+                                sh:nodeKind  sh:IRI ;
+                                sh:path      sio:isSupportedBy
+                              ] ;
+        sh:property           [ sh:nodeKind  sh:IRI ;
+                                sh:path      sio:seeAlso
+                              ] ;
+        sh:property           [ sh:datatype  xsd:string ;
+                                sh:path      sio:description
+                              ] ;
+        sh:property           [ sh:datatype  xsd:string ;
+                                sh:maxCount  1 ;
+                                sh:path      sio:title
+                              ] ;
+        sh:targetClass        sio:Drug .
+
+sioshape:Association  a       sh:NodeShape ;
+        sh:closed             false ;
+        sh:ignoredProperties  ( rdf:type ) ;
+        sh:property           [ sh:class     sio:Article ;
+                                sh:nodeKind  sh:IRI ;
+                                sh:path      sio:isSupportedBy
+                              ] ;
+        sh:property           [ sh:maxCount  1 ;
+                                sh:minCount  1 ;
+                                sh:nodeKind  sh:IRI ;
+                                sh:path      rdf:object
+                              ] ;
+        sh:property           [ sh:maxCount  1 ;
+                                sh:minCount  1 ;
+                                sh:nodeKind  sh:IRI ;
+                                sh:path      rdf:predicate
+                              ] ;
+        sh:property           [ sh:maxCount  1 ;
+                                sh:minCount  1 ;
+                                sh:nodeKind  sh:IRI ;
+                                sh:path      rdf:subject
+                              ] ;
+        sh:targetClass        sio:Association .

@@ -11,7 +11,7 @@ prefixes:
   uniprot: "https://identifiers.org/uniprot:"
   omim: "https://identifiers.org/mim:"
   schema: "https://schema.org/"
-  sio: "http://semantiscience.org/resource/"
+  sio: "http://semanticscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"
@@ -24,7 +24,8 @@ mappings:
     sources:
       - ['data/iproclass.csv~csv']
   
-    s: uniprot:$(UniProtKB accession)
+    
+    # s: uniprot:$(UniProtKB accession)
     po:
       - [a, sio:Protein]
       - [sio:hasProvider, bio2kg:graph/iproclass~iri]
@@ -49,10 +50,10 @@ mappings:
               - [idsf:add_prefix, "pubmed:"]
           type: iri
 
-      # - p: sio:isSupportedBy
-      #   o:
-      #       function: grel:string_split
-      #       parameters:
-      #           - [grel:p_string_sep, ";"]
-      #           - [grel:valueParameter, $(PubMed)]
-      #       # language: en
+      - p: sio:isSupportedBy
+        o:
+            function: grel:string_split
+            parameters:
+                - [grel:p_string_sep, ";"]
+                - [grel:valueParameter, $(PubMed)]
+            # language: en

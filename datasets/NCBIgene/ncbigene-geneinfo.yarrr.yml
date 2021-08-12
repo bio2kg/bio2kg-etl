@@ -11,7 +11,7 @@ prefixes:
   HGNC: "https://identifiers.org/HGNC:"
   MGI: "https://identifiers.org/MGI:"
   schema: "https://schema.org/"
-  sio: "http://semantiscience.org/resource/"
+  sio: "http://semanticscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"

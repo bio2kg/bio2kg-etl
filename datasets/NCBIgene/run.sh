@@ -21,7 +21,6 @@ if [ ! -f "data/mim2gene_medgen" ]; then
 fi
 
 # PROCESS_FILE="${1:-ncbigene-mim2gene.yarrr.yml}"
-# # ncbigene-geneinfo.yarrr.yml
 
 ls *.yarrr.yml | while read PROCESS_FILE 
 do

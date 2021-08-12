@@ -26,7 +26,7 @@ if [ ! -f "data/preppi.csv" ]; then
     # Convert TSV to CSV for RML Mapper
     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' preppi.tsv > preppi.csv
 
-    # The next lines are used to produce a sample for development, comment them to process the complete files
+    ## The next lines are used to produce a sample for development, comment them to process the complete files
     # mv disease-chemical.csv disease-chemical-full.csv
     # head -n 1000 disease-chemical-full.csv > disease-chemical.csv
     cd ..

@@ -12,7 +12,7 @@ prefixes:
   ncbigene: "https://identifiers.org/ncbigene:"
   ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
   schema: "https://schema.org/"
-  sio: "http://semantiscience.org/resource/"
+  sio: "http://semanticscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"

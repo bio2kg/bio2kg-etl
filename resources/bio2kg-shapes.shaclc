@@ -1,0 +1,49 @@
+BASE <http://example.com/ns>
+
+IMPORTS <http://semanticscience.org/ontology/sio-subset-labels.owl>
+# Redirects to https://raw.githubusercontent.com/micheldumontier/semanticscience/master/ontology/sio/release/sio-subset-labels.owl
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX sh:  <http://www.w3.org/ns/shacl#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX sioshape: <http://semanticscience.org/shape/>
+PREFIX b2kshape: <https://w3id.org/bio2kg/shape/>
+
+## Download converted and convert to SHACL RDF:
+# wget -O /opt/shaclconvert.jar https://gitlab.ontotext.com/yasen.marinov/shaclconvert/-/raw/master/built/shaclconvert.jar
+# java -jar /opt/shaclconvert.jar resources/bio2kg-shapes.shaclc resources/bio2kg-shapes.shacl
+
+# Website to validate shapes against RDF: https://shacl.org/playground/
+
+shape sioshape:Drug -> sio:Drug {
+	closed=false ignoredProperties=[rdf:type] . 
+	# severity=sh:warning
+	sio:title  xsd:string [0..1] .
+	sio:description  xsd:string [0..*] .
+	sio:seeAlso  IRI [0..*] .
+	sio:isSupportedBy  IRI sio:Article [0..*] .
+
+	# sio:hasUniqueIdentifier  xsd:string [0..1] pattern="^\\d{3}-\\d{2}-\\d{4}$" .
+	# ex:address  BlankNode [0..1] {
+	# 	ex:city xsd:string [1..1] .
+	# 	ex:postalCode xsd:integer|xsd:string [1..1] maxLength=5 .
+	# } .
+}
+
+shape sioshape:Association -> sio:Association {
+	closed=false ignoredProperties=[rdf:type] . 
+
+	rdf:subject  IRI [1..1] .
+	rdf:predicate  IRI [1..1] .
+	rdf:object  IRI [1..1] .
+	sio:isSupportedBy  IRI sio:Article [0..*] .
+}
+
+shape sioshape:Gene -> sio:Gene {
+	closed=false ignoredProperties=[rdf:type] .
+
+	sio:title  xsd:string [0..1] .
+	sio:description  xsd:string [0..*] .
+	sio:seeAlso  IRI [0..*] .
+	sio:isSupportedBy  IRI sio:Article [0..*] .
+}

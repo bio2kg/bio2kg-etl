@@ -27,31 +27,30 @@ All temporary files are put in the `data/` folder
 
 1. Define a `run.sh` script to download the dataset, and run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
 2. You can browse existing SemanticScience classes and properties here: https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html
-3. You can add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily:
+3. You can add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml):
 
-Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). After that, add the following lines to the `settings.json` 
+Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). After that, add the following lines to the `settings.json` :
 
 ```json
     "yaml.schemas": {
-        "/path/to/folder/yarrrml.schema.json": ["*.yarrr.yml"]
+        "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/yarrrml.schema.json": ["*.yarrr.yml"]
     }
 ```
 
 ### Available RML mappers
 
-1. rmlmapper-java: works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
+1. [rmlmapper-java](https://github.com/RMLio/rmlmapper-java): works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
 
-2. RMLStreamer (scala): works well with large CSV. Not working with XML and functions (e.g. DrugBank, iProClass)
+2. [RMLStreamer](https://github.com/RMLio/RMLStreamer) (scala): works well with large CSV. Not working with XML and functions (e.g. DrugBank, iProClass)
 
-3. RocketRML (js): works well with medium size CSV and XML. Limit to 2G file to load. Face issues with some resolutions (e.g. PubMed)
+3. [RocketRML](https://github.com/semantifyit/RocketRML) (js): works well with medium size CSV and XML. Limit to 2G file to load. Face issues with some resolutions (e.g. PubMed)
 
 
 See also: 
 
-* https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run (check `datasets/CTD`)
+* [SDM-RDFizer](https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run): work started in `datasets/CTD`
 
-* https://github.com/carml/carml: requires to rewrite a lot of things in Java 
-
+* [CARML](https://github.com/carml/carml): can't be used as executable apparently, requires to write a java program
 
 ## Run workflows on DSRI with GitHub Actions
 
@@ -271,7 +270,7 @@ Register a workflow:
 python3 workflows/prefect-workflow.py
 ```
 
-## Run Argo workflows
+## Deploy Argo workflows on DSRI
 
 [Install Argo workflows](https://github.com/argoproj/argo-helm/tree/master/charts/argo-workflows) using Helm charts:
 

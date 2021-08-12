@@ -43,11 +43,18 @@ oc cp data/mapping.rml.ttl $FLINK_POD:/mnt/
 
 PARALLELISM=64
 echo "Running the RML Streamer on $PARALLELISM threads"
+
+## Modified RMLStreamer with IDS functions:
 # oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
 
-# /opt/flink/bin/flink run -p 64 -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m mapping.rml.ttl -o /mnt/bio2kg-rmlstreamer.nt --job-name "RMLStreamer Bio2KG - iProClass"
+## Original RMLStreamer:
+oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer-original.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
 
-oc exec $FLINK_POD -- bash -c "cd /mnt && /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main RMLStreamer.jar toFile -m mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name \"RMLStreamer Bio2KG - $DATASET\""
+## Change directory first:
+# oc exec $FLINK_POD -- bash -c "cd /mnt && /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main RMLStreamer.jar toFile -m mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name \"RMLStreamer Bio2KG - $DATASET\""
+
+## Run directly from flink pod
+# /opt/flink/bin/flink run -p 64 -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m mapping.rml.ttl -o /mnt/bio2kg-rmlstreamer.nt --job-name "RMLStreamer Bio2KG - iProClass"
 
 
 # echo "Copy the $DATASET RDF output from the DSRI to the local machine"

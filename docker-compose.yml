@@ -1,16 +1,13 @@
 version: "3"
 
-services:
+# NOTE: we currently use the DSRI to host our Virtuoso instance, cf. README.md
 
-  # To enable Virtuoso LDP, see https://github.com/vemonet/shapes-of-you#enable-virtuoso-linked-data-platform
+services:
+  # To enable Virtuoso LDP, see https://github.com/vemonet/virtuoso-ldp
   virtuoso:
     container_name: bio2kg-graph-virtuoso
     image: openlink/virtuoso-opensource-7:latest
-    # See also: https://hub.docker.com/r/markw/ldp_server
 
-    # https://community.openlinksw.com/t/permissions-on-ldp-containers-and-resources/290/14
-    # Download VAD packages: ODS Framework and Briefcase
-    # http://download3.openlinksw.com/index.html?prefix=uda/vad-vos-packages/7.2/
     restart: unless-stopped
     volumes:
       - /data/bio2kg/graph/virtuoso:/database

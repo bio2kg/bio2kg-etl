@@ -1,11 +1,11 @@
-name: Process SNAP BioData
+name: Process GenAge
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/snap-biodata/*'
-    - '.github/workflows/process-snap-biodata.yml'
+    - 'datasets/GenAge/*'
+    - '.github/workflows/process-genage.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
@@ -24,13 +24,13 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/snap-biodata
+        cd datasets/GenAge
         ./download.sh
         ./run.sh
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-snap-biodata.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: snap-biodata" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-genage.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: genage" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/snap-biodata/data/bio2kg-snap-biodata.ttl
+        path: datasets/GenAge/data/bio2kg-genage.ttl

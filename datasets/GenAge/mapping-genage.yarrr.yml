@@ -1,0 +1,63 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  uniprot: "https://identifiers.org/uniprot:"
+  MESH: "https://identifiers.org/mesh:"
+  HGNC: "https://identifiers.org/HGNC:"
+  MGI: "https://identifiers.org/MGI:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  genagevocab: "https://w3id.org/bio2kg/vocab/genage/"
+  genagedata: "https://w3id.org/bio2kg/data/genage/"
+
+mappings:
+
+  # GenAge ID,symbol,name,organism,entrez gene id,avg lifespan change (max obsv),lifespan effect,longevity influence
+  # 1,aak-2,AMP-Activated Kinase,Caenorhabditis elegans,181727,,Increase and Decrease,Pro-Longevity
+  # 2,aat-8,Amino Acid Transporter,Caenorhabditis elegans,185079,30,Increase,Anti-Longevity
+  models-gene:
+    sources:
+      - ['data/genage_models.csv~csv']
+    s: ncbigene:$(entrez gene id)
+    po:
+      - [a, sio:Gene]
+      - [sio:hasProvider, bio2kg:graph/genage~iri]
+
+      - [sio:similarTo, genagedata:gene/$(GenAge ID)~iri] 
+      - [sio:title, $(name)]
+      - [sio:hasSynonym, $(symbol)]
+      - [sio:affects, $(organism)]
+
+      - [genagevocab:avg-lifespan-change, $(avg lifespan change \(max obsv\))]
+      - [genagevocab:lifespan-effect, $(lifespan effect)]
+      - [genagevocab:avg-lifespan-change, $(avg lifespan change \(max obsv\))]
+      - [genagevocab:longevity-influence, $(longevity influence)]
+
+  # GenAge ID,symbol,name,entrez gene id,uniprot,why
+  # 1,GHR,growth hormone receptor,2690,GHR_HUMAN,mammal
+  human-gene:
+    sources:
+      - ['data/genage_human.csv~csv']
+    s: ncbigene:$(entrez gene id)
+    po:
+      - [a, sio:Gene]
+      - [sio:hasProvider, bio2kg:graph/genage~iri]
+
+      - [sio:similarTo, genagedata:gene/$(GenAge ID)~iri] 
+      - [sio:title, $(name)]
+      - [sio:hasSynonym, $(symbol)]
+      - [sio:description, $(why)]
+
+      - [sio:hasConcretization, "uniprot:$(uniprot)~iri"]
+      
