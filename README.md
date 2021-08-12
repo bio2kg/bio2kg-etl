@@ -27,33 +27,31 @@ All temporary files are put in the `data/` folder
 
 1. Define a `run.sh` script to download the dataset, and run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
 2. You can browse existing SemanticScience classes and properties here: https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html
+3. You can add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily:
 
-### Checkout new mappers
+Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). After that, add the following lines to the `settings.json` 
+
+```json
+    "yaml.schemas": {
+        "/path/to/folder/yarrrml.schema.json": ["*.yarrr.yml"]
+    }
+```
+
+### Available RML mappers
+
+1. rmlmapper-java: works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
+
+2. RMLStreamer (scala): works well with large CSV. Not working with XML and functions (e.g. DrugBank, iProClass)
+
+3. RocketRML (js): works well with medium size CSV and XML. Limit to 2G file to load. Face issues with some resolutions (e.g. PubMed)
+
+
+See also: 
 
 * https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run (check `datasets/CTD`)
 
-* https://github.com/carml/carml
-* https://github.com/semantifyit/RocketRML (check `datasets/DrugBank` and `datasets/iProClass`)
+* https://github.com/carml/carml: requires to rewrite a lot of things in Java 
 
-### Use RocketRML
-
-Install our custom RocketRML directly from GitHub:
-
-```bash
-yarn add vemonet/RocketRML
-```
-
-Or install from a local folder to develop RocketRML:
-
-```bash
-yarn add file:$HOME/sandbox/RocketRML
-```
-
-Update:
-
-```bash
-yarn upgrade file:$HOME/sandbox/RocketRML
-```
 
 ## Run workflows on DSRI with GitHub Actions
 
@@ -167,7 +165,7 @@ Add or update the template in the `bio2kg` project:
 oc apply -f https://raw.githubusercontent.com/vemonet/flink-on-openshift/master/template-flink-dsri.yml
 ```
 
-Create the Flink cluster:
+Create the Flink cluster in your project on DSRI:
 
 ```bash
 oc new-app apache-flink -p APPLICATION_NAME=flink \
@@ -175,9 +173,11 @@ oc new-app apache-flink -p APPLICATION_NAME=flink \
   -p WORKER_COUNT="4" \
   -p TASKS_SLOTS="64" \
   -p CPU_LIMIT="32" \
-  -p MEMORY_LIMIT=60Gi \
-  -p FLINK_IMAGE="flink:1.12.3-scala_2.11"
+  -p MEMORY_LIMIT=100Gi \
+  -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
 ```
+
+> Check [this repo](https://github.com/vemonet/flink-on-openshift) to build the image of Flink with the RMLStreamer.
 
 Download the [latest release](https://github.com/RMLio/RMLStreamer/releases) of the `RMLStreamer.jar` file in the Flink cluster (to do only if not already present)
 
@@ -189,14 +189,21 @@ Submit a job:
 
 ```bash
 export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name)
-export PARALLELISM=64
 
-oc exec $FLINK_POD -- /opt/flink/bin/flink run --detached -p $PARALLELISM -c io.rml.framework.Main /opt/RMLStreamer.jar toFile -m /mnt/input.csv -o /mnt/output.nt --job-name "RMLStreamer Bio2KG - dataset"
+oc exec $FLINK_POD -- /opt/flink/bin/flink run -p 64 -c io.rml.framework.Main /opt/RMLStreamer.jar toFile -m /mnt/mapping.rml.ttl -o /mnt/bio2kg-output.nt --job-name "RMLStreamer Bio2KG - dataset"
 ```
 
 See the Flink docs for more details on running jobs using the [CLI](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/cli/) or [Kubernetes native execution](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/native_kubernetes/).
 
 cf. more Flink [docs for Kubernetes deployment](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/standalone/kubernetes/)
+
+Uninstall the Flink cluster from your project on DSRI:
+
+```bash
+oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
+# Delete the persistent volume:
+oc delete pvc --selector app=flink
+```
 
 ## Deploy Prefect workflows on DSRI
 

@@ -1,7 +1,13 @@
 const parser = require('rocketrml');
 
 // https://github.com/semantifyit/RocketRML
+// Install custom from GitHub:
 // yarn add vemonet/RocketRML
+// Or install from a local folder to develop RocketRML:
+// yarn add file:$HOME/sandbox/RocketRML
+// And update when change
+// yarn upgrade file:$HOME/sandbox/RocketRML
+
 const doMapping = async () => {
 
     const args = process.argv.slice(2);

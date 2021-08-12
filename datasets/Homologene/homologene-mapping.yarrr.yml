@@ -20,6 +20,7 @@ mappings:
   genes:
     sources:
       - ['data/homologene.csv~csv']
+    
       # HomoloGene group id,Taxonomy ID,Gene ID,Gene Symbol,Protein gi,Protein accession
       # "3","9606","34","ACADM","4557231","NP_000007.1"
       # "3","9598","469356","ACADM","160961497","NP_001104286.1"

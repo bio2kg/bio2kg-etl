@@ -1,0 +1,219 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://rml.io/yarrrml/schema",
+    "title": "YARRRML",
+    "description": "A YARRRML document",
+    "type": "object",
+    "properties": {
+      "prefixes": {
+        "type": "object"
+      },
+      "sources": {
+        "type": "object",
+        "patternProperties": {
+          "^.*$": {
+            "$ref": "#/$defs/source"
+          }
+        }
+      },
+      "mappings": {
+        "type": "object",
+        "patternProperties": {
+          "^.*$": {
+            "properties": {
+              "po": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "p": {
+                          "type": "string"
+                        },
+                        "o": {
+                          "type": "object",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "const": "blank"
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  },
+                                  "datatype": {
+                                    "type": "string"
+                                  },
+                                  "language": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": ["value", "type"]
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "mapping": {
+                                    "type": "string"
+                                  },
+                                  "conditions": {
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/$defs/function"
+                                    }
+                                  }
+                                },
+                                "required": ["mapping"]
+                              },
+                              {"$ref": "#/$defs/function"}
+                            ]
+                          },
+                          "minItems": 1
+                        }
+                      }
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 2
+                    }
+                  ]
+                }
+              },
+              "s": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {"$ref": "#/$defs/function"}
+                ]
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/source"
+                }
+              }
+            }
+          }
+        },
+        "minProperties": 1,
+        "additionalProperties": false
+      }
+    },
+    "required": [
+      "mappings"
+    ],
+    "$defs": {
+      "function": {
+        "type": "object",
+        "properties": {
+          "function": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "parameter": {
+                  "type": "string"
+                },
+                "value": {
+                  "anyOf": [{
+                    "type": "string"
+                  }, {
+                    "$ref": "#/$defs/function"
+                  }]
+                },
+                "type": {
+                  "type": "string"
+                },
+                "from": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "parameter",
+                "value"
+              ]
+            }
+          }
+        },
+        "required": ["function"]
+      },
+      "source": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "access": {
+                "type": "string"
+              },
+              "referenceFormulation": {
+                "type": "string"
+              },
+              "iterator": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "access",
+              "referenceFormulation"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "table": {
+                "type": "string"
+              },
+              "queryFormulation": {
+                "type": "string"
+              },
+              "query": {
+                "type": "string"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "table"
+                ]
+              },
+              {
+                "required": [
+                  "query"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  }
+  

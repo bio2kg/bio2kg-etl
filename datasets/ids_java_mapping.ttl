@@ -1,0 +1,83 @@
+@prefix cc:      <http://creativecommons.org/ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix doap:    <http://usefulinc.com/ns/doap#> .
+@prefix fno:     <https://w3id.org/function/ontology#> .
+@prefix fnoi:    <https://w3id.org/function/vocabulary/implementation#> .
+@prefix fnom:    <https://w3id.org/function/vocabulary/mapping#> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix grel:    <http://users.ugent.be/~bjdmeest/function/grel.ttl#> .
+@prefix grelm:   <http://fno.io/grel/rmlmapping#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix woc:     <http://rdf.webofcode.org/woc/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix idsf:    <https://w3id.org/um/ids/rmlfunctions.ttl#> .
+
+# Check https://github.com/RMLio/rmlmapper-java/blob/master/src/main/resources/functions_grel.ttl
+
+grelm:void
+    a                 void:DatasetDescription ;
+    dcterms:title     "A VoID Description of the IDS Fno JAVA Mapping Descriptions Dataset" ;
+    dcterms:creator   <https://github.com/vemonet> ;
+    foaf:primaryTopic grelm:dataset ;
+.
+
+<https://github.com/vemonet>
+    rdf:type  foaf:Person ;
+    foaf:mbox "mailto:vincent.emonet@gmail.com" ;
+    foaf:name "Vincent Emonet"@en .
+
+grelm:dataset
+    a                    void:Dataset ;
+    foaf:homepage        <https://github.com/OpenRefine/OpenRefine/wiki/General-Refine-Expression-Language> ;
+    foaf:homepage        <https://fno.io> ;
+    dcterms:title        "IDS Fno JAVA Mapping Descriptions"@en ;
+    dcterms:description  "The FnO JAVA mapping descriptions of IDS RML functions" ;
+    dcterms:contributor  <https://github.com/vemonet> ;
+    dcterms:modified     "2020-01-21"^^xsd:date ;
+    cc:license           <http://creativecommons.org/license/by/3.0/> ;
+    dcterms:issued       "2020-01-21"^^xsd:date ;
+    dcterms:rights       "Copyright © Vincent Emonet"@en ;
+    dcterms:subject      <http://dbpedia.org/resource/Function_(mathematics)> ;
+    dcterms:subject      <http://dbpedia.org/resource/Function_model> ;
+    void:feature         <http://www.w3.org/ns/formats/Turtle> ;
+    void:exampleResource grelm:boolean_and ;
+    void:vocabulary      <https://w3id.org/function/ontology#>, <https://w3id.org/function/vocabulary/implementation#>,
+                         <https://w3id.org/function/vocabulary/mapping#> .
+
+# Contents:
+# - Parameters (per java) param_{var} with predicate p_{type}_{var}
+# - Outputs (per java) output_{type} with predicate o_{type}
+# - Problems (per java) prob_{var}
+#   - Functions (per java)
+
+# https://w3id.org/um/ids/functions.ttl#
+
+grelm:javaString
+    a                  fnoi:JavaClass ;
+    doap:download-page "IdsRmlFunctions.jar" ;
+    fnoi:class-name    "org.semanticscience.d2s.functions.StringFunctions" .
+
+#SPLIT
+
+grelm:splitMapping
+    a                    fnoi:Mapping ;
+    fno:function         idsf:string_process ;
+    fno:implementation   grelm:javaString ;
+# TODO if not clear
+    fno:parameterMapping [ ] ;
+# TODO if not clear
+    fno:returnMapping    [ ] ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "stringProcess" ] ;
+.
+
+
+# grel:string_split
+#     a                   fno:Function ;
+#     fno:name            "split" ;
+#     dcterms:description "split" ;
+#     fno:expects         ( grel:valueParam grel:param_string_sep ) ;
+#     fno:returns         ( grel:output_array ) .
+
