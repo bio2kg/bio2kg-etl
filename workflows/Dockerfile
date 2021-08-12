@@ -7,7 +7,7 @@ USER root
 
 # dnf not working, use conda instead
 # RUN yum -y upgrade
-RUN dnf -y install pugixml
+RUN dnf -y install make automake gcc gcc-c++ kernel-devel pugixml
 
 RUN chown -R $UID:$GID /opt
 USER $UID
