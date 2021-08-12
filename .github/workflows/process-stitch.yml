@@ -32,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/STITCH/data/bio2kg-stitch.ttl
+        path: datasets/STITCH/data/bio2kg-*.ttl
