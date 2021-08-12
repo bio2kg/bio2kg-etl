@@ -14,6 +14,10 @@ if [ ! -f "data/drugbank.xml" ]; then
     unzip drugbank.zip
     # Replace <drugbank-id @primary=true> by <drugbank-id-primary> to enable RML to get the main DrugBank ID
     sed -r 's/<drugbank-id primary="true">(.*)<\/drugbank-id>/<drugbank-id-primary>\1<\/drugbank-id-primary>/g' full\ database.xml > drugbank.xml
+
+    # Fix a namespace causing RMLStreamer to fail
+    # sed -ir 's/xsi:schemaLocation="http:\/\/www.drugbank.ca /xsi:schemaLocation="/' drugbank.xml
+    sed -ir 's/ version="5\.1" exported-on="2021-01-03"//' drugbank.xml
 fi
 
-npm install rocketrml
+# npm install rocketrml

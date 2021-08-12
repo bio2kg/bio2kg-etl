@@ -5,6 +5,10 @@ yarrrml-parser -i pubmed-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 # rm data/bio2kg-*.ttl
 
+# cd ../..
+# yarn upgrade file:$HOME/sandbox/RocketRML
+# cd datasets/PubMed
+
 ls data/pubmed21n*.xml | while read PROCESS_FILE 
 do
     PROCESS_FILE=$(echo $PROCESS_FILE | sed "s/data\///g")

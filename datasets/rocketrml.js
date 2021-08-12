@@ -55,8 +55,8 @@ const doMapping = async () => {
                 if(prefix || replace || format) {
                     resultList.forEach(function (value, i) {
                         if(format && format.toLowerCase() == "uri") { 
-                            resultList[i] = resultList[i].replace(" ", "-")
-                                    .replace(",", "-").replace(".", "-").toLowerCase();
+                            resultList[i] = resultList[i].replace(/ /g, "-")
+                                    .replace(/,/g, "-").replace(/\./g, "-").toLowerCase();
                         }
                         if(format && format.toLowerCase() == "lowercase") {
                             resultList[i] = resultList[i].toLowerCase();
@@ -69,7 +69,7 @@ const doMapping = async () => {
                         }
                         if(find && replace) { 
                             // resultList[i] = resultList[i].replaceAll(find, replace);
-                            resultList[i] = resultList[i].replace(find, replace);
+                            resultList[i] = resultList[i].replace(new RegExp(find, 'g'), replace);
                         }
                     });
                 }

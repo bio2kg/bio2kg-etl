@@ -21,7 +21,7 @@ echo "Copy the $DATASET mappings to the RML Streamer on DSRI"
 sed -ir 's/data\/drugbank.xml/\/mnt\/DrugBank\/drugbank.xml/g' data/mapping.rml.ttl
 oc cp data/mapping.rml.ttl $FLINK_POD:$DATASET_PATH/
 
-PARALLELISM=64
+PARALLELISM=1
 echo "Running the RML Streamer on $PARALLELISM threads"
 oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
 

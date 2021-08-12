@@ -7,7 +7,7 @@ if [ ! -f "data/homologene.csv" ]; then
     # https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/README
     wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data
     # wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.xml.gz
-    gzip -d *.gz
+    # gzip -d *.gz
 
     # Convert TSV to CSV for RML Mapper
     sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' homologene.data > homologene.csv
