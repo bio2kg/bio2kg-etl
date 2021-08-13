@@ -41,14 +41,14 @@ mappings:
       #         - [idsf:add_prefix, "omim:"]
       #     type: iri
 
-      - p: sio:isSupportedBy
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(PubMed ID)"]
-              - [idsf:split_on, "; "]
-              - [idsf:add_prefix, "pubmed:"]
-          type: iri
+      # - p: sio:isSupportedBy
+      #   o:
+      #     function: idsf:string_process
+      #     parameters:
+      #         - [idsf:input, "$(PubMed ID)"]
+      #         - [idsf:split_on, "; "]
+      #         - [idsf:add_prefix, "pubmed:"]
+      #     type: iri
 
       - p: sio:isSupportedBy
         o:

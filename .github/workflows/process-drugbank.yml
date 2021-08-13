@@ -81,6 +81,7 @@ jobs:
         DRUGBANK_VERSION: 5-1-8
       run: |
         conda install -y pugixml
+        conda install -y -c anaconda make 
         yarn
         cd datasets/DrugBank
         ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
