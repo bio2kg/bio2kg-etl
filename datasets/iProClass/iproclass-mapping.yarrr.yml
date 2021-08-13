@@ -25,12 +25,12 @@ mappings:
       - ['data/iproclass.csv~csv']
   
     
-    # s: uniprot:$(UniProtKB accession)
+    s: uniprot:$(UniProtKB accession)
     po:
       - [a, sio:Protein]
       - [sio:hasProvider, bio2kg:graph/iproclass~iri]
 
-      - [sio:affects, ncbitaxon:$(NCBI taxonomy)]  # 9606
+      - [sio:affects, ncbitaxon:$(NCBI taxonomy)~iri]  # 9606
 
       # - p: sio:isAssociatedWith
       #   o:

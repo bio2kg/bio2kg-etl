@@ -7,7 +7,7 @@ USER root
 
 # RUN dnf -y upgrade  # seems to not work
 RUN dnf -y install make automake gcc gcc-c++ kernel-devel pugixml
-# conda install -y -c anaconda make 
+# conda install -y -c anaconda make gcc
 
 RUN chown -R $UID:$GID /opt
 USER $UID

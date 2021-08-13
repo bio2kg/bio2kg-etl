@@ -1,6 +1,11 @@
 # ETL for the Bio2KG knowledge graph
 
-[![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml) [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) [![Process NCBIgene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml) [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml)
+
+| **Genes**        | [![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml)  [![Process NCBIgene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml) [![Process Homologene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml) [![Process GenAge](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml) |
+| ---------------- | ------------------------------------------------------------ |
+| **Drugs**        | [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) |
+| **Proteins**     | [![Process iProClass](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml) |
+| **Associations** | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml) |
 
 ## Run workflows locally
 
@@ -41,9 +46,9 @@ Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `
 
 1. [rmlmapper-java](https://github.com/RMLio/rmlmapper-java): works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
 
-2. [RMLStreamer](https://github.com/RMLio/RMLStreamer) (scala): works well with large CSV. Not working with XML and functions (e.g. DrugBank, iProClass)
+2. [RMLStreamer](https://github.com/RMLio/RMLStreamer) (scala): works well with large CSV and XML files. Not working with functions (e.g. DrugBank, iProClass)
 
-3. [RocketRML](https://github.com/semantifyit/RocketRML) (js): works well with medium size CSV and XML. Limit to 2G file to load. Face issues with some resolutions (e.g. PubMed)
+3. [RocketRML](https://github.com/semantifyit/RocketRML) (js): works well with medium size CSV (2G max) and XML. Easy to define new functions in JavaScript (no need to rebuild the jar and add turtle files)
 
 
 See also: 
@@ -173,6 +178,7 @@ oc new-app apache-flink -p APPLICATION_NAME=flink \
   -p TASKS_SLOTS="64" \
   -p CPU_LIMIT="32" \
   -p MEMORY_LIMIT=100Gi \
+  -p LOG_LEVEL=DEBUG \
   -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
 ```
 

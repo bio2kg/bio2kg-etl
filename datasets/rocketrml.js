@@ -15,7 +15,7 @@ const doMapping = async () => {
     const output_path = args[1] || './data/bio2kg-rocketml.n3';
 
     const options = {
-        verbose: false,
+        verbose: true,
         toRDF: true,
         // If you want to insert your all objects with their regarding @id's (to get a nesting in jsonld), "Un-flatten" jsonld
         replace: false,
@@ -33,7 +33,7 @@ const doMapping = async () => {
         functions : {
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
                 const idfs = 'https://w3id.org/um/ids/rmlfunctions.ttl#'
-                console.log(data);
+                // console.log(data);
                 s = String(data[idfs + 'input']) || null
                 split = data[idfs + 'split_on'] || null
                 prefix = data[idfs + 'add_prefix'] || null
@@ -77,9 +77,9 @@ const doMapping = async () => {
             }
         }
     };
-    console.log(mapping_path);
+    // console.log(mapping_path);
     const result = await parser.parseFile(mapping_path, output_path, options).catch((err) => { console.log(err); });
-    console.log(result);
+    // console.log(result);
 };
 
 doMapping();

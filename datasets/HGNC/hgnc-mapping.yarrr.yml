@@ -21,7 +21,13 @@ prefixes:
 
 authors:
   - Vincent Emonet <vincent.emonet@gmail.com>
-
+# targets:
+#   uniprot-sparql: ["https://www.uniprot.org/sparql/~sd"]
+targets:
+  ww: sss
+  
+  
+  
 mappings:
   genes:
     sources:
@@ -37,7 +43,11 @@ mappings:
         - [idsf:find, "%3A"]
         - [idsf:replace, ":"]
       type: iri
-    
+    # condition:
+    #   function: grel:string_contains
+    #   parameters:
+    #     - [grel:valueParameter, "$(warc-header.warc-type)_$(warc-header.warc-target-uri)"]
+    #     - [grel:string_sub, "response_https://api.twitter.com/1.1/statuses/user_timeline.json"]
     po:
       - [a, sio:Gene]
       - [sio:hasProvider, bio2kg:graph/hgnc]
