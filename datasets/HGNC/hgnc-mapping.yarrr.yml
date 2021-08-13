@@ -7,6 +7,8 @@ prefixes:
   idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
+  hgnc: "https://identifiers.org/HGNC:"
+  HGNC: "https://identifiers.org/HGNC:"
   mesh: "https://identifiers.org/mesh:"
   MESH: "https://identifiers.org/mesh:"
   ncbigene: "https://identifiers.org/ncbigene:"
@@ -23,11 +25,7 @@ authors:
   - Vincent Emonet <vincent.emonet@gmail.com>
 # targets:
 #   uniprot-sparql: ["https://www.uniprot.org/sparql/~sd"]
-targets:
-  ww: sss
-  
-  
-  
+
 mappings:
   genes:
     sources:
@@ -36,6 +34,7 @@ mappings:
       # "hgnc_id","symbol","name","locus_group","locus_type","status","location","location_sortable","alias_symbol","alias_name","prev_symbol","prev_name","gene_family","gene_family_id","date_approved_reserved","date_symbol_changed","date_name_changed","date_modified","entrez_id","ensembl_gene_id","vega_id","ucsc_id","ena","refseq_accession","ccds_id","uniprot_ids","pubmed_id","mgd_id","rgd_id","lsdb","cosmic","omim_id","mirbase","homeodb","snornabase","bioparadigms_slc","orphanet","pseudogene.org","horde_id","merops","imgt","iuphar","kznf_gene_catalog","mamit-trnadb","cd","lncrnadb","enzyme_id","intermediate_filament_db","rna_central_ids","lncipedia","gtrnadb","agr"
       # "HGNC:5","A1BG","alpha-1-B glycoprotein","protein-coding gene","gene with protein product","Approved","19q13.43","19q13.43","","","","","Immunoglobulin like domain containing","594","1989-06-30","","","2015-07-13","1","ENSG00000121410","OTTHUMG00000183507","uc002qsd.5","","NM_130786","CCDS12976","P04217","2591067","MGI:2152878","RGD:69417","","A1BG","138670","","","","","","","","I43.950","","","","","","","","","","","","HGNC:5"
       # "HGNC:7","A2M","alpha-2-macroglobulin","protein-coding gene","gene with protein product","Approved","12p13.31","12p13.31","FWP007|S863-7|CPAMD5","","","","C3 and PZP like, alpha-2-macroglobulin domain containing","1234","1986-01-01","","","2018-05-03","2","ENSG00000175899","OTTHUMG00000150267","uc001qvk.2","BX647329|X68728|M11313","NM_000014","CCDS44827","P01023","2408344|9697696","MGI:2449119","RGD:2004","","A2M","103950","","","","","","","","I39.001","","","","","","","","","","","","HGNC:7"
+    # s: $(hgnc_id)
     s:
       function: idsf:string_process
       parameters:
@@ -82,7 +81,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(mgd_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
       - p: sio:similarTo
@@ -90,7 +89,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(rgd_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
 
@@ -100,7 +99,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(uniprot_ids)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
           type: iri
 
@@ -118,7 +117,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(pubmed_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
           type: iri
 
@@ -127,7 +126,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(ccds_id)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://identifiers.org/ccds:"]
             type: iri
 
@@ -136,7 +135,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(omim_id)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://identifiers.org/mim:"]
             type: iri
 
@@ -146,7 +145,7 @@ mappings:
             parameters:
               # Receptor tyrosine kinases|Protein phosphatase 1 regulatory subunits|MicroRNA protein coding host genes
                 - [idsf:input, "$(gene_family)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:format_for, "uri"]
                 - [idsf:add_prefix, "https://w3id.org/bio2g/data/gene-family/"]
             type: iri

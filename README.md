@@ -1,16 +1,17 @@
 # ETL for the Bio2KG knowledge graph
 
 
-| Entities     | ETL workflows                                                |
-| ------------ | ------------------------------------------------------------ |
-| Genes        | [![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml)  [![Process NCBIgene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml) [![Process Homologene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml) [![Process GenAge](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml) |
-| Drugs        | [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) |
-| Proteins     | [![Process iProClass](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml) |
-| Associations | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml) |
+| Entities                                                     | ETL workflows on DSRI                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| [Genes](https://vemonet.github.io/semanticscience/browse/class-siogene.html) | [![Process HGNC](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-hgnc.yml)  [![Process NCBIgene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ncbigene.yml) [![Process Homologene](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-homologene.yml) [![Process GenAge](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-genage.yml) |
+| [Drugs](https://vemonet.github.io/semanticscience/browse/class-siodrug.html) | [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) |
+| [Proteins](https://vemonet.github.io/semanticscience/browse/class-sioprotein.html) | [![Process iProClass](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml) |
+| [Publications](https://vemonet.github.io/semanticscience/browse/class-siopeerreviewedarticle.html) | [![PubMed](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml) |
+| [Associations](https://vemonet.github.io/semanticscience/browse/class-sioassociation.html) | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml) |
 
 ## Run workflows locally
 
-A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large dataset though). Checking a dataset workflow definition is a good way to see exactly the process to transform a dataset.
+A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large datasets though, so try to use a sample for testing). Checking a dataset workflow definition is a good way to see exactly the process to convert this dataset to RDF using the SemanticScience ontology.
 
 Checkout the `prepare_local.sh` script to see if you need to install additional packages like `wget` and `unzip`, and run it to install dependencies to run the ETL scripts locally:
 
@@ -22,6 +23,7 @@ Go to the folder of the dataset you want to process, e.g. to run `HGNC`:
 
 ```bash
 cd datasets/HGNC
+./download.sh
 ./run.sh
 ```
 
@@ -31,11 +33,11 @@ All temporary files are put in the `data/` folder
 
 ### Define mappings
 
-1. Define a `run.sh` script to download the dataset, and run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
-2. You can browse existing SemanticScience classes and properties here: https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html
-3. You can add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml):
+1. Define a `download.sh` script to download the dataset.
+2. Define a `mapping-dataset.yarrr.yml` file to map the dataset to the [SemanticScience ontology](https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html) following the Bio2KG models. 
+3. Define a `run.sh` script to run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
 
-Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). After that, add the following lines to the `settings.json` :
+Add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
 
 ```json
     "yaml.schemas": {
@@ -45,11 +47,13 @@ Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `
 
 ### Available RML mappers
 
+Multiple solutions are available to generate RDF from RML mappings:
+
 1. [rmlmapper-java](https://github.com/RMLio/rmlmapper-java): works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
 
 2. [RMLStreamer](https://github.com/RMLio/RMLStreamer) (scala): works well with large CSV and XML files. Not working with functions (e.g. DrugBank, iProClass)
 
-3. [RocketRML](https://github.com/semantifyit/RocketRML) (js): works well with medium size CSV (2G max) and XML. Easy to define new functions in JavaScript (no need to rebuild the jar and add turtle files)
+3. [RocketRML](https://github.com/semantifyit/RocketRML) (js): works well with medium size CSV (2G max) and XML. Easy to define new functions in JavaScript (no need to rebuild the jar and add turtle files). But faces issues when running in the workflow runner (missing `make` for `pugixml`). See `datasets/DrugBank` or `datasets/iProClass`.
 
 
 See also: 
@@ -60,7 +64,7 @@ See also:
 
 ## Run workflows on DSRI with GitHub Actions
 
-You can define GitHub Actions workflows in the folder `.github/workflows` to run on the DSRI:
+You can define GitHub Actions workflows YAML files in the folder `.github/workflows` to run on the DSRI:
 
 ```yaml
 jobs:
@@ -75,9 +79,9 @@ You can install anything you want with conda, pip, yarn, npm, maven.
 
 [![Publish Docker image](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml)
 
-The latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) is downloaded automatically.
+The workflow-runner image is built and publish at every change to `workflows/Dockerfile` by a GitHub Actions workflow.
 
-Build:
+Build with the latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) automatically downloaded:
 
 ```bash
 docker build -t ghcr.io/bio2kg/workflow-runner:latest workflows

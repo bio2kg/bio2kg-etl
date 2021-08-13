@@ -25,6 +25,7 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         cd datasets/CTD
+        ./download.sh
         ./run.sh
         # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         cd data

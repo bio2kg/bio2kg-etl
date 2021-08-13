@@ -1,0 +1,151 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  uniprot: "https://identifiers.org/uniprot:"
+  hgnc: "https://identifiers.org/HGNC:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ensembl: "https://identifiers.org/ensembl:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  irefvocab: "https://w3id.org/bio2kg/vocab/irefindex/"
+  irefdata: "https://w3id.org/bio2kg/data/irefindex/"
+
+  taxid: "http://purl.org/obo/owl/NCBITaxon#"
+  uniprotkb: "https://identifiers.org/uniprot:"
+  refseq: "http://www.ncbi.nlm.nih.gov/nuccore/"
+  GenBank: "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?val="
+  entrezgene: "https://identifiers.org/ncbigene:"
+  psi-mi: "http://purl.obolibrary.org/psi-mi/"
+  intact: "http://www.ebi.ac.uk/intact/pages/details/details.xhtml?interactionAc="
+  dip: "http://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?ID="
+  complex: "https://identifiers.org/irefindex.complex:"
+
+# "#uidA","uidB","altA","altB","aliasA","aliasB","method","author","pmids","taxa","taxb","interactionType","sourcedb","interactionIdentifier","confidence","expansion","biological_role_A","biological_role_B","experimental_role_A","experimental_role_B","interactor_type_A","interactor_type_B","xrefs_A","xrefs_B","xrefs_Interaction","Annotations_A","Annotations_B","Annotations_Interaction","Host_organism_taxid","parameters_Interaction","Creation_date","Update_date","Checksum_A","Checksum_B","Checksum_Interaction","Negative","OriginalReferenceA","OriginalReferenceB","FinalReferenceA","FinalReferenceB","MappingScoreA","MappingScoreB","irogida","irogidb","irigid","crogida","crogidb","crigid","icrogida","icrogidb","icrigid","imex_id","edgetype","numParticipants"
+# "uniprotkb:Q1D4K3","uniprotkb:Q1D033","entrezgene/locuslink:41361561|uniprotkb:Q1D4K3|rogid:/CDJEcxxrTY/5MMKjOm1BJkUu/g246197|irogid:104817","entrezgene/locuslink:41363092|uniprotkb:Q1D033|rogid:9VOiVoR86BLRyJny5g63BEL2juc246197|irogid:980128","hgnc:MXAN_RS20610|uniprotkb:Q1D4K3_MYXXD|crogid:/CDJEcxxrTY/5MMKjOm1BJkUu/g246197|icrogid:104817","hgnc:MXAN_RS28375|uniprotkb:Q1D033_MYXXD|crogid:9VOiVoR86BLRyJny5g63BEL2juc246197|icrogid:980128","psi-mi:\"MI:0018\"(two hybrid)","whitworth-2007-1","pubmed:18442170","taxid:246197(Myxococcus xanthus DK 1622)","taxid:246197(Myxococcus xanthus DK 1622)","psi-mi:\"MI:0915\"(physical association)","psi-mi:\"MI:0469\"(intact)","intact:EBI-1576987|rigid:HUhmEWlMTKd2a8cn4XZdVj4mWlI|edgetype:X","hpr:362|lpr:362|np:1","none","psi-mi:\"MI:0499\"(unspecified role)","psi-mi:\"MI:0499\"(unspecified role)","psi-mi:\"MI:0498\"(prey)","psi-mi:\"MI:0496\"(bait)","psi-mi:\"MI:0326\"(protein)","psi-mi:\"MI:0326\"(protein)","-","-","-","-","-","-","taxid:4932(Saccharomyces cerevisiae)","-","2020-06-27","2020-06-27","rogid:/CDJEcxxrTY/5MMKjOm1BJkUu/g246197","rogid:9VOiVoR86BLRyJny5g63BEL2juc246197","rigid:HUhmEWlMTKd2a8cn4XZdVj4mWlI","false","uniprotkb:Q1D4K3","uniprotkb:Q1D033","uniprotkb:Q1D4K3","uniprotkb:Q1D033","P","P","104817","980128","852122","/CDJEcxxrTY/5MMKjOm1BJkUu/g246197","9VOiVoR86BLRyJny5g63BEL2juc246197","HUhmEWlMTKd2a8cn4XZdVj4mWlI","104817","980128","852122","-","X","2"
+mappings:
+  associations:
+    sources:
+      - ['data/irefindex.csv~csv']
+    s: bio2kg:irefindex/association/$(#uidA)-$(uidB)
+    po:
+      - [a, sio:Association]
+      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
+
+      - [rdf:subject, $(#uidA)~iri]
+      - [rdf:object, $(uidB)~iri]
+      - [rdf:predicate, sio:toInteractWith]
+
+      - [sio:creator, $(author)]
+      - p: sio:isSupportedBy
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(pmids)"]
+              - [idsf:split_on, \|]
+              # - [idsf:find, "-"]
+              # - [idsf:replace, ""]
+          # type: iri
+      - [sio:created, $(Creation_date)]
+      - [sio:modified, $(Update_date)]
+
+      - [irefvocab:method, $(method)  ]
+      - [irefvocab:interactionType, $(interactionType)]
+      - [irefvocab:sourcedb, $(sourcedb)]
+      - p: sio:hasIdentifier
+        o:
+          function: idsf:string_process
+          # intact:EBI-1576987|rigid:HUhmEWlMTKd2a8cn4XZdVj4mWlI|edgetype:X
+          parameters:
+              - [idsf:input, "$(interactionIdentifier)"]
+              - [idsf:split_on, \|]
+          # type: iri
+
+      - p: irefvocab:confidence
+        o:
+          function: idsf:string_process
+          # hpr:362|lpr:362|np:1
+          parameters:
+              - [idsf:input, "$(confidence)"]
+              - [idsf:split_on, \|]
+
+      - [irefvocab:expansion, $(expansion)]
+
+      # psi-mi:\"MI:0499\"(unspecified role)
+      - [irefvocab:subjectBiologicalRole, $(biological_role_A)]
+      - [irefvocab:objectBiologicalRole, $(biological_role_B)]
+      # psi-mi:\"MI:0498\"(prey) or bait
+      - [irefvocab:subjectExperimentalRole, $(experimental_role_A)]
+      - [irefvocab:objectExperimentalRole, $(experimental_role_B)]
+      # psi-mi:\"MI:0326\"(protein)
+      - [irefvocab:subjectInteractorRole, $(interactor_type_A)]
+      - [irefvocab:objectInteractorRole, $(interactor_type_B)]
+
+      - [sio:affects, $(Host_organism_taxid)]
+      - [sio:comment, $(Annotations_Interaction)]
+      - [irefvocab:xrefs, $(xrefs_Interaction)]
+
+      - [irefvocab:numParticipants, $(numParticipants)]
+      - [irefvocab:edgetype, $(edgetype)]
+      - [irefvocab:subjectMappingScore, $(MappingScoreA)]
+      - [irefvocab:objectMappingScore, $(MappingScoreB)]
+
+  subjects:
+    sources:
+      - ['data/irefindex.csv~csv']
+    s: $(#uidA)
+    po:
+      - [a, sio:Entity] # TODO: improve
+      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
+
+      - [sio:title, $(#uidA)]
+      - [sio:affects, $(taxa)] # TODO: could be an URI
+      - p: sio:alternative
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(altA)"]
+              - [idsf:split_on, \|]
+          # type: iri
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(aliasA)"]
+              - [idsf:split_on, \|]
+
+  objects:
+    sources:
+      - ['data/irefindex.csv~csv']
+    s: $(uidB)
+    po:
+      - [a, sio:Entity] # TODO: improve
+      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
+
+      - [sio:affects, $(taxb)] # TODO: could be an URI
+      - [sio:title, $(uidB)]
+      - p: sio:alternative
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(altB)"]
+              - [idsf:split_on, \|]
+          # type: iri
+
+      - p: sio:hasSynonym
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(aliasB)"]
+              - [idsf:split_on, \|]

@@ -1,0 +1,42 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  uniprot: "https://identifiers.org/uniprot:"
+  MESH: "https://identifiers.org/mesh:"
+  HGNC: "https://identifiers.org/HGNC:"
+  MGI: "https://identifiers.org/MGI:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  gendrvocab: "https://w3id.org/bio2kg/vocab/genage/"
+  gendrdata: "https://w3id.org/bio2kg/data/genage/"
+
+# Genes associated with dietary restrictions (limiting nutrient intake from diet without causing malnutrition)
+mappings:
+
+  # GenDR ID,gene symbol,species,entrez gene id,gene name
+  # 1,SIR2,Saccharomyces cerevisiae,851520,Silent Information Regulator 2
+  gendr-manipulations:
+    sources:
+      - ['data/gendr_manipulations.csv~csv']
+    s: ncbigene:$(entrez gene id)
+    po:
+      - [a, sio:Gene]
+      - [sio:hasProvider, bio2kg:graph/gendr~iri]
+
+      - [sio:similarTo, gendrdata:gene/$(GenDR ID)~iri] 
+      - [sio:title, $(gene name)]
+      - [sio:hasSynonym, $(gene symbol)]
+      - [sio:affects, $(species)]
+
+      - [sio:isAssociatedWith, gendrvocab:DietaryRestrictions~iri]

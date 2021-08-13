@@ -27,6 +27,7 @@ mappings:
     s: drugbank:$(drugbank-id-primary)
     po:
       - [a, sio:Drug]
+      - [sio:hasProvider, bio2kg:graph/drugbank]
       - [sio:title, $(name)]
       - [sio:description, $(description)]
       - [sio:seeAlso, https://identifiers.org/cas:$(cas-number)~iri]
@@ -69,7 +70,6 @@ mappings:
   #     - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
 
   #     - [sio:description, "$(description)"]
-
 
   target-interactions:
     sources:

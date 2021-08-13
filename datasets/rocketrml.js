@@ -1,21 +1,42 @@
 const parser = require('rocketrml');
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+
+// Parse args
+const args = yargs(hideBin(process.argv))
+  .option('mapping', {
+    alias: 'm',
+    type: 'string',
+    description: 'Path to the mapping file'
+  })
+  .option('output', {
+    alias: 'o',
+    type: 'string',
+    description: 'Path to the output file'
+  })
+  .option('verbose', {
+    alias: 'v',
+    type: 'boolean',
+    description: 'Run with verbose logging',
+    default: false
+  })
+  .alias('help', 'h')
+  .argv
 
 // https://github.com/semantifyit/RocketRML
-// Install custom from GitHub:
-// yarn add vemonet/RocketRML
+// Install custom RocketRML from GitHub:
+// yarn add vemonet/RocketRML#add-yarrrml
 // Or install from a local folder to develop RocketRML:
 // yarn add file:$HOME/sandbox/RocketRML
 // And update when change
 // yarn upgrade file:$HOME/sandbox/RocketRML
 
 const doMapping = async () => {
-
-    const args = process.argv.slice(2);
-    const mapping_path = args[0] || './data/mapping.rml.ttl'
-    const output_path = args[1] || './data/bio2kg-rocketml.n3';
+    const mapping_path = args.mapping || './data/mapping.rml.ttl'
+    const output_path = args.output || './data/bio2kg-rocketml.ttl';
 
     const options = {
-        verbose: true,
+        verbose: args.verbose,
         toRDF: true,
         // If you want to insert your all objects with their regarding @id's (to get a nesting in jsonld), "Un-flatten" jsonld
         replace: false,
@@ -29,7 +50,7 @@ const doMapping = async () => {
         // ignore input values that are empty string (or whitespace only) (only use a value from the input if value.trim() !== '') (default false)
         ignoreEmptyStrings: true,
 
-        // You can also use functions to manipulate the data while parsing. (E.g. Change a date to a ISO format, ..)
+        // Define functions available in RML mapper
         functions : {
             'https://w3id.org/um/ids/rmlfunctions.ttl#string_process': function (data) {
                 const idfs = 'https://w3id.org/um/ids/rmlfunctions.ttl#'
@@ -79,7 +100,6 @@ const doMapping = async () => {
     };
     // console.log(mapping_path);
     const result = await parser.parseFile(mapping_path, output_path, options).catch((err) => { console.log(err); });
-    // console.log(result);
 };
 
 doMapping();

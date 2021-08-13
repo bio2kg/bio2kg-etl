@@ -1,0 +1,69 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  uniprot: "https://identifiers.org/uniprot:"
+  clinicaltrials: "https://identifiers.org/clinicaltrials:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  clintrialsvocab: "https://w3id.org/bio2kg/vocab/clinicaltrials/"
+  clintrialsdata: "https://w3id.org/bio2kg/data/clinicaltrials/"
+
+mappings:
+  clinical-studies:
+    sources:
+      - [CLINICALTRIALS_FILEPATH~xpath, /clinical_study]
+    s: clinicaltrials:$(id_info/nct_id)
+    po:
+      - [a, sio:Study]
+      - [sio:hasProvider, bio2kg:graph/clinicaltrials]
+      - [sio:hasSource, $(source)]
+
+      - [sio:title, $(brief_title)]
+      - [sio:alternative, $(official_title)]
+      - [sio:description, $(detailed_description/textblock)]
+      - [sio:seeAlso, $(required_header/url)]
+      - [sio:modified, $(required_header/download_date)]
+
+      - [clintrialsvocab:overall_status, $(overall_status)]
+      - [clintrialsvocab:phase, $(phase)]
+      - [clintrialsvocab:study_type, $(study_type)]
+      - [clintrialsvocab:condition, $(condition)]
+      
+      - [clintrialsvocab:gender, $(eligibility/gender)]
+      - [clintrialsvocab:minimum_age, $(eligibility/minimum_age)]
+      - [clintrialsvocab:maximum_age, $(eligibility/maximum_age)]
+      - [clintrialsvocab:healthy_volunteers, $(eligibility/healthy_volunteers)]
+      - [clintrialsvocab:eligibility, $(eligibility/gender)]
+
+      - [clintrialsvocab:condition_mesh_term, $(condition_browse/mesh_term)]
+      - [clintrialsvocab:intervention_mesh_term, $(intervention_browse/mesh_term)]
+
+      - [clintrialsvocab:mesh-headings, mesh:$(MedlineCitation/MeshHeadingList/MeshHeading/DescriptorName/@UI)]
+
+      # - [clintrialsvocab:location, $(location/facility/name)]
+      - p: clintrialsvocab:location
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(location/facility/name)"]
+              - [idsf:add_prefix, "clintrialsdata:"]
+              - [idsf:format_for, "uri"]
+          type: iri
+
+  # mesh-categories:
+  #   sources:
+  #     - [data/PUBMED_FILEPATH~xpath, /PubmedArticleSet/PubmedArticle/MedlineCitation/MeshHeadingList/MeshHeading]
+  #   s: mesh:$(DescriptorName/@UI)
+  #   po:
+  #     - [a, sio:Category]
+  #     - [sio:title, $(DescriptorName)]

@@ -1,11 +1,11 @@
-name: STITCH
+name: GenDR
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-    - 'datasets/STITCH/*'
-    - '.github/workflows/process-stitch.yml'
+    - 'datasets/GenDR/*'
+    - '.github/workflows/process-gendr.yml'
   # schedule:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
@@ -24,13 +24,13 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/STITCH
+        cd datasets/GenDR
         ./download.sh
-        ./run.sh "-Xms64g -Xmx64g"
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-stitch.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: stitch" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        ./run.sh
+        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-gendr.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: gendr" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/STITCH/data/bio2kg-*.ttl
+        path: datasets/GenDR/data/bio2kg-gendr.ttl

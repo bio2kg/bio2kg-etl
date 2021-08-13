@@ -12,7 +12,7 @@ yarn upgrade file:$HOME/sandbox/RocketRML
 cd datasets/DrugBank
 
 echo "Running RocketRML"
-node ../rocketrml.js drugbank-mapping.yarrr.yml
+node ../rocketrml.js -m drugbank-mapping.yarrr.yml
 
 # GitHub Action: Error: Xpath-iterator not installed, cannot run with xpathLib:"pugixml"
 

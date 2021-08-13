@@ -18,5 +18,5 @@ do
     # java -jar /opt/rmlmapper.jar -m data/$PROCESS_FILE.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 
 
     echo "Running RocketRML"
-    node ../rocketrml.js "data/$PROCESS_FILE.rml.ttl"
+    node ../rocketrml.js -m "data/$PROCESS_FILE.rml.ttl"
 done

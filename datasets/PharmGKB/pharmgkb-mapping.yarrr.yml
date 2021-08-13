@@ -63,7 +63,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(mgd_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
       - p: sio:similarTo
@@ -71,7 +71,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(rgd_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/"]
           type: iri
 
@@ -81,7 +81,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(uniprot_ids)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/uniprot:"]
           type: iri
 
@@ -90,7 +90,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(refseq_accession)"]
-                - [idsf:split_on, "|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
             type: iri
 
@@ -99,7 +99,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(pubmed_id)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
           type: iri
 
@@ -108,7 +108,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(ccds_id)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://identifiers.org/ccds:"]
             type: iri
 
@@ -117,7 +117,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(omim_id)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://identifiers.org/mim:"]
             type: iri
 
@@ -127,7 +127,7 @@ mappings:
             parameters:
               # Receptor tyrosine kinases|Protein phosphatase 1 regulatory subunits|MicroRNA protein coding host genes
                 - [idsf:input, "$(gene_family)"]
-                - [idsf:split_on, "\|"]
+                - [idsf:split_on, \|]
                 - [idsf:format_for, "uri"]
                 - [idsf:add_prefix, "https://w3id.org/bio2g/data/gene-family/"]
             type: iri

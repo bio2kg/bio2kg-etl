@@ -11,3 +11,5 @@ if [ ! -f "data/hgnc.csv" ]; then
     cd ..
 fi
 
+# mv data/hgnc.csv data/hgnc-full.csv
+# head -n 1000 data/hgnc-full.csv > data/hgnc.csv

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "rocketrml": "vemonet/RocketRML#fix-xpath-iterator"
+    "rocketrml": "file:/home/vemonet/sandbox/RocketRML",
+    "yargs": "^17.1.0"
   }
 }
