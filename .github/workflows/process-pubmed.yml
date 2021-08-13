@@ -1,4 +1,4 @@
-name: Process PubMed
+name: PubMed
 on:
   workflow_dispatch:
   push:

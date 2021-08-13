@@ -1,4 +1,4 @@
-name: Process STITCH
+name: STITCH
 on:
   workflow_dispatch:
   push:

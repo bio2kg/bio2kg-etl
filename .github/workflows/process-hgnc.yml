@@ -1,4 +1,4 @@
-name: Process HGNC
+name: HGNC
 on:
   workflow_dispatch:
   # push:

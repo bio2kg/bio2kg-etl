@@ -1,4 +1,4 @@
-name: Process SNAP BioData
+name: SNAP BioData
 on:
   workflow_dispatch:
   push:

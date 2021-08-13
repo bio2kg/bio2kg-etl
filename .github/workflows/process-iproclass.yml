@@ -1,4 +1,4 @@
-name: Process iProClass
+name: iProClass
 on:
   workflow_dispatch:
   push:

@@ -1,4 +1,4 @@
-name: Process CTD
+name: CTD
 on:
   workflow_dispatch:
   push:

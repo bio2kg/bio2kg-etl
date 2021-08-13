@@ -1,4 +1,4 @@
-name: Process GenAge
+name: GenAge
 on:
   workflow_dispatch:
   push:

@@ -1,4 +1,4 @@
-name: Process NCBIgene
+name: NCBIgene
 on:
   workflow_dispatch:
   push:
