@@ -19,6 +19,9 @@ prefixes:
   hgncvocab: "https://w3id.org/bio2kg/vocab/hgnc/"
   hgncdata: "https://w3id.org/bio2kg/data/hgnc/"
 
+authors:
+  - Vincent Emonet <vincent.emonet@gmail.com>
+
 mappings:
   genes:
     sources:
@@ -30,10 +33,11 @@ mappings:
     s:
       function: idsf:string_process
       parameters:
-          - [idsf:input, "https://identifiers.org/$(hgnc_id)"]
-          - [idsf:find, "%3A"]
-          - [idsf:replace, ":"]
+        - [idsf:input, https://identifiers.org/$(hgnc_id)]
+        - [idsf:find, "%3A"]
+        - [idsf:replace, ":"]
       type: iri
+    
     po:
       - [a, sio:Gene]
       - [sio:hasProvider, bio2kg:graph/hgnc]

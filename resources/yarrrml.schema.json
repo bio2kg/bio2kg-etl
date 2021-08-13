@@ -8,6 +8,12 @@
       "prefixes": {
         "type": "object"
       },
+      "authors": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
       "sources": {
         "type": "object",
         "patternProperties": {
@@ -22,86 +28,16 @@
           "^.*$": {
             "properties": {
               "po": {
-                "type": "array",
-                "items": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "p": {
-                          "type": "string"
-                        },
-                        "o": {
-                          "type": "object",
-                          "items": {
-                            "anyOf": [
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "const": "blank"
-                                  }
-                                },
-                                "additionalProperties": false
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "value": {
-                                    "type": "string"
-                                  },
-                                  "type": {
-                                    "type": "string"
-                                  },
-                                  "datatype": {
-                                    "type": "string"
-                                  },
-                                  "language": {
-                                    "type": "string"
-                                  }
-                                },
-                                "required": ["value", "type"]
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "mapping": {
-                                    "type": "string"
-                                  },
-                                  "conditions": {
-                                    "type": "array",
-                                    "items": {
-                                      "$ref": "#/$defs/function"
-                                    }
-                                  }
-                                },
-                                "required": ["mapping"]
-                              },
-                              {"$ref": "#/$defs/function"}
-                            ]
-                          },
-                          "minItems": 1
-                        }
-                      }
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "minItems": 2
-                    }
-                  ]
-                }
+                "$ref": "#/$defs/predicateobjects"
+              },
+              "predicateobjects": {
+                "$ref": "#/$defs/predicateobjects"
               },
               "s": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {"$ref": "#/$defs/function"}
-                ]
+                "$ref": "#/$defs/subjects"
+              },
+              "subjects": {
+                "$ref": "#/$defs/subjects"
               },
               "sources": {
                 "type": "array",
@@ -126,28 +62,43 @@
           "function": {
             "type": "string"
           },
+          "type": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
           "parameters": {
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "parameter": {
+              "anyOf": [{
+                "type": "array",
+                "items": {
                   "type": "string"
                 },
-                "value": {
-                  "anyOf": [{
+                "minItems": 2,
+                "maxItems": 2
+              }, {
+                "type": "object",
+                "properties": {
+                  "parameter": {
                     "type": "string"
-                  }, {
-                    "$ref": "#/$defs/function"
-                  }]
-                },
-                "type": {
-                  "type": "string"
-                },
-                "from": {
-                  "type": "string"
+                  },
+                  "value": {
+                    "anyOf": [{
+                      "type": "string"
+                    }, {
+                      "$ref": "#/$defs/function"
+                    }]
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "from": {
+                    "type": "string"
+                  }
                 }
-              },
+              }],
               "required": [
                 "parameter",
                 "value"
@@ -210,7 +161,148 @@
             "type": "array",
             "items": {
               "type": "string"
+            },
+            "minItems": 2,
+            "maxItems": 3
+          }
+        ]
+      },
+      "predicateobjects": {
+        "type": "array",
+        "items": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "p": {
+                  "$ref": "#/$defs/objects"
+                },
+                "predicates": {
+                  "$ref": "#/$defs/objects"
+                },
+                "o": {
+                  "$ref": "#/$defs/objects"
+                },
+                "objects": {
+                  "$ref": "#/$defs/objects"
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 3
             }
+          ]
+        }
+      },
+      "subjects": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/$defs/function"
+          }
+        ]
+      },
+      "objects": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/function"
+          },
+          {
+            "type": "string"
+          }, 
+          {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "datatype": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              }
+            },
+            "required": ["value", "type"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "mapping": {
+                "type": "string"
+              },
+              "conditions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/function"
+                }
+              }
+            },
+            "required": ["mapping"]
+          },
+          {
+            "type": "object",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/function"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "blank"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "datatype": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["value", "type"]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "mapping": {
+                      "type": "string"
+                    },
+                    "conditions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/function"
+                      }
+                    }
+                  },
+                  "required": ["mapping"]
+                }
+              ]
+            },
+            "minItems": 1
           }
         ]
       }
