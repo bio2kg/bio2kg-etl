@@ -2,4 +2,5 @@ rdflib
 rdflib-jsonld
 SPARQLWrapper
 pandas
+d2s
 # prefect[kubernetes]

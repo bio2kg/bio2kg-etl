@@ -15,11 +15,7 @@ yarn
 
 echo "Install dependencies for python scripts"
 conda install --file workflows/requirements.txt
-# or use pip install -r requirements.txt
+# or use pip install -r workflows/requirements.txt
 
-# Additional packages to install
+# Additional packages you might need to install
 # conda install --quiet -y wget unzip
-
-echo "Retrieving IDS RML functions files"
-cp ../ids-rml-functions/functions_ids.ttl datasets/
-cp ../ids-rml-functions/target/IdsRmlFunctions-v0.0.1-jar-with-dependencies.jar datasets/IdsRmlFunctions.jar
