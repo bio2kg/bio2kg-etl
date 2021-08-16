@@ -1,0 +1,41 @@
+name: PharmGKB
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+    - 'datasets/PharmGKB/*'
+    - '.github/workflows/process-pharmgkb.yml'
+  # schedule:
+  #   - cron:  '00 01 * * *'
+  # Everyday at 01:00am GMT+1
+
+jobs:
+
+  process:
+    runs-on: ["self-hosted", "dsri", "bio2kg" ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Run RML mapper ETL
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+      run: |
+        cd datasets/PharmGKB
+        ./download.sh
+        ./run.sh
+        cd data
+        ls bio2kg-*.ttl | while read UPLOAD_FILE 
+        do
+            UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
+            curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        done
+
+    - name: Upload RDF output
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: datasets/PharmGKB/data/bio2kg-*.ttl

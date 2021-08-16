@@ -1,0 +1,72 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  uniprot: "https://identifiers.org/UniProt:"
+  UniProt: "https://identifiers.org/UniProt:"
+  up: "http://purl.uniprot.org/core/"
+  mesh: "https://identifiers.org/mesh:"
+  MESH: "https://identifiers.org/mesh:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  uniprotvocab: "https://w3id.org/bio2kg/vocab/uniprot/"
+  uniprotdata: "https://w3id.org/bio2kg/data/uniprot/"
+
+authors:
+  - Vincent Emonet <vincent.emonet@gmail.com>
+# targets:
+#   uniprot-sparql: ["https://www.uniprot.org/sparql/~sd"]
+
+mappings:
+  genes:
+    sources:
+      - access: https://sparql.uniprot.org
+        type: sparql
+        query: |
+          SELECT * WHERE {
+            ?taxon a up:Taxon
+            OPTIONAL {
+              ?taxon up:scientificName ?label .
+            } OPTIONAL {
+              ?taxon up:otherName ?synonym .
+            } OPTIONAL {
+              ?taxon rdfs:subClassOf ?subClassOf .
+            }
+          }
+        referenceFormulation: csv
+
+    s: $(taxon)
+    # condition:
+    #   function: grel:string_contains
+    #   parameters:
+    #     - [grel:valueParameter, "$(warc-header.warc-type)_$(warc-header.warc-target-uri)"]
+    #     - [grel:string_sub, "response_https://api.twitter.com/1.1/statuses/user_timeline.json"]
+    po:
+      - [a, sio:Taxon]
+      - [sio:hasProvider, bio2kg:graph/uniprot]
+
+      - [sio:hasSynonym, $(synonym)]
+      - [sio:title, $(label)]
+
+      - [rdfs:subClassOf, $(subClassOf)]
+
+
+      # - p: sio:isAssociatedWith # bl:gene_associated_with_condition
+      #   o:
+      #       function: idsf:string_process
+      #       parameters:
+      #           - [idsf:input, "$(omim_id)"]
+      #           - [idsf:split_on, \|]
+      #           - [idsf:add_prefix, "https://identifiers.org/mim:"]
+      #       type: iri
+

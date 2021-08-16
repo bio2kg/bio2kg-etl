@@ -1,0 +1,68 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  pharmgkbvocab: "https://w3id.org/bio2kg/vocab/pharmgkb/"
+  pharmgkbdata: "https://w3id.org/bio2kg/data/pharmgkb/"
+
+  ensembl: "http://www.ensembl.org/id/" # or https://identifiers.org/ensembl: ?
+
+  taxid: "http://purl.org/obo/owl/NCBITaxon#"
+  uniprotkb: "https://identifiers.org/uniprot:"
+  refseq: "http://www.ncbi.nlm.nih.gov/nuccore/"
+  GenBank: "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?val="
+  entrezgene: "https://identifiers.org/ncbigene:"
+  psi-mi: "http://purl.obolibrary.org/psi-mi/"
+  intact: "http://www.ebi.ac.uk/intact/pages/details/details.xhtml?interactionAc="
+  dip: "http://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?ID="
+  complex: "https://identifiers.org/irefindex.complex:"
+
+  pharmgkb: "http://www.pharmgkb.org/do/serve?objId=$id"
+  pharmgkbDrug: "http://www.pharmgkb.org/drug/"
+  pharmgkbChemical: "http://www.pharmgkb.org/drug/"
+  pharmgkbGene: "http://www.pharmgkb.org/gene/"
+  pharmgkbHaplotype: "http://www.pharmgkb.org/gene/"
+  pharmgkbPathways: "http://www.pharmgkb.org/pathway/"
+
+# "PharmGKB Accession Id","NCBI Gene ID","HGNC ID","Ensembl Id","Name","Symbol","Alternate Names","Alternate Symbols","Is VIP","Has Variant Annotation","Cross-references","Has CPIC Dosing Guideline","Chromosome","Chromosomal Start - GRCh37","Chromosomal Stop - GRCh37","Chromosomal Start - GRCh38","Chromosomal Stop - GRCh38"
+# "PA24356","1","HGNC:5","ENSG00000121410","alpha-1-B glycoprotein","A1BG","","","No","No","ALFRED:LO098153A,Comparative Toxicogenomics Database:1,Ensembl:ENSG00000121410,GenAtlas:A1BG,GeneCard:A1BG,GO:GO:0000004,GO:GO:0005554,GO:GO:0005576,HGNC:HGNC:5,HumanCyc Gene:HS04495,ModBase:P04217,MutDB:A1BG,NCBI Gene:1,OMIM:138670,RefSeq DNA:NT_011109,RefSeq Protein:NP_570602,RefSeq RNA:NM_130786,UCSC Genome Browser:NM_130786,UniProtKB:P04217","No","chr19","58858172","58864865","58346806","58353499"
+mappings:
+  genes:
+    sources:
+      - ['data/phenotypes.csv~csv']
+    s: pharmgkb:$(PharmGKB Accession Id)
+    po:
+      - [a, sio:Phenotype]
+
+      - [sio:title, $(Name)]
+      - [sio:alternative, $(Alternate Names)]
+
+      - p: pharmgkbvocab:xrefs
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Cross-references)"]
+              - [idsf:split_on, ","]
+          # type: iri
+
+      - p: pharmgkbvocab:xrefs
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(External Vocabulary)"]
+              - [idsf:split_on, ","]
+              # - [idsf:find, "(*.?)"]
+              # - [idsf:replace, ""]
+          # type: iri
+

@@ -22,10 +22,10 @@ USER $UID
 
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
-    # LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8
-ENV PATH="${CONDA_DIR}/bin:${PATH}" 
+    LANGUAGE=en_US.UTF-8 \
+    PATH="${CONDA_DIR}/bin:${PATH}" 
+    # LC_ALL=en_US.UTF-8 \
     # HOME="/home/${NB_USER}" \
     # CONDA_VERSION="${conda_version}"
 

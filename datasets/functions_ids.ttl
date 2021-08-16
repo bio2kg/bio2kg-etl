@@ -63,6 +63,41 @@ grel:output_array
     fno:predicate grel:o_array ;
     fno:type      rdf:List .
 
+grel:string_contains
+    a                   fno:Function ;
+    fno:name            "contains" ;
+    dcterms:description "contains" ;
+    fno:solves          grel:prob_contains ;
+    fno:expects         ( grel:valueParam grel:param_string_sub ) ;
+    fno:returns         ( grel:output_bool ) .
+
+grel:prob_contains
+    a                   fno:Problem ;
+    fno:name            "The contains problem"^^xsd:string ;
+    dcterms:description "Whether a string contains another string"^^xsd:string .
+
+grel:valueParam
+    a             fno:Parameter ;
+    fno:name      "input value" ;
+    rdfs:label    "input value" ;
+    fno:predicate grel:valueParameter ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+grel:param_string_sub
+    a             fno:Parameter ;
+    fno:name      "sub" ;
+    rdfs:label    "sub" ;
+    fno:predicate grel:string_sub ;
+    fno:type      xsd:string ;
+    fno:required  "true"^^xsd:boolean .
+
+grel:output_bool
+    a             fno:Output ;
+    fno:name      "bool" ;
+    rdfs:label    "bool" ;
+    fno:predicate grel:o_bool ;
+    fno:type      xsd:boolean .
 
 ## IDS string processing
 
@@ -140,4 +175,16 @@ grelm:stringProcessMapping
     fno:returnMapping    [ ] ;
     fno:methodMapping    [ a                fnom:StringMethodMapping ;
                            fnom:method-name "stringProcess" ] ;
+.
+
+grelm:containsMapping
+    a                    fno:Mapping ;
+    fno:function         grel:string_contains ;
+    fno:implementation   grelm:javaString ;
+# TODO if not clear
+    fno:parameterMapping [ ] ;
+# TODO if not clear
+    fno:returnMapping    [ ] ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "contains" ] ;
 .

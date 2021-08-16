@@ -9,7 +9,8 @@ on:
   # schedule:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
-
+env:
+  DATASET_PATH: datasets/HGNC
 jobs:
 
   process:
@@ -24,7 +25,7 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd datasets/HGNC
+        cd $DATASET_PATH
         ./download.sh
         ./run.sh
         export CLEAR_GRAPH=https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc

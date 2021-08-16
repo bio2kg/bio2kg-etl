@@ -1,0 +1,95 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  pharmgkbvocab: "https://w3id.org/bio2kg/vocab/pharmgkb/"
+  pharmgkbdata: "https://w3id.org/bio2kg/data/pharmgkb/"
+
+  ensembl: "http://www.ensembl.org/id/" # or https://identifiers.org/ensembl: ?
+
+  taxid: "http://purl.org/obo/owl/NCBITaxon#"
+  uniprotkb: "https://identifiers.org/uniprot:"
+  refseq: "http://www.ncbi.nlm.nih.gov/nuccore/"
+  GenBank: "http://www.ncbi.nlm.nih.gov/entrez/viewer.fcgi?val="
+  entrezgene: "https://identifiers.org/ncbigene:"
+  psi-mi: "http://purl.obolibrary.org/psi-mi/"
+  intact: "http://www.ebi.ac.uk/intact/pages/details/details.xhtml?interactionAc="
+  dip: "http://dip.doe-mbi.ucla.edu/dip/DIPview.cgi?ID="
+  complex: "https://identifiers.org/irefindex.complex:"
+
+  pharmgkb: "http://www.pharmgkb.org/do/serve?objId=$id"
+  pharmgkbDrug: "http://www.pharmgkb.org/drug/"
+  pharmgkbChemical: "http://www.pharmgkb.org/drug/"
+  pharmgkbGene: "http://www.pharmgkb.org/gene/"
+  pharmgkbHaplotype: "http://www.pharmgkb.org/gene/"
+  pharmgkbPathways: "http://www.pharmgkb.org/pathway/"
+
+mappings:
+  relationships:
+    sources:
+      - ['data/relationships.csv~csv']
+    s: pharmgkbdata:association/$(Entity1_id)-$(Entity2_id)
+    po:
+      - [a, sio:Association]
+      - [rdf:predicate, sio:toInteractWith]
+      - p: rdf:subject
+        o: 
+          value: "pharmgkbGene:$(Entity1_id)"
+          condition:
+            # function: grel:string_contains
+            # parameters:
+            #   - [grel:valueParameter, "$(Entity1_type)"]
+            #   - [grel:string_sub, "Variant"]
+            function: equal
+            parameters:
+              - [str1, $(Entity1_type)]
+              - [str2, Variant]
+          type: iri
+
+      - p: rdf:object
+        o: 
+          value: "pharmgkbDrug:$(Entity2_id)"
+          condition:
+            # function: grel:string_contains
+            # parameters:
+            #   - [grel:valueParameter, "$(Entity2_type)"]
+            #   - [grel:string_sub, "Chemical"]
+            function: equal
+            parameters:
+              - [str1, $(Entity2_type)]
+              - [str2, Chemical]
+          type: iri
+
+      - p: sio:isSupportedBy
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(PMIDs)"]
+              - [idsf:split_on, ;]
+              - [idsf:add_prefix, "pubmed:"]
+          type: iri
+
+      - [sio:comment, $(Association)]
+      # associated / not associated
+
+      - p: sio:hasEvidence
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(Evidence)"]
+              - [idsf:split_on, ","]
+              - [idsf:add_prefix, "pharmgkbvocab:"]
+          type: iri
+
+

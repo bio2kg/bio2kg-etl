@@ -26,6 +26,7 @@ if [ ! -f "data/pharmgkb.csv" ]; then
 
     find . -name "*.tsv"  | while read file 
     do
-        sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' $file > "$file.csv"
+        csv_file=$(echo $file | sed "s/\.tsv$/.csv/g")
+        sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' $file > "$csv_file"
     done
 fi

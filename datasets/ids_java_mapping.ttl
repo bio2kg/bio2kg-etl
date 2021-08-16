@@ -73,6 +73,17 @@ grelm:splitMapping
                            fnom:method-name "stringProcess" ] ;
 .
 
+grelm:containsMapping
+    a                    fno:Mapping ;
+    fno:function         grel:string_contains ;
+    fno:implementation   grelm:javaString ;
+# TODO if not clear
+    fno:parameterMapping [ ] ;
+# TODO if not clear
+    fno:returnMapping    [ ] ;
+    fno:methodMapping    [ a                fnom:StringMethodMapping ;
+                           fnom:method-name "contains" ] ;
+.
 
 # grel:string_split
 #     a                   fno:Function ;

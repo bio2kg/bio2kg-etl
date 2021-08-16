@@ -1,0 +1,95 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  rr: "http://www.w3.org/ns/r2rml#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  drugcentral: "https://identifiers.org/DrugCentral:"
+  DrugCentral: "https://identifiers.org/DrugCentral:"
+  uniprot: "https://identifiers.org/uniprot:"
+  pdb: "https://identifiers.org/pdb:"
+  mesh: "https://identifiers.org/mesh:"
+  MESH: "https://identifiers.org/mesh:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  drugcentralvocab: "https://w3id.org/bio2kg/vocab/drugcentral/"
+  drugcentraldata: "https://w3id.org/bio2kg/data/drugcentral/"
+
+authors:
+  - Vincent Emonet <vincent.emonet@gmail.com>
+
+## Example SQL queries:
+# -- select all FDA approved drugs including discontinued and withdrawn
+# select structures.* from structures,approval where structures.id = approval.struct_id and approval.type = 'FDA';
+
+# -- select all FDA approved drugs with 1 or more currently marketed formulation
+# select structures.* from structures where no_formulations > 0;
+
+# -- select drug - target complex PDB ids for mechanism of action targets only
+# select pdb.struct_id,structures.name,pdb.pdb, pdb.chain_id,pdb.ligand_id,pdb.accession,
+#       target_component.gene
+# from pdb,structures,act_table_full,td2tc,target_component where
+#   pdb.struct_id = structures.id and
+#   pdb.struct_id = act_table_full.struct_id
+#   and act_table_full.moa = 1
+#   and act_table_full.target_id = td2tc.target_id
+#   and td2tc.component_id = target_component.id
+#   and target_component.accession = pdb.accession;
+  
+# -- select mechanism of action targets for human targets only
+# select struct_id,structures.name,target_name,target_class,accession,gene,swissprot,act_value,
+#   act_type,act_type,act_source,act_source_url,moa_source,moa_source_url from act_table_full,structures where
+#     act_table_full.struct_id = structures.id
+#   and moa = 1 and organism = 'Homo sapiens';
+
+# -- select all pharmaceutical formulations containing acetylsalicylic acid (aspirin) from FDA Orange Book
+# select ob_product.* from ob_product,struct2obprod,structures where
+#     structures.name = 'acetylsalicylic acid' and structures.id = struct2obprod.struct_id
+#     and struct2obprod.prod_id = ob_product.id;
+    
+# -- select all significant adverse events associated with Atorvastatin from FDA FAERS database based on likelihood ratio test
+# select meddra_name,meddra_code,llr,llr_threshold from faers,structures
+#         where structures.id = faers.struct_id and structures.name = 'atorvastatin'
+#         and llr > llr_threshold order by llr desc;
+
+
+mappings:
+  drug-targets:
+    sources:
+      # https://drugcentral.org/download
+      # A bug in rmlmapper deletes the first character of the access, so it needs to be doubled
+      - access: "uunmtid-dbs.net:5433/drugcentral"
+        type: postgresql
+        credentials:
+          username: drugman
+          password: dosage
+        queryFormulation: sql2008
+        query: |
+          select pdb.struct_id,structures.name,pdb.pdb, pdb.chain_id,pdb.ligand_id,pdb.accession,
+                target_component.gene
+          from pdb,structures,act_table_full,td2tc,target_component where
+            pdb.struct_id = structures.id and
+            pdb.struct_id = act_table_full.struct_id
+            and act_table_full.moa = 1
+            and act_table_full.target_id = td2tc.target_id
+            and td2tc.component_id = target_component.id
+            and target_component.accession = pdb.accession;
+        referenceFormulation: csv
+
+    s: drugcentraldata:drug-target/$(pdb)-$(accession)
+    po:
+      - [a, sio:Association]
+      - [sio:hasProvider, bio2kg:graph/drugcentral]
+
+      - [rdf:subject, pdb:$(pdb)~iri]
+      - [rdf:object, uniprot:$(accession)~iri]
+      - [rdf:predicate, sio:toInteractWith~iri]
