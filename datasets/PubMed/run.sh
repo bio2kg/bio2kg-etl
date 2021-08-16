@@ -14,9 +14,9 @@ do
     PROCESS_FILE=$(echo $PROCESS_FILE | sed "s/data\///g")
     sed "s/PUBMED_FILEPATH/$PROCESS_FILE/g" data/mapping.rml.ttl > data/$PROCESS_FILE.rml.ttl
 
-    # echo "Running RML mapper for $PROCESS_FILE"
-    # java -jar /opt/rmlmapper.jar -m data/$PROCESS_FILE.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 
+    echo "Running RML mapper for $PROCESS_FILE"
+    java -jar /opt/rmlmapper.jar -m data/$PROCESS_FILE.rml.ttl -o data/bio2kg-$PROCESS_FILE.ttl -s turtle -f ../functions_ids.ttl 
 
-    echo "Running RocketRML"
-    node ../rocketrml.js -m "data/$PROCESS_FILE.rml.ttl"
+    # echo "Running RocketRML"
+    # node ../rocketrml.js -m "data/$PROCESS_FILE.rml.ttl"
 done
