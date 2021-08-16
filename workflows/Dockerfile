@@ -53,7 +53,8 @@ RUN conda update --all --quiet -y && \
     conda clean --all -f -y 
 
 ADD requirements.txt .
-RUN conda install --file requirements.txt && \
+# RUN conda install --file requirements.txt && \
+RUN pip install -r requirements.txt && \
     rm requirements.txt
 
 # Download latest RML mapper in /opt/rmlmapper.jar

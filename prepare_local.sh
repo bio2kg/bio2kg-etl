@@ -14,8 +14,8 @@ echo "Installing RocketRML"
 yarn
 
 echo "Install dependencies for python scripts"
-conda install --file workflows/requirements.txt
-# or use pip install -r workflows/requirements.txt
+pip3 install -r workflows/requirements.txt
+# conda install --file workflows/requirements.txt
 
 # Additional packages you might need to install
 # conda install --quiet -y wget unzip
