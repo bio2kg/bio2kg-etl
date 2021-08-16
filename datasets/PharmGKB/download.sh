@@ -6,18 +6,14 @@ if [ ! -f "data/pharmgkb.csv" ]; then
     mkdir -p data
     cd data
     # https://www.pharmgkb.org/downloads
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/relationships.zip
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/genes.zip
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/drugs.zip
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/chemicals.zip
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/phenotypes.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/relationships.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/genes.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/drugs.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/chemicals.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/phenotypes.zip
 
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/pathways-biopax.zip
-    # wget -N https://api.pharmgkb.org/v1/download/file/data/pathways-tsv.zip
-    # wget -N 
-    # wget -N 
-    # wget -N 
-    # wget -N 
+    wget -N https://api.pharmgkb.org/v1/download/file/data/pathways-biopax.zip
+    wget -N https://api.pharmgkb.org/v1/download/file/data/pathways-tsv.zip
 
     unzip -o "*.zip"
     # Convert TSV to CSV for RML Mapper
