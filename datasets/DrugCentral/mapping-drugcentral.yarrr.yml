@@ -55,8 +55,8 @@ mappings:
       - [rdf:predicate, sio:toInteractWith~iri]
       - [rdf:subject, drugcentraldata:structure/$(STRUCT_ID)~iri]
 
-      - [drugcentralvocab:ActionSource, $(ACT_SOURCE_URL)~iri]
-      - [drugcentralvocab:mechanismOfActionSource, $(MOA_SOURCE_URL)~iri]
+      - [drugcentralvocab:ActionSource, $(ACT_SOURCE_URL)]
+      - [drugcentralvocab:mechanismOfActionSource, $(MOA_SOURCE_URL)]
       # https://www.ebi.ac.uk/chembl/compound/inspect/CHEMBL1200749
 
       # Multiple targets ACCESSION IDs
@@ -67,7 +67,7 @@ mappings:
             - [idsf:input, "$(ACCESSION)"]
             - [idsf:split_on, \|]
             - [idsf:add_prefix, "uniprot:"]
-          type: iri
+          # type: iri
 
       - p: drugcentralvocab:actionType
         o: 
