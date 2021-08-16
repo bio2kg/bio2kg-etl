@@ -10,8 +10,7 @@ on:
   #   - cron:  '00 01 * * *'
   # Everyday at 01:00am GMT+1
 env:
-  DATASET: DrugCentral
-  DATASET_PATH: datasets/$DATASET
+  DATASET_PATH: datasets/DrugCentral
 jobs:
 
   process:
