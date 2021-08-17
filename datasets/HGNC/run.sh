@@ -7,7 +7,7 @@ yarrrml-parser -i hgnc-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Running RML mapper, output to data/ folder"
 rm data/bio2kg-hgnc.ttl
-java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle -f ../functions_ids.ttl 
+java -jar /opt/rmlmapper.jar -m data/mapping.rml.ttl -o data/bio2kg-hgnc.ttl -s turtle -f ../functions_ids.ttl
 
 echo "RDF output:"
 head -n 40 data/bio2kg-hgnc.ttl

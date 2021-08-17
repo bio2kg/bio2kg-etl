@@ -16,7 +16,7 @@ PREFIX b2kshape: <https://w3id.org/bio2kg/shape/>
 # Website to validate shapes against RDF: https://shacl.org/playground/
 
 shape sioshape:Drug -> sio:Drug {
-	closed=false ignoredProperties=[rdf:type] . 
+	closed=false ignoredProperties=[rdf:type] .
 	# severity=sh:warning
 	sio:title  xsd:string [0..1] .
 	sio:description  xsd:string [0..*] .

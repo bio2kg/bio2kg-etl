@@ -142,7 +142,7 @@ helm uninstall actions-runner
 
 ## Deploy a Virtuoso triplestore on DSRI
 
-On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog**. 
+On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
 
 You can also do it in one line from the command-line:
 

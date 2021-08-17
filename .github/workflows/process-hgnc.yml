@@ -28,6 +28,7 @@ jobs:
         cd $DATASET_PATH
         ./download.sh
         ./run.sh
+        
         export CLEAR_GRAPH=https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc
         curl -u dav:$DBA_PASSWORD -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql?query=CLEAR GRAPH <$CLEAR_GRAPH>
         # Load file after deleting previous graph
