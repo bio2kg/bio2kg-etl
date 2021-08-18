@@ -1,0 +1,58 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dctypes: <http://purl.org/dc/dcmitype/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix idot: <http://identifiers.org/idot/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2s: <https://w3id.org/d2s/vocab/> .
+
+# Summary of the dataset
+<https://w3id.org/bio2kg/dataset/hgnc> a dctypes:Dataset ;
+    rdfs:label "HGNC dataset summary" ;
+    dc:identifier "hgnc" ;
+    idot:preferredPrefix "hgnc" ;
+    dcterms:title "HUGO Gene Nomenclature Committee" ;
+    dc:description "HGNC is responsible for approving unique symbols and names for human loci, including protein coding genes, ncRNA genes and pseudogenes, to allow unambiguous scientific communication." ;
+    dcat:keyword "gene" ;
+    foaf:page <https://www.genenames.org/> ;
+    # dcterms:references <https://www.ncbi.nlm.nih.gov/pubmed/33156333> ;
+    dcterms:rights "Copyright (C) 2001 The HGNC Consortium. This manual and the accompanying database may be copied and redistributed freely, without advance permission, provided that this Copyright statement is reproduced with each copy." ;
+    # dcterms:license <http://creativecommons.org/licenses/by-nc/4.0/legalcode> ;
+    dcterms:publisher [
+        a dcterms:Agent ;
+        foaf:name "HUGO Gene Nomenclature Committee at the European Bioinformatics Institute" ;
+        foaf:page "https://www.genenames.org/"
+    ] ;
+
+    void:sparqlEndpoint <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql> ;
+    d2s:graph <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc> ;
+    d2s:processor "rocketrml" ;
+
+    # TODO: add details about how can the different files of the dataset be automatically downloaded
+    # to update with newer version automatically
+    d2s:downloadFiles 
+        [
+            a d2s:FileDownload ;
+            dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt> ;
+            d2s:downloadScript """wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt""" ;
+            d2s:postProcessScript """ls""" 
+        ] .
+
+    # pav:lastUpdateOn "2021-08-17"^^xsd:date .
+
+
+    # d2s:downloadScript """wget -N http://myfile""" ;
+    # d2s:postProcessScript """sed /s/replace/by/g""" ;
+    # d2s:addHeader "col1,col2,col3" ;
+    # d2s:updateStrategy "same_url" or "new_version_url" ;
+    # d2s:updateSchedule "every 6 months" ;
+
+    # d2s:lastModified "Tue, 17 Aug 2021 09:05:07 GMT" ;
+    # d2s:lastUpdated "Tue, 13 Aug 2021 09:05:07 GMT" ;
+    
+    # dcterms:format "application/xml" ;
+

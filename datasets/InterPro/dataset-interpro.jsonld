@@ -1,0 +1,39 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/interpro",
+
+    "identifier": "interpro",
+    "preferredPrefix": "interpro",
+    "label": "InterPro dataset summary",
+    "title": "InterPro",
+    "description": "InterPro is a resource that provides functional analysis of protein sequences by classifying them into families and predicting the presence of domains and important sites. To classify proteins in this way, InterPro uses predictive models, known as signatures, provided by several collaborating databases (referred to as member databases) that collectively make up the InterPro consortium.",
+    "rights": "Copyright (C) 2001 The InterPro Consortium. This manual and the accompanying database may be copied and redistributed freely, without advance permission, provided that this Copyright statement is reproduced with each copy.",
+    "keyword": "protein",
+    "page": "https://www.ebi.ac.uk/interpro",
+    "references": "https://www.ncbi.nlm.nih.gov/pubmed/33156333",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "@id": "https://w3id.org/bio2kg/dataset/The%20InterPro%20Consortium",
+        "name": "The InterPro Consortium",
+        "page": "https://www.ebi.ac.uk/interpro"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/interpro",
+    "processor": "rmlmapper-java",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz",
+            "downloadScript": "wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz",
+            "postProcessScript": "gzip -d *.gz"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd",
+            "downloadScript": "wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd"
+            "rr": "sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' hgnc_complete_set.txt > hgnc.csv"
+        }
+    ]
+}

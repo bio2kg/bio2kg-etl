@@ -8,8 +8,6 @@ prefixes:
   idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
-  drugcentral: "https://identifiers.org/DrugCentral:"
-  DrugCentral: "https://identifiers.org/DrugCentral:"
   uniprot: "https://identifiers.org/uniprot:"
   pdb: "https://identifiers.org/pdb:"
   mesh: "https://identifiers.org/mesh:"
@@ -21,8 +19,11 @@ prefixes:
   bl: "https://w3id.org/biolink/vocab/"
   d2s: "https://w3id.org/d2s/"
   bio2kg: "https://w3id.org/bio2kg/data/"
+
   drugcentralvocab: "https://w3id.org/bio2kg/vocab/drugcentral/"
   drugcentraldata: "https://w3id.org/bio2kg/data/drugcentral/"
+  drugcentral: "https://identifiers.org/drugcentral:"
+  DrugCentral: "https://identifiers.org/drugcentral:"
 
 authors:
   - Vincent Emonet <vincent.emonet@gmail.com>

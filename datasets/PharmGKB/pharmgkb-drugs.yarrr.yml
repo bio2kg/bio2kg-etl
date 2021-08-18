@@ -31,13 +31,14 @@ prefixes:
   complex: "https://identifiers.org/irefindex.complex:"
 
   pharmgkb: "http://www.pharmgkb.org/do/serve?objId=$id"
-  pharmgkbDrug: "http://www.pharmgkb.org/drug/"
-  pharmgkbChemical: "http://www.pharmgkb.org/drug/"
-  pharmgkbGene: "http://www.pharmgkb.org/gene/"
-  pharmgkbHaplotype: "http://www.pharmgkb.org/gene/"
-  pharmgkbPathways: "http://www.pharmgkb.org/pathway/"
+  pharmgkbDrug: "https://identifiers.org/pharmgkb.drug:"
+  pharmgkbChemical: "https://identifiers.org/pharmgkb.drug:"
+  pharmgkbGene: "https://identifiers.org/pharmgkb.gene:"
+  pharmgkbHaplotype: "https://identifiers.org/pharmgkb.gene:"
+  pharmgkbDisease: "https://identifiers.org/pharmgkb.disease:"
+  pharmgkbPathways: "https://identifiers.org/pharmgkb.pathways:"
 
-  atc: "http://www.whocc.no/atc_ddd_index/?code="
+  atc: "https://identifiers.org/atc:"
   rxnorm: "https://www.nlm.nih.gov/research/umls/rxnorm/"
 
 # "PharmGKB Accession Id","NCBI Gene ID","HGNC ID","Ensembl Id","Name","Symbol","Alternate Names","Alternate Symbols","Is VIP","Has Variant Annotation","Cross-references","Has CPIC Dosing Guideline","Chromosome","Chromosomal Start - GRCh37","Chromosomal Stop - GRCh37","Chromosomal Start - GRCh38","Chromosomal Stop - GRCh38"

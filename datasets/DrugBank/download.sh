@@ -17,7 +17,7 @@ if [ ! -f "data/drugbank.xml" ]; then
 
     # Fix a namespace causing RMLStreamer to fail
     # sed -ir 's/xsi:schemaLocation="http:\/\/www.drugbank.ca /xsi:schemaLocation="/' drugbank.xml
-    sed -ir 's/ version="5\.1" exported-on="2021-01-03"//' drugbank.xml
+    # sed -ir 's/ version="5\.1" exported-on="2021-01-03"//' drugbank.xml
 fi
 
 # npm install rocketrml

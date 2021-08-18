@@ -1,0 +1,73 @@
+{
+    "@context": {
+        "label": "http://www.w3.org/2000/01/rdf-schema#label",
+        "url": {
+            "@id": "http://schema.org/url",
+            "@type": "@id"
+        },
+        "version": "http://purl.org/pav/version",
+        "isVersionOf": "http://purl.org/dc/terms/isVersionOf",
+        "name": "http://xmlns.com/foaf/0.1/name",
+        "title": "http://purl.org/dc/terms/title",
+        "keyword": "http://www.w3.org/ns/dcat#keyword",
+        "preferredPrefix": "http://identifiers.org/idot/preferredPrefix",
+        "description": "http://purl.org/dc/elements/1.1/description",
+        "identifier": "http://purl.org/dc/elements/1.1/identifier",
+        "rights": "http://purl.org/dc/terms/rights",
+        "format": "http://purl.org/dc/terms/format",
+        "distribution": {
+            "@id": "http://www.w3.org/ns/dcat#distribution",
+            "@type": "@id"
+        },
+        "sparqlEndpoint": {
+            "@id": "http://rdfs.org/ns/void#sparqlEndpoint",
+            "@type": "@id"
+        },
+        "page": {
+            "@id": "http://xmlns.com/foaf/0.1/page",
+            "@type": "@id"
+        },
+        "publisher": {
+            "@id": "http://purl.org/dc/terms/publisher",
+            "@type": "@id"
+        },
+        "references": {
+            "@id": "http://purl.org/dc/terms/references",
+            "@type": "@id"
+        },
+        "created": {
+            "@id": "http://purl.org/dc/terms/created",
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+        },
+        "source": {
+            "@id": "http://purl.org/dc/terms/source",
+            "@type": "@id"
+        },
+        "accessURL": {
+            "@id": "http://www.w3.org/ns/dcat#accessURL",
+            "@type": "@id"
+        },  
+        "downloadURL": {
+            "@id": "http://www.w3.org/ns/dcat#downloadURL",
+            "@type": "@id"
+        },
+        "downloadFiles": {
+            "@id": "https://w3id.org/d2s/vocab/downloadFiles",
+            "@type": "@id"
+        }
+    },
+    "@wizardQuestions": {
+        "name": "Provide the name of this entity:",
+        "label": "Provide the label of this entity:",
+        "description": "Give a short description of the content:",
+        "publisher": "Person, or organization, who published this work:",
+        "version": "What is the version number for this dataset? e.g. 1.1.1 or v1.2",
+        "license": "Link to the full text of the terms of use (license) for this dataset:",
+        "format": "What is the file format of this data?",
+        "page": "Link to the website or homepage:",
+        "temporalCoverage": "What is the creation or publishing date range for the documents or contents of this dataset? Use https://en.wikipedia.org/wiki/ISO_8601#Time_intervals format - e.g. 2007-03-01/2008-05-11:",
+        "keywords": "Provide keywords describing the content in this dataset:",
+        "references": "Is there an academic publication which describes this dataset?",
+        "frequency": "How often does a new version get published for this dataset? e.g. daily, weekly, monthly"
+    }
+}

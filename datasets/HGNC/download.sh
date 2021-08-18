@@ -7,7 +7,7 @@ if [ ! -f "data/hgnc.csv" ]; then
     cd data
     wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt
     # Convert TSV to CSV for RML Mapper
-    sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' hgnc_complete_set.txt > hgnc.csv
+    sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' hgnc_complete_set.txt > hgnc_complete_set.csv
     cd ..
 fi
 

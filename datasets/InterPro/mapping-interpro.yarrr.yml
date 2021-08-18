@@ -1,0 +1,53 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  PUBMED: "https://identifiers.org/pubmed:"
+  interpro: "https://identifiers.org/interpro:"
+  mesh: "https://identifiers.org/mesh:"
+  uniprot: "https://identifiers.org/uniprot:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  interprovocab: "https://w3id.org/bio2kg/vocab/interpro/"
+  interprodata: "https://w3id.org/bio2kg/data/interpro/"
+
+mappings:
+  families:
+    sources:
+      - ["data/interpro.xml~xpath", /interprodb/interpro]
+    s: interpro:$(@id)
+    po:
+      - [a, sio:ProteinFamily]
+      - [a, interprovocab:$(@type)]
+
+      - [sio:hasProvider, bio2kg:graph/interpro]
+      - [sio:title, $(name)]
+      - [sio:description, $(abstract/p)]
+      - [interprovocab:protein_count, $(@protein_count)]
+
+      # - [sio:hasMember, $(member_list/db_xref/@db):$(member_list/db_xref/@dbkey)]
+      - p: sio:hasMember
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(member_list/db_xref/@db):$(member_list/db_xref/@dbkey)"]
+              - [idsf:format_for, "curie_to_uri"]
+          type: iri
+
+      - p: sio:isSupportedBy
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(pub_list/publication/db_xref/@db):$(pub_list/publication/db_xref/@dbkey)"]
+              - [idsf:format_for, "curie_to_uri"]
+          type: iri
+

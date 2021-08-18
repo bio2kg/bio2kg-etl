@@ -16,8 +16,8 @@ prefixes:
   bio2kg: "https://w3id.org/bio2kg/data/"
   ncbigene: "https://identifiers.org/ncbigene:"
   ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
-  KEGG: "https://identifiers.org/HGNC:"
-  REACT: "https://identifiers.org/REACT:"
+  KEGG: "https://identifiers.org/kegg:"
+  REACT: "https://identifiers.org/react:"
   MESH: "https://identifiers.org/mesh:"
 
 mappings:

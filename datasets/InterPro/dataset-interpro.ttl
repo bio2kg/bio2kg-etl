@@ -1,0 +1,100 @@
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dctypes: <http://purl.org/dc/dcmitype/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix idot: <http://identifiers.org/idot/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix d2s: <https://w3id.org/d2s/vocab/> .
+
+# Summary of the dataset
+<https://w3id.org/bio2kg/dataset/interpro> a dctypes:Dataset ;
+    rdfs:label "InterPro dataset summary" ;
+    dc:identifier "interpro" ;
+    idot:preferredPrefix "interpro" ;
+    dcterms:title "InterPro" ;
+    dc:description "InterPro is a resource that provides functional analysis of protein sequences by classifying them into families and predicting the presence of domains and important sites. To classify proteins in this way, InterPro uses predictive models, known as signatures, provided by several collaborating databases (referred to as member databases) that collectively make up the InterPro consortium." ;
+    dcat:keyword "protein" ;
+    foaf:page <https://www.ebi.ac.uk/interpro> ;
+    dcterms:references <https://www.ncbi.nlm.nih.gov/pubmed/33156333> ;
+    dcterms:rights "Copyright (C) 2001 The InterPro Consortium. This manual and the accompanying database may be copied and redistributed freely, without advance permission, provided that this Copyright statement is reproduced with each copy." ;
+    # dcterms:license <http://creativecommons.org/licenses/by-nc/4.0/legalcode> ;
+    dcterms:publisher [
+        a dcterms:Agent ;
+        foaf:name "The InterPro Consortium" ;
+        foaf:page "https://www.ebi.ac.uk/interpro"
+    ] ;
+
+    void:sparqlEndpoint <https://data.bio2kg.ondsri.maastrichtuniversity.nl/sparql> ;
+    d2s:graph <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/interpro> ;
+    d2s:processor "rmlmapper-java" ;
+
+    # TODO: add details about how can the different files of the dataset be automatically downloaded
+    # to update with newer version automatically
+    d2s:downloadFiles 
+        # [
+        #     a d2s:FileDownload ;
+        #     dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz> ;
+        #     d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz""" ;
+        #     d2s:postProcessScript """gzip -d *.gz""" 
+        # ],
+        [
+            a d2s:FileDownload ;
+            dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd> ;
+            d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd""" 
+        ] .
+
+    # pav:lastUpdateOn "2021-08-17"^^xsd:date .
+
+
+    # d2s:downloadScript """wget -N http://myfile""" ;
+    # d2s:postProcessScript """sed /s/replace/by/g""" ;
+    # d2s:addHeader "col1,col2,col3" ;
+    # d2s:updateStrategy "same_url" or "new_version_url" ;
+    # d2s:updateSchedule "every 6 months" ;
+
+    # d2s:lastModified "Tue, 17 Aug 2021 09:05:07 GMT" ;
+    # d2s:lastUpdated "Tue, 13 Aug 2021 09:05:07 GMT" ;
+    
+    # dcterms:format "application/xml" ;
+
+
+
+
+
+
+
+# # Publisher
+# <https://w3id.org/bio2kg/dataset/The%20InterPro%20Consortium> a dcterms:Agent ;
+#     foaf:name "The InterPro Consortium" ;
+#     foaf:page "https://www.ebi.ac.uk/interpro" .
+
+
+# # TODO: remove the descriptions for versions? 
+# # This should be automatically generated at first run
+
+# # Version 1 of the dataset
+# <https://w3id.org/bio2kg/dataset/interpro/version/1> a dctypes:Dataset ;
+#     rdfs:label "InterPro dataset version 1" ;
+#     pav:version "1" ;
+#     dcterms:isVersionOf <https://w3id.org/bio2kg/dataset/interpro> ;
+#     dcat:distribution <https://w3id.org/bio2kg/dataset/interpro/version/1/distribution/rdf>,
+#         <https://w3id.org/bio2kg/dataset/interpro/version/1/distribution/source> .
+
+
+# # Distributions for version 1: source and RDF
+# <https://w3id.org/bio2kg/dataset/interpro/version/1/distribution/rdf> a void:Dataset,
+#         dcat:Distribution ;
+#     rdfs:label "InterPro RDF distribution for version 1" ;
+#     dcterms:created "2021-08-17"^^xsd:date ;
+#     dcterms:source <https://w3id.org/bio2kg/dataset/interpro/version/1/distribution/source> ;
+#     dcat:accessURL "https://bio2kg.ondsri.maastrichtuniversity.nl/sparql" .
+
+# <https://w3id.org/bio2kg/dataset/interpro/version/1/distribution/source> a dcat:Distribution ;
+#     rdfs:label "InterPro source distribution for version 1" ;
+#     dcterms:format "application/xml" ;
+#     dcat:downloadURL "https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz" .
+

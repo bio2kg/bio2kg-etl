@@ -47,6 +47,7 @@ jobs:
     #   run: |
     #     cd datasets/DrugBank
     #     ./run.sh "-Xms100g -Xmx100g"
+    #     ./download.sh
     #     curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     # https://github.com/redhat-actions/oc-login#readme
