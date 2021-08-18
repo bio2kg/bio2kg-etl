@@ -23,7 +23,7 @@ prefixes:
 mappings:
   families:
     sources:
-      - ["data/interpro.xml~xpath", /interprodb/interpro]
+      - ["interpro.xml~xpath", /interprodb/interpro]
     s: interpro:$(@id)
     po:
       - [a, sio:ProteinFamily]
