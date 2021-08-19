@@ -9,7 +9,7 @@ PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX sioshape: <http://semanticscience.org/shape/>
 PREFIX b2kshape: <https://w3id.org/bio2kg/shape/>
 
-## Download converted and convert to SHACL RDF:
+## Download converter, and convert compact SHACL to SHACL RDF:
 # wget -O /opt/shaclconvert.jar https://gitlab.ontotext.com/yasen.marinov/shaclconvert/-/raw/master/built/shaclconvert.jar
 # java -jar /opt/shaclconvert.jar resources/bio2kg-shapes.shaclc resources/bio2kg-shapes.shacl
 

@@ -38,9 +38,8 @@
         [
             a d2s:FileDownload ;
             dcat:downloadURL <https://go.drugbank.com/releases/5-1-8/downloads/all-full-database> ;
-            d2s:downloadScript """curl -Lfs -o drugbank.zip -u $DRUGBANK_USERNAME:$DRUGBANK_PASSWORD https://go.drugbank.com/releases/$DRUGBANK_VERSION/downloads/all-full-database""" ;
-#             d2s:postProcessScript """unzip drugbank.zip
-# sed -r 's/<drugbank-id primary="true">(.*)<\/drugbank-id>/<drugbank-id-primary>\1<\/drugbank-id-primary>/g' full\ database.xml > drugbank.xml""" 
+            d2s:downloadScript """curl -Lfs -o drugbank.zip -u $DRUGBANK_USERNAME:$DRUGBANK_PASSWORD https://go.drugbank.com/releases/5-1-8/downloads/all-full-database""" ;
+            d2s:postProcessScript "prepare.sh"
         ] .
 
     # pav:lastUpdateOn "2021-08-17"^^xsd:date .

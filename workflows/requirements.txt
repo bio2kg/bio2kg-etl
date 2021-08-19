@@ -2,5 +2,6 @@ rdflib
 rdflib-jsonld
 SPARQLWrapper
 pandas
-d2s
+git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
+# d2s
 # prefect[kubernetes]

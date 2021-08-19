@@ -38,8 +38,8 @@
         [
             a d2s:FileDownload ;
             dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt> ;
-            d2s:downloadScript """wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt""" ;
-            d2s:postProcessScript """ls""" 
+            d2s:downloadScript """wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"""
+            # d2s:postProcessScript """ls""" 
         ] .
 
     # pav:lastUpdateOn "2021-08-17"^^xsd:date .

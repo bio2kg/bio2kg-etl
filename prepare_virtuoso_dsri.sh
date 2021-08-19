@@ -1,11 +1,12 @@
 
+APP_NAME="${1:-triplestore}"
 
 # export DBA_PASSWORD=$1
 export DBA_PASSWORD=$(cat .env | grep VIRTUOSO_PASSWORD | sed 's/VIRTUOSO_PASSWORD=//g')
 
 oc project bio2kg
 
-pod_id=$(oc get pod --selector app=triplestore --no-headers -o=custom-columns=NAME:.metadata.name)
+pod_id=$(oc get pod --selector app=$APP_NAME --no-headers -o=custom-columns=NAME:.metadata.name)
 echo "Preparing Pod on the DSRI with ID: $pod_id"
 
 # Install wget and download VAD packages in Virtuoso container

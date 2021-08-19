@@ -13,6 +13,8 @@
 
 A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large datasets though, so try to use a sample for testing). Checking a dataset workflow definition is a good way to see exactly the process to convert this dataset to RDF using the SemanticScience ontology.
 
+> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run Bash scripts (even when using the python library).
+
 Checkout the `prepare_local.sh` script to see if you need to install additional packages like `wget` and `unzip`, and run it to install dependencies to run the ETL scripts locally:
 
 ```bash
@@ -29,27 +31,37 @@ cd datasets/HGNC
 
 All temporary files are put in the `data/` folder
 
-> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run Bash scripts.
+You can also try to use `d2s` to run the dataset processing based on its `metadata.ttl` file:
+
+```bash
+cd datasets/HGNC
+d2s run --sample 100
+```
 
 ### Define mappings
 
-1. Define a `download.sh` script to download the dataset.
-2. Define a `mapping-dataset.yarrr.yml` file to map the dataset to the [SemanticScience ontology](https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html) following the Bio2KG models. 
-3. Define a `run.sh` script to run the RML mapper to generate the RDF. Use `datasets/HGNC` as starter for tabular files, or `datasets/DrugBank` for XML files.
-
-Add autocomplete and validation for YARRRML mappings files in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
+Add autocomplete and validation for YARRRML mappings files and the `d2s.yml` config file in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
 
 ```json
     "yaml.schemas": {
-        "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/yarrrml.schema.json": ["*.yarrr.yml"]
+        "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/yarrrml.schema.json": ["*.yarrr.yml"],
+        "https://raw.githubusercontent.com/d2s/d2s-cli/master/resources/d2s-config.schema.json": ["d2s.yml"],
     }
 ```
+
+To process a new dataset create a new folder in the `datasets` folder, and add the following files to map the dataset to RDF:
+
+1. Define a `dataset-yourdataset.ttl` or `dataset-yourdataset.jsonld` file to describe your dataset, the files to download and potential preprocessing script to run.
+2. Optionally define a `prepare.sh` script to perform specification preparation steps on the dataset.
+3. Define a `mapping-yourdataset.yarrr.yml` file to map the dataset to the [SemanticScience ontology](https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html) following the Bio2KG model. 
+
+Use `datasets/HGNC` as starter for tabular files, or `datasets/InterPro` for XML files.
 
 ### Available RML mappers
 
 Multiple solutions are available to generate RDF from RML mappings:
 
-1. [rmlmapper-java](https://github.com/RMLio/rmlmapper-java): works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
+1. [rmlmapper-java](https://github.com/RMLio/rmlmapper-java): the reference implementation, works well with CSV, XML and functions. But out of memory quickly for large files (e.g. DrugBank, iProClass)
 
 2. [RMLStreamer](https://github.com/RMLio/RMLStreamer) (scala): works well with large CSV and XML files. Not working with functions (e.g. DrugBank, iProClass)
 
@@ -140,11 +152,11 @@ Uninstall:
 helm uninstall actions-runner
 ```
 
-## Deploy a Virtuoso triplestore on DSRI
+## Deploy Virtuoso triplestores on DSRI
 
-On the DSRI you can easily create a Virtuoso triplestore by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
+On the DSRI you can easily create Virtuoso triplestores by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
 
-You can also do it in one line from the command-line:
+Start the production triplestore:
 
 ```bash
 oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
@@ -154,10 +166,21 @@ oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
   -p TRIPLESTORE_URL=https://data.bio2kg.org/
 ```
 
-After starting the Virtuoso triplestore you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
+Start the staging triplestore:
 
 ```bash
-./prepare_virtuoso_dsri.sh
+oc new-app virtuoso-staging -p PASSWORD=mypassword \
+  -p APPLICATION_NAME=staging \
+  -p STORAGE_SIZE=300Gi \
+  -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
+  -p TRIPLESTORE_URL=https://data.bio2kg.org/
+```
+
+After starting the Virtuoso triplestores you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
+
+```bash
+./prepare_virtuoso_dsri.sh triplestore
+./prepare_virtuoso_dsri.sh staging
 ```
 
 **Configure Virtuoso**:

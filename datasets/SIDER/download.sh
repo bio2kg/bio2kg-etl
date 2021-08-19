@@ -7,6 +7,7 @@ if [ ! -f "data/meddra_all_label_se.csv" ]; then
 
     # http://sideeffects.embl.de/download/
     # Docs: http://sideeffects.embl.de/media/download/README
+    # Warning: Given stitch compound ID does not resolve with identifers.org/stitch
     wget -N http://sideeffects.embl.de/media/download/meddra_all_label_se.tsv.gz
     wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_indications.tsv.gz
     wget -N ftp://xi.embl.de/SIDER/latest/meddra_all_se.tsv.gz

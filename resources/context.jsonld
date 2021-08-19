@@ -15,6 +15,7 @@
         "identifier": "http://purl.org/dc/elements/1.1/identifier",
         "rights": "http://purl.org/dc/terms/rights",
         "format": "http://purl.org/dc/terms/format",
+        "lastUpdateOn": "http://purl.org/pav/lastUpdateOn",
         "distribution": {
             "@id": "http://www.w3.org/ns/dcat#distribution",
             "@type": "@id"
@@ -54,7 +55,12 @@
         "downloadFiles": {
             "@id": "https://w3id.org/d2s/vocab/downloadFiles",
             "@type": "@id"
-        }
+        },
+        "downloadScript": "https://w3id.org/d2s/vocab/downloadScript",
+        "postProcessScript": "https://w3id.org/d2s/vocab/postProcessScript",
+        "processor": "https://w3id.org/d2s/vocab/processor",
+        "graph": "https://w3id.org/d2s/vocab/graph",
+        "rdfSyntax": "https://w3id.org/d2s/vocab/rdfSyntax"
     },
     "@wizardQuestions": {
         "name": "Provide the name of this entity:",
@@ -65,7 +71,6 @@
         "license": "Link to the full text of the terms of use (license) for this dataset:",
         "format": "What is the file format of this data?",
         "page": "Link to the website or homepage:",
-        "temporalCoverage": "What is the creation or publishing date range for the documents or contents of this dataset? Use https://en.wikipedia.org/wiki/ISO_8601#Time_intervals format - e.g. 2007-03-01/2008-05-11:",
         "keywords": "Provide keywords describing the content in this dataset:",
         "references": "Is there an academic publication which describes this dataset?",
         "frequency": "How often does a new version get published for this dataset? e.g. daily, weekly, monthly"

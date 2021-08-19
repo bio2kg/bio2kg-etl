@@ -22,6 +22,7 @@
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
     "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/interpro",
     "processor": "rmlmapper-java",
+    "rdfSyntax": "ntriples",
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
