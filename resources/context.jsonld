@@ -61,18 +61,5 @@
         "processor": "https://w3id.org/d2s/vocab/processor",
         "graph": "https://w3id.org/d2s/vocab/graph",
         "rdfSyntax": "https://w3id.org/d2s/vocab/rdfSyntax"
-    },
-    "@wizardQuestions": {
-        "name": "Provide the name of this entity:",
-        "label": "Provide the label of this entity:",
-        "description": "Give a short description of the content:",
-        "publisher": "Person, or organization, who published this work:",
-        "version": "What is the version number for this dataset? e.g. 1.1.1 or v1.2",
-        "license": "Link to the full text of the terms of use (license) for this dataset:",
-        "format": "What is the file format of this data?",
-        "page": "Link to the website or homepage:",
-        "keywords": "Provide keywords describing the content in this dataset:",
-        "references": "Is there an academic publication which describes this dataset?",
-        "frequency": "How often does a new version get published for this dataset? e.g. daily, weekly, monthly"
     }
 }
