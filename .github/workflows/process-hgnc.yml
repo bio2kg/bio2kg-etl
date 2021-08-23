@@ -25,17 +25,17 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
+        pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
         cd $DATASET_PATH
-        ./download.sh
-        ./run.sh
+        d2s run
         
-        export CLEAR_GRAPH=https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc
-        curl -u dav:$DBA_PASSWORD -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql?query=CLEAR GRAPH <$CLEAR_GRAPH>
-        # Load file after deleting previous graph
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-hgnc.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        # export CLEAR_GRAPH=https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc
+        # curl -u dav:$DBA_PASSWORD -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql?query=CLEAR GRAPH <$CLEAR_GRAPH>
+        # # Load file after deleting previous graph
+        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-hgnc.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: hgnc" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/HGNC/data/bio2kg-*.ttl
+        path: datasets/HGNC/output/*

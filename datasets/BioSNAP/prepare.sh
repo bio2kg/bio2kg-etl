@@ -7,4 +7,4 @@
 gzip -d *.gz
 
 # Convert TSV to CSV for RML Mapper
-sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' DCh-Miner_miner-disease-chemical.tsv > input/DCh-Miner_miner-disease-chemical.csv
+sed -e 's/"//g' -e 's/\t/","/g' -e 's/^/"/' -e 's/$/"/' -e 's/\r//' DCh-Miner_miner-disease-chemical.tsv > DCh-Miner_miner-disease-chemical.csv

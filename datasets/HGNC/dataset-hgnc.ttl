@@ -32,13 +32,16 @@
     d2s:graph <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/hgnc> ;
     d2s:processor "rmlmapper-java" ;
 
+    d2s:postProcessScript "prepare.sh" ;
+
     # TODO: add details about how can the different files of the dataset be automatically downloaded
     # to update with newer version automatically
     d2s:downloadFiles 
         [
             a d2s:FileDownload ;
             dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt> ;
-            d2s:downloadScript """wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"""
+            d2s:processedFilename "hgnc_complete_set.csv" 
+            # d2s:downloadScript """wget -N ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc/tsv/hgnc_complete_set.txt"""
             # d2s:postProcessScript """ls""" 
         ] .
 

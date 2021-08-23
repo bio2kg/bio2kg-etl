@@ -21,7 +21,7 @@ prefixes:
 mappings:
   interactions:
     sources:
-      - ['preppi.csv~csv']
+      - ['preppi_final600.csv~csv']
       ## TSV not working with RML mapper
       # access: preppi.tsv
       # referenceFormulation: csv
@@ -46,12 +46,12 @@ mappings:
           parameters:
               - [idsf:input, "$(pubs)"]
               - [idsf:split_on, \|]
-              # - [idsf:add_prefix, "pubmed:"]
+              - [idsf:add_prefix, "pubmed:"]
           type: iri
 
   # protpep_score:
   #   sources:
-  #     - ['preppi.csv~csv']
+  #     - ['preppi_final600.csv~csv']
   #   s: d2s:data/preppi/interaction/$(prot1)_$(prot2)/protpep_score
   #   po:
   #     - [a, bl:ConfidenceLevel]

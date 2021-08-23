@@ -25,11 +25,13 @@
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/mim2gene_medgen"
+            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/mim2gene_medgen",
+            "processedFilename": "mim2gene_medgen.csv"
         },
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz"
+            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz",
+            "processedFilename": "gene_info.csv"
         }
     ],
     "postProcessScript": "prepare.sh"

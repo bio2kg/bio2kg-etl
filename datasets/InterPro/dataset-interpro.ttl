@@ -39,12 +39,14 @@
         #     a d2s:FileDownload ;
         #     dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz> ;
         #     d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz""" ;
-        #     d2s:postProcessScript """gzip -d *.gz""" 
+        #     d2s:postProcessScript """gzip -d *.gz""" ;
+        #     d2s:processedFilename "interpro.xml" 
         # ],
         [
             a d2s:FileDownload ;
             dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd> ;
-            d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd""" 
+            d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd""" ;
+            d2s:processedFilename "interpro.dtd" 
         ] .
 
     # pav:lastUpdateOn "2021-08-17"^^xsd:date .

@@ -23,15 +23,17 @@
     "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/genage",
     "processor": "rmlmapper-java",
     "rdfSyntax": "turtle",
-    "postProcessScript": "prepare.sh",
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "http://genomics.senescence.info/genes/human_genes.zip"
+            "downloadURL": "http://genomics.senescence.info/genes/human_genes.zip",
+            "processedFilename": "genage_human.csv"
         },
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "http://genomics.senescence.info/genes/models_genes.zip"
+            "downloadURL": "http://genomics.senescence.info/genes/models_genes.zip",
+            "processedFilename": "genage_models.csv"
         }
-    ]
+    ],
+    "postProcessScript": "prepare.sh"
 }

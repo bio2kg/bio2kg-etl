@@ -26,7 +26,8 @@
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
             "downloadURL": "http://www.interactome-atlas.org/data/HuRI.tsv",
-            "postProcessScript": "prepare.sh"
+            "processedFilename": "HuRI.csv"
         }
-    ]
+    ],
+    "postProcessScript": "prepare.sh"
 }

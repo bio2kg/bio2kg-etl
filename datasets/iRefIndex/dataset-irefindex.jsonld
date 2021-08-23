@@ -26,7 +26,8 @@
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
             "downloadURL": "https://irefindex.vib.be/download/irefindex/data/archive/release_17.0/psi_mitab/MITAB2.6/All.mitab.27062020.txt.zip",
-            "postProcessScript": "prepare.sh"
+            "postProcessScript": "prepare.sh",
+            "processedFilename": "irefindex.csv"
         }
     ]
 }

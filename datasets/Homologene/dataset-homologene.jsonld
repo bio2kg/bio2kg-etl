@@ -27,7 +27,8 @@
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
             "downloadURL": "https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data",
-            "postProcessScript": "prepare.sh"
+            "processedFilename": "homologene.csv"
         }
-    ]
+    ],
+    "postProcessScript": "prepare.sh"
 }

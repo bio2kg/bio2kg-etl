@@ -27,7 +27,8 @@
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
             "downloadURL": "https://genomics.senescence.info/diet/dataset.zip",
-            "postProcessScript": "prepare.sh"
+            "processedFilename": "gendr_manipulations.csv"
         }
-    ]
+    ],
+    "postProcessScript": "prepare.sh"
 }

@@ -27,11 +27,13 @@
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
             "downloadURL": "https://unmtid-shinyapps.net/download/drug.target.interaction.tsv.gz",
-            "postProcessScript": "gzip -d *.gz"
+            "processedFilename": "drug.target.interaction.csv"
         },
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://unmtid-shinyapps.net/download/structures.smiles.tsv"
+            "downloadURL": "https://unmtid-shinyapps.net/download/structures.smiles.tsv",
+            "processedFilename": "structures.smiles.csv"
         }
-    ]
+    ],
+    "postProcessScript": "prepare.sh"
 }

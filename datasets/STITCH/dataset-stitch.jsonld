@@ -25,12 +25,17 @@
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "http://stitch.embl.de/download/chemical_chemical.links.detailed.v5.0.tsv.gz"
-        },
-        {
-            "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0.tsv.gz"
+            "downloadURL": "http://stitch.embl.de/download/chemical_chemical.links.detailed.v5.0.tsv.gz",
+            "processedFilename": "chemical_chemical.links.detailed.csv"
         }
     ],
-    "postProcessScript": "gzip -d *.gz"
+    "postProcessScript": "prepare.sh",
+    
+    "otherFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0.tsv.gz",
+            "processedFilename": "protein_chemical.links.detailed.csv"
+        }
+    ]
 }

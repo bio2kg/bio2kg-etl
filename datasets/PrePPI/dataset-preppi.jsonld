@@ -25,7 +25,8 @@
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://honiglab.c2b2.columbia.edu/PrePPI/ref/preppi_final600.txt.tar.gz"
+            "downloadURL": "https://honiglab.c2b2.columbia.edu/PrePPI/ref/preppi_final600.txt.tar.gz",
+            "processedFilename": "preppi_final600.csv"
         }
     ],
     "postProcessScript": "prepare.sh"

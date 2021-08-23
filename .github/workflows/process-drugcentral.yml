@@ -34,7 +34,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: rdf-output
-        path: output/*
+        path: datasets/DrugCentral/output/*
 
 
     # - name: Run RML mapper ETL

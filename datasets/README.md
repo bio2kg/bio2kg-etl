@@ -26,6 +26,13 @@ Running an ETL workflow should be handled by a small program (python?) which wil
 
 We need to register how to download each file in the dataset metadata
 
+### d2s run
+
+Working for following datasets:
+
+* BioSNAP
+* DrugCentral
+
 ## Notes
 
 Some RML mappings have been reused from https://doi.org/10.5281/zenodo.3552369

@@ -24,13 +24,12 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
+        pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
         cd datasets/STITCH
-        ./download.sh
-        ./run.sh "-Xms64g -Xmx64g"
-        curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-stitch.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: stitch" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+        d2s run --memory 64g
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/STITCH/data/bio2kg-*.ttl
+        path: datasets/STITCH/output/*
