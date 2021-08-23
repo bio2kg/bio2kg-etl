@@ -26,7 +26,7 @@ jobs:
       run: |
         pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
         cd datasets/iRefIndex
-        d2s run --memory 60g
+        d2s run --memory 100g
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
