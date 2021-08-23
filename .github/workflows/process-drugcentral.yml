@@ -28,14 +28,11 @@ jobs:
         pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
         cd datasets/DrugCentral
         d2s run
-        ls data
-        ls output
 
     - name: Upload RDF output artifact to GitHub
-      id: stepupload
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2
       with:
-        name: rdf-output
+        name: output
         path: datasets/DrugCentral/output/*
 
 
