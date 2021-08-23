@@ -7,7 +7,7 @@
 | [Drugs](https://vemonet.github.io/semanticscience/browse/class-siodrug.html) | [![Process DrugBank](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugbank.yml) [![DrugCentral](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugcentral.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-drugcentral.yml) [![PharmGKB](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pharmgkb.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pharmgkb.yml) |
 | [Proteins](https://vemonet.github.io/semanticscience/browse/class-sioprotein.html) | [![Process iProClass](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-iproclass.yml) |
 | [Publications](https://vemonet.github.io/semanticscience/browse/class-siopeerreviewedarticle.html) | [![PubMed](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml) [![ClinicalTrials](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml) |
-| [Associations](https://vemonet.github.io/semanticscience/browse/class-sioassociation.html) | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![iRefIndex](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process SNAP BioData](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-snap-biodata.yml) |
+| [Associations](https://vemonet.github.io/semanticscience/browse/class-sioassociation.html) | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![iRefIndex](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process BioSNAP](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml) |
 
 ## Run workflows locally
 
@@ -21,22 +21,14 @@ Checkout the `prepare_local.sh` script to see if you need to install additional 
 ./prepare_local.sh
 ```
 
-Go to the folder of the dataset you want to process, e.g. to run `HGNC`:
-
-```bash
-cd datasets/HGNC
-./download.sh
-./run.sh
-```
-
-All temporary files are put in the `data/` folder
-
-You can also try to use `d2s` to run the dataset processing based on its `metadata.ttl` file:
+Go to the folder of the dataset you want to process, and use `d2s` to run the dataset processing based on its `metadata.ttl` file: e.g. to run `HGNC`:
 
 ```bash
 cd datasets/HGNC
 d2s run --sample 100
 ```
+
+All temporary files are put in the `data/` folder
 
 ### Define mappings
 
@@ -80,10 +72,16 @@ See also:
 
 On the DSRI you can easily create Virtuoso triplestores by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
 
+First define the password as environment variable:
+
+```bash
+export DBA_PASSWORD=yourpassword
+```
+
 Start the production triplestore:
 
 ```bash
-oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
+oc new-app virtuoso-triplestore -p PASSWORD=$DBA_PASSWORD \
   -p APPLICATION_NAME=triplestore \
   -p STORAGE_SIZE=300Gi \
   -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
@@ -93,7 +91,7 @@ oc new-app virtuoso-triplestore -p PASSWORD=mypassword \
 Start the staging triplestore:
 
 ```bash
-oc new-app virtuoso-staging -p PASSWORD=mypassword \
+oc new-app virtuoso-triplestore -p PASSWORD=$DBA_PASSWORD \
   -p APPLICATION_NAME=staging \
   -p STORAGE_SIZE=300Gi \
   -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
@@ -113,6 +111,16 @@ After starting the Virtuoso triplestores you will need to install additional VAD
 
 * Instructions to enable the **faceted browser** and **full text search** via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtFacetBrowserInstallConfig
 
+Delete a triplestore on DSRI:
+
+```bash
+oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=staging
+oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=triplestore
+# Delete the persistent volume:
+oc delete pvc --selector app=staging
+oc delete pvc --selector app=triplestore
+```
+
 ### Start the RMLStreamer on DSRI
 
 Add or update the template in the `bio2kg` project on the DSRI:
@@ -131,7 +139,8 @@ oc new-app apache-flink -p APPLICATION_NAME=flink \
   -p CPU_LIMIT="32" \
   -p MEMORY_LIMIT=100Gi \
   -p LOG_LEVEL=DEBUG \
-  -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
+  -p FLINK_IMAGE="flink:1.12.3-scala_2.11"
+  # -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
 ```
 
 > Check [this repo](https://github.com/vemonet/flink-on-openshift) to build the image of Flink with the RMLStreamer.
@@ -224,7 +233,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set-string githubPat=$GITHUB_PAT \
     --set-string githubOwner=bio2kg \
     --set runnerLabels="{ dsri, bio2kg }" \
-    --set replicas=20 \
+    --set replicas=40 \
     --set serviceAccountName=anyuid \
     --set memoryRequest="512Mi" \
     --set memoryLimit="200Gi" \
@@ -347,6 +356,62 @@ Some relevant resources:
 * [Official Airflow docs for Helm](https://airflow.apache.org/docs/helm-chart/stable/index.html)
 * [Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
 * [Airflow template for OpenShift](https://github.com/CSCfi/airflow-openshift)
+
+1. Install with Helm:
+
+```bash
+helm repo add airflow-stable https://airflow-helm.github.io/charts
+helm repo update
+```
+
+Deploy using Helm:
+
+```bash
+helm install airflow airflow-stable/airflow \
+	--namespace bio2kg \
+    --version "8.X.X" \
+    --values ./workflows/airflow-helm-values.yaml
+    # --set airflow.webserverSecretKey=$DBA_PASSWORD \
+    # --set serviceAccount.name="anyuid" 
+```
+
+Stop Helm chart:
+
+```bash
+helm uninstall airflow
+```
+
+2. Or deploy using the OpenShift template:
+
+```bash
+oc apply -f https://raw.githubusercontent.com/CSCfi/airflow-openshift/master/AirflowTemplate.yml
+```
+
+Then start Airflow:
+
+```bash
+oc new-app apache-airflow \
+  -p APPLICATION_NAME=airflow \
+  -p AIRFLOW_IMAGE=docker-registry.rahti.csc.fi/airflow-image/airflow-2-os:latest \
+  -p AUTHENTICATION_USERNAME=airflow \
+  -p AUTHENTICATION_PASSWORD=$DBA_PASSWORD \
+  -p JUPYTER_PASSWORD=$DBA_PASSWORD \
+  -p WORKER_COUNT=4 \
+  -p WORKER_CPU=16 \
+  -p WORKER_MEMORY=50Gi \
+  -p PIP_REQUIREMENTS="git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master" \
+  -p FLOWER_USER=airflow \
+  -p FLOWER_PASSWORD=$DBA_PASSWORD \
+  -p PERSISTENT_VOLUME_CLAIM_TMP_WORKER_SIZE=500Gi
+```
+
+> The dags are stored in `/opt/airflow/dags` in the Airflow scheduler, and shared with  `/opt/app-root/src` in the Jupyter
+
+Delete airflow started from template:
+
+```bash
+oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=airflow
+```
 
 ## Credits
 

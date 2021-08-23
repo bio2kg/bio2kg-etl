@@ -68,7 +68,8 @@ mappings:
     sources:
       # https://drugcentral.org/download
       # A bug in rmlmapper deletes the first character of the access, so it needs to be doubled
-      - access: "uunmtid-dbs.net:5433/drugcentral"
+      # - access: "uunmtid-dbs.net:5433/drugcentral"
+      - access: "unmtid-dbs.net:5433/drugcentral"
         type: postgresql
         credentials:
           username: drugman

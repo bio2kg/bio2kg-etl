@@ -35,13 +35,13 @@
     # TODO: add details about how can the different files of the dataset be automatically downloaded
     # to update with newer version automatically
     d2s:downloadFiles 
-        # [
-        #     a d2s:FileDownload ;
-        #     dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz> ;
-        #     d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz""" ;
-        #     d2s:postProcessScript """gzip -d *.gz""" ;
-        #     d2s:processedFilename "interpro.xml" 
-        # ],
+        [
+            a d2s:FileDownload ;
+            dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz> ;
+            d2s:downloadScript """wget -N https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.xml.gz""" ;
+            d2s:postProcessScript """gzip -d *.gz""" ;
+            d2s:processedFilename "interpro.xml" 
+        ],
         [
             a d2s:FileDownload ;
             dcat:downloadURL <https://ftp.ebi.ac.uk/pub/databases/interpro/interpro.dtd> ;
