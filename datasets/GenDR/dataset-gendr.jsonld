@@ -1,0 +1,33 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/gendr",
+
+    "identifier": "gendr",
+    "preferredPrefix": "gendr",
+    "label": "GenDR dataset summary",
+    "title": "GenDR",
+    "description": "A curated database of genes associated with dietary restriction in model organisms either from genetic manipulation experiments or gene expression profiling.",
+    "rights": "Copyright © 2002 - 2020 by João Pedro de Magalhães",
+    "license": "http://creativecommons.org/licenses/by/3.0/",
+    "keyword": "gene",
+    "page": "https://genomics.senescence.info/diet/",
+    "references": "https://www.ncbi.nlm.nih.gov/pubmed/22912585",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": " João Pedro de Magalhães",
+        "page": "http://jp.senescence.info/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/gendr",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://genomics.senescence.info/diet/dataset.zip",
+            "postProcessScript": "prepare.sh"
+        }
+    ]
+}

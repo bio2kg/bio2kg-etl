@@ -53,7 +53,7 @@ To process a new dataset create a new folder in the `datasets` folder, and add t
 
 1. Define a `dataset-yourdataset.ttl` or `dataset-yourdataset.jsonld` file to describe your dataset, the files to download and potential preprocessing script to run.
 2. Optionally define a `prepare.sh` script to perform specification preparation steps on the dataset.
-3. Define a `mapping-yourdataset.yarrr.yml` file to map the dataset to the [SemanticScience ontology](https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html) following the Bio2KG model. 
+3. Define a `mapping-yourdataset.yarrr.yml` file to map the dataset to the [SemanticScience ontology](https://vemonet.github.io/semanticscience/browse/entities-tree-classes.html) following the Bio2KG model.  You can use [YARRRML Matey editor](https://rml.io/yarrrml/matey/) to write and test your YARRRML mappings.
 
 Use `datasets/HGNC` as starter for tabular files, or `datasets/InterPro` for XML files.
 
@@ -74,85 +74,9 @@ See also:
 
 * [CARML](https://github.com/carml/carml): can't be used as executable apparently, requires to write a java program
 
-## Run workflows on DSRI with GitHub Actions
+## Deploy services on the DSRI
 
-You can define GitHub Actions workflows YAML files in the folder `.github/workflows` to run on the DSRI:
-
-```yaml
-jobs:
-    your-job:
-      runs-on: ["self-hosted", "dsri", "bio2kg" ]
-      steps: ...
-```
-
-You can install anything you want with conda, pip, yarn, npm, maven.
-
-### Build the GitHub Actions runner image
-
-[![Publish Docker image](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml)
-
-The workflow-runner image is built and publish at every change to `workflows/Dockerfile` by a GitHub Actions workflow.
-
-Build with the latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) automatically downloaded:
-
-```bash
-docker build -t ghcr.io/bio2kg/workflow-runner:latest workflows
-```
-
-Quick try:
-
-```bash
-docker run -it --entrypoint=bash ghcr.io/bio2kg/workflow-runner:latest
-```
-
-Push:
-
-```bash
-docker push ghcr.io/bio2kg/workflow-runner:latest
-```
-
-### Start a GitHub Actions runner on DSRI
-
-You can easily start a GitHub Actions workflow runner in your project on the DSRI using the [Actions runner Helm chart](https://github.com/redhat-actions/openshift-actions-runner-chart):
-
-1. Get an access token with a user in the bio2kg organization, and export it in your environment
-
-```bash
-export GITHUB_PAT="TOKEN"
-```
-
-2. Go to your project on the DSRI
-
-```bash
-oc project bio2kg
-```
-
-3. Start the runners in your project
-
-```bash
-helm install actions-runner openshift-actions-runner/actions-runner \
-    --set-string githubPat=$GITHUB_PAT \
-    --set-string githubOwner=bio2kg \
-    --set runnerLabels="{ dsri, bio2kg }" \
-    --set replicas=20 \
-    --set serviceAccountName=anyuid \
-    --set memoryRequest="512Mi" \
-    --set memoryLimit="200Gi" \
-    --set cpuRequest="100m" \
-    --set cpuLimit="128" \
-    --set runnerImage=ghcr.io/bio2kg/workflow-runner \
-    --set runnerTag=latest
-```
-
-4. Check the runners are available from GitHub: go to your organization **Settings** page on GitHub, then go to the **Actions** tab, click go to the **Runner** tab, and scroll to the bottom. In the list of active runners you should see the runners you just deployed. 
-
-Uninstall:
-
-```bash
-helm uninstall actions-runner
-```
-
-## Deploy Virtuoso triplestores on DSRI
+### Start Virtuoso triplestores on DSRI
 
 On the DSRI you can easily create Virtuoso triplestores by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
 
@@ -189,9 +113,9 @@ After starting the Virtuoso triplestores you will need to install additional VAD
 
 * Instructions to enable the **faceted browser** and **full text search** via the admin UI: http://vos.openlinksw.com/owiki/wiki/VOS/VirtFacetBrowserInstallConfig
 
-## Deploy the RMLStreamer on DSRI
+### Start the RMLStreamer on DSRI
 
-Add or update the template in the `bio2kg` project:
+Add or update the template in the `bio2kg` project on the DSRI:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/vemonet/flink-on-openshift/master/template-flink-dsri.yml
@@ -238,11 +162,91 @@ oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
 oc delete pvc --selector app=flink
 ```
 
-## Deploy Prefect workflows on DSRI
+## Run workflows on DSRI 
+
+### With GitHub Actions
+
+You can define GitHub Actions workflows YAML files in the folder `.github/workflows` to run on the DSRI:
+
+```yaml
+jobs:
+    your-job:
+      runs-on: ["self-hosted", "dsri", "bio2kg" ]
+      steps: ...
+```
+
+You can install anything you want with conda, pip, yarn, npm, maven.
+
+#### Build the GitHub Actions runner image
+
+[![Publish Docker image](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/publish-runner-docker.yml)
+
+The workflow-runner image is built and publish at every change to `workflows/Dockerfile` by a GitHub Actions workflow.
+
+Build with the latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) automatically downloaded:
+
+```bash
+docker build -t ghcr.io/bio2kg/workflow-runner:latest workflows
+```
+
+Quick try:
+
+```bash
+docker run -it --entrypoint=bash ghcr.io/bio2kg/workflow-runner:latest
+```
+
+Push:
+
+```bash
+docker push ghcr.io/bio2kg/workflow-runner:latest
+```
+
+#### Start a GitHub Actions runner on DSRI
+
+You can easily start a GitHub Actions workflow runner in your project on the DSRI using the [Actions runner Helm chart](https://github.com/redhat-actions/openshift-actions-runner-chart):
+
+1. Get an access token with a user in the bio2kg organization, and export it in your environment
+
+```bash
+export GITHUB_PAT="TOKEN"
+```
+
+2. Go to your project on the DSRI
+
+```bash
+oc project bio2kg
+```
+
+3. Start the runners in your project
+
+```bash
+helm install actions-runner openshift-actions-runner/actions-runner \
+    --set-string githubPat=$GITHUB_PAT \
+    --set-string githubOwner=bio2kg \
+    --set runnerLabels="{ dsri, bio2kg }" \
+    --set replicas=20 \
+    --set serviceAccountName=anyuid \
+    --set memoryRequest="512Mi" \
+    --set memoryLimit="200Gi" \
+    --set cpuRequest="100m" \
+    --set cpuLimit="128" \
+    --set runnerImage=ghcr.io/bio2kg/workflow-runner \
+    --set runnerTag=latest
+```
+
+4. Check the runners are available from GitHub: go to your organization **Settings** page on GitHub, then go to the **Actions** tab, click go to the **Runner** tab, and scroll to the bottom. In the list of active runners you should see the runners you just deployed. 
+
+Uninstall:
+
+```bash
+helm uninstall actions-runner
+```
+
+### Deploy Prefect workflows on DSRI
 
 Experimental.
 
-### Install Prefect server
+#### Install Prefect server
 
 See docs to [install Prefect Server on Kubernetes](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server)
 
@@ -282,7 +286,7 @@ Uninstall:
 helm uninstall prefect
 ```
 
-### Run a Prefect workflow
+#### Run a Prefect workflow
 
 On your laptop, change the host in the configuration file `~/.prefect/config.toml` (cf. [docs](https://github.com/PrefectHQ/server/tree/master/helm/prefect-server#connecting-to-your-server))
 
@@ -304,7 +308,7 @@ Register a workflow:
 python3 workflows/prefect-workflow.py
 ```
 
-## Deploy Argo workflows on DSRI
+### Deploy Argo workflows on DSRI
 
 [Install Argo workflows](https://github.com/argoproj/argo-helm/tree/master/charts/argo-workflows) using Helm charts:
 
@@ -335,6 +339,14 @@ helm uninstall argo-workflows
 ```
 
 Maybe fix with [adding SCC for hostpath](https://docs.openshift.com/container-platform/3.11/admin_guide/manage_scc.html#use-the-hostpath-volume-plugin)
+
+### Deploy Airflow on DSRI
+
+Some relevant resources:
+
+* [Official Airflow docs for Helm](https://airflow.apache.org/docs/helm-chart/stable/index.html)
+* [Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
+* [Airflow template for OpenShift](https://github.com/CSCfi/airflow-openshift)
 
 ## Credits
 

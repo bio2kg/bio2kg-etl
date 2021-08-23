@@ -1,0 +1,32 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/irefindex",
+
+    "identifier": "irefindex",
+    "preferredPrefix": "irefindex",
+    "label": "iRefIndex dataset summary",
+    "title": "iRefIndex",
+    "description": " iRefIndex provides an index of protein interactions available in a number of primary interaction databases including BIND, BioGRID, CORUM, DIP, HPRD, InnateDB, IntAct, MatrixDB, MINT, MPact, MPIDB, MPPI, Reactome, VirHostnet, and QuickGO. ",
+    "license": "http://creativecommons.org/licenses/by/2.5/",
+    "keyword": "gene",
+    "page": "https://irefindex.vib.be/wiki/index.php/iRefIndex",
+    "references": "http://www.biomedcentral.com/1471-2105/9/405/abstract",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "Donaldson Research",
+        "page": "https://irefindex.vib.be/wiki/index.php/Donaldson_Research"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/irefindex",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://irefindex.vib.be/download/irefindex/data/archive/release_17.0/psi_mitab/MITAB2.6/All.mitab.27062020.txt.zip",
+            "postProcessScript": "prepare.sh"
+        }
+    ]
+}

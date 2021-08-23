@@ -8,6 +8,8 @@ prefixes:
   pubmed: "https://identifiers.org/pubmed:"
   drugbank: "https://identifiers.org/drugbank:"
   mesh: "https://identifiers.org/mesh:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
   schema: "https://schema.org/"
   sio: "http://semanticscience.org/resource/"
   bl: "https://w3id.org/biolink/vocab/"
@@ -19,7 +21,7 @@ prefixes:
 mappings:
   genes:
     sources:
-      - ['data/homologene.csv~csv']
+      - ['homologene.csv~csv']
     
       # HomoloGene group id,Taxonomy ID,Gene ID,Gene Symbol,Protein gi,Protein accession
       # "3","9606","34","ACADM","4557231","NP_000007.1"

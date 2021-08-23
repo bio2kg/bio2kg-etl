@@ -5,6 +5,7 @@ if [ ! -f "data/homologene.csv" ]; then
     echo "data/homologene.csv does not exist, downloading (11G)"
     mkdir -p data && cd data
     # https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/README
+    # https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/HomoloGene_Field_Description.txt
     wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.data
     # wget -N https://ftp.ncbi.nlm.nih.gov/pub/HomoloGene/current/homologene.xml.gz
     # gzip -d *.gz

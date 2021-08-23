@@ -1,0 +1,37 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/drugcentral",
+
+    "identifier": "drugcentral",
+    "preferredPrefix": "drugcentral",
+    "label": "DrugCentral dataset summary",
+    "title": "DrugCentral",
+    "description": "DrugCentral provides information on active ingredients chemical entities, pharmaceutical products, drug mode of action, indications, pharmacologic action. We monitor FDA, EMA, and PMDA for new drug approval on regular basis to ensure currency of the resource. Limited information on discontinued and drugs approved outside US is also available however regulatory approval information can't be verified.",
+    "rights": "Database developed and maintained by Oleg Ursu and Tudor Oprea.",
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+    "keyword": "drug",
+    "page": "https://drugcentral.org",
+    "references": "https://doi.org/10.1093/nar/gkaa997",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "Division of Translational Informatics at University of New Mexico",
+        "page": "http://datascience.unm.edu/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/drugcentral",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "ntriples",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://unmtid-shinyapps.net/download/drug.target.interaction.tsv.gz",
+            "postProcessScript": "gzip -d *.gz"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://unmtid-shinyapps.net/download/structures.smiles.tsv"
+        }
+    ]
+}

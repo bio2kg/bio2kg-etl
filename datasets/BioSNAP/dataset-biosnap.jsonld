@@ -1,0 +1,33 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/biosnap",
+
+    "identifier": "biosnap",
+    "preferredPrefix": "biosnap",
+    "label": "BioSNAP dataset summary",
+    "title": "BioSNAP",
+    "description": "SNAP is a General-Purpose Network Analysis and Graph-Mining Library.",
+    "license": "https://www.ncbi.nlm.nih.gov/home/about/policies",
+    "keyword": "protein",
+    "page": "http://snap.stanford.edu/biodata",
+    "references": "https://dl.acm.org/doi/10.1145/2898361",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "Stanford SNAP Group",
+        "page": "http://snap.stanford.edu/contact.html"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/biosnap",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://snap.stanford.edu/biodata/datasets/10004/files/DCh-Miner_miner-disease-chemical.tsv.gz",
+            "processedFilename": "DCh-Miner_miner-disease-chemical.csv"
+        }
+    ],
+    "postProcessScript": "prepare.sh"
+}

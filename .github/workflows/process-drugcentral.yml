@@ -21,22 +21,32 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Run RML mapper ETL
+    - name: Run dataset processing
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
-        cd $DATASET_PATH
-        ./download.sh
-        ./run.sh
-        cd data
-        ls bio2kg-*.ttl | while read UPLOAD_FILE 
-        do
-            UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
-            curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
-        done
+        pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
+        cd datasets/DrugCentral
+        d2s run
 
-    - name: Upload RDF output
-      uses: actions/upload-artifact@v2
+    - name: Upload RDF output artifact to GitHub
+      id: stepupload
+      uses: actions/upload-artifact@v1
       with:
-        name: output
-        path: datasets/DrugCentral/data/bio2kg-*.ttl
+        name: rdf-output
+        path: output/*
+
+
+    # - name: Run RML mapper ETL
+    #   env:
+    #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+    #   run: |
+    #     cd $DATASET_PATH
+    #     ./download.sh
+    #     ./run.sh
+    #     cd data
+    #     ls bio2kg-*.ttl | while read UPLOAD_FILE 
+    #     do
+    #         UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
+    #         curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+    #     done

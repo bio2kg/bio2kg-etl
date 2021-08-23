@@ -20,7 +20,7 @@ prefixes:
 mappings:
   disease-gene-associations:
     sources:
-      - ['data/mim2gene_medgen.csv~csv']
+      - ['mim2gene_medgen.csv~csv']
     s: bio2kg:ctd/interaction/OMIM:$(#MIM number)-$(GeneID)
     po:
       - [a, sio:GeneDiseaseAssocation] # TODO: check
@@ -34,14 +34,14 @@ mappings:
 
   diseases:
     sources:
-      - ['data/mim2gene_medgen.csv~csv']
+      - ['mim2gene_medgen.csv~csv']
     s: omim:$(#MIM number)
     po:
       - [a, sio:Disease]
 
   genes:
     sources:
-      - ['data/mim2gene_medgen.csv~csv']
+      - ['mim2gene_medgen.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]

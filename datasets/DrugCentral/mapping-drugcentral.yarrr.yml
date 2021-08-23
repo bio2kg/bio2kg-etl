@@ -37,7 +37,7 @@ authors:
 mappings:
   drug-interactions:
     sources:
-      - ['data/drug.target.interaction.csv~csv']
+      - ['drug.target.interaction.csv~csv']
     # s: bio2kg:drugcentral/interaction/$(STRUCT_ID)-$(ACCESSION)
     s: 
       function: idsf:string_process
@@ -84,7 +84,7 @@ mappings:
   # "CCCCN1CCCC[C@H]1C(=O)NC1=C(C)C=CC=C1C","InChI=1S/C18H28N2O/c1-4-5-12-20-13-7-6-11-16(20)18(21)19-17-14(2)9-8-10-15(17)3/h8-10,16H,4-7,11-13H2,1-3H3,(H,19,21)/t16-/m0/s1","LEBVLXFERQHONN-INIZCTEOSA-N","4","levobupivacaine","27262-47-1"
   structures-smiles:
     sources:
-      - ['data/structures.smiles.csv~csv']
+      - ['structures.smiles.csv~csv']
     s: drugcentraldata:structure/$(ID)
     po:
       - [a, sio:Drug]

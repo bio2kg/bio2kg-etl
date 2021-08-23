@@ -1,0 +1,36 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/stitch",
+
+    "identifier": "stitch",
+    "preferredPrefix": "stitch",
+    "label": "STITCH dataset summary",
+    "title": "STITCH",
+    "description": "STITCH is a database of known and predicted interactions between chemicals and proteins. The interactions include direct (physical) and indirect (functional) associations; they stem from computational prediction, from knowledge transfer between organisms, and from interactions aggregated from other (primary) databases.",
+    "license": "http://stitch.embl.de/cgi/access.pl?footer_active_subpage=licensing",
+    "keyword": "interactions",
+    "page": "http://stitch.embl.de",
+    "references": "https://www.ncbi.nlm.nih.gov/pubmed/26590256",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "EMBL",
+        "page": " https://embl.de"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/stitch",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://stitch.embl.de/download/chemical_chemical.links.detailed.v5.0.tsv.gz"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0.tsv.gz"
+        }
+    ],
+    "postProcessScript": "gzip -d *.gz"
+}

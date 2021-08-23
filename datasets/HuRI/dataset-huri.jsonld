@@ -1,0 +1,32 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/huri",
+
+    "identifier": "huri",
+    "preferredPrefix": "huri",
+    "label": "HuRI dataset summary",
+    "title": "The Human Reference Interactome",
+    "description": "HomoloGene is an automated system for detecting homologs among eukaryotic gene sets.",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "keyword": "gene",
+    "page": "http://www.interactome-atlas.org/",
+    "references": "https://doi.org/10.1038/s41586-020-2188-x",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "Center for Cancer Systems Biology at Dana-Farber Cancer Institute",
+        "page": "https://www.ncbi.nlm.nih.gov/huri"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/huri",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://www.interactome-atlas.org/data/HuRI.tsv",
+            "postProcessScript": "prepare.sh"
+        }
+    ]
+}

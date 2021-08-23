@@ -1,0 +1,37 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/genage",
+
+    "identifier": "genage",
+    "preferredPrefix": "genage",
+    "label": "GenAge dataset summary",
+    "title": "GenAge",
+    "description": "A curated database of candidate human ageing-related genes and genes associated with longevity and/or ageing in model organisms.",
+    "rights": "Copyright © 2002 - 2020 by João Pedro de Magalhães",
+    "license": "http://creativecommons.org/licenses/by/3.0/",
+    "keyword": "gene",
+    "page": "https://genomics.senescence.info/genes/index.html",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/15280050",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": " João Pedro de Magalhães",
+        "page": "http://jp.senescence.info/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/genage",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "postProcessScript": "prepare.sh",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://genomics.senescence.info/genes/human_genes.zip"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://genomics.senescence.info/genes/models_genes.zip"
+        }
+    ]
+}

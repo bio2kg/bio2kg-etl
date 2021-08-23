@@ -1,0 +1,36 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/ncbigene",
+
+    "identifier": "ncbigene",
+    "preferredPrefix": "ncbigene",
+    "label": "NCBIgene dataset summary",
+    "title": "NCBIgene",
+    "description": "Gene integrates information from a wide range of species. A record may include nomenclature, Reference Sequences (RefSeqs), maps, pathways, variations, phenotypes, and links to genome-, phenotype-, and locus-specific resources worldwide.",
+    "license": "https://www.ncbi.nlm.nih.gov/home/about/policies",
+    "keyword": "gene",
+    "page": "https://www.ncbi.nlm.nih.gov/gene",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/25355515",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "NCBI",
+        "page": "https://www.ncbi.nlm.nih.gov"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ncbigene",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/mim2gene_medgen"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz"
+        }
+    ],
+    "postProcessScript": "prepare.sh"
+}

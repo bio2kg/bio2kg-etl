@@ -15,11 +15,10 @@ prefixes:
   bio2kg: "https://w3id.org/bio2kg/data/"
   ensembl: "https://identifiers.org/ensembl:"
 
-
 mappings:
   interactions:
     sources:
-      - ['data/huri.csv~csv']
+      - ['HuRI.csv~csv']
     s: bio2kg:huri/interaction/$(geneA)-$(geneB)
     po:
       - [a, sio:Association]

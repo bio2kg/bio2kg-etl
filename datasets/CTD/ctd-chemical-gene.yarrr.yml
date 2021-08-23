@@ -31,7 +31,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(InteractionActions)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:find, "\\\\u005"]
               - [idsf:replace, "-"]
               - [idsf:format_for, "uri"]
@@ -50,7 +50,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(PubMedIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "pubmed:"]
           type: iri
 

@@ -1,0 +1,32 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/preppi",
+
+    "identifier": "preppi",
+    "preferredPrefix": "preppi",
+    "label": "PrePPI dataset summary",
+    "title": "PrePPI",
+    "description": "PrePPI is a database of predicted and experimentally determined protein-protein interactions (PPI) for the human proteome. Predicted interactions in the database are determined using a Bayesian framework that combines structural, functional, evolutionary and expression information. Currently, PrePPI contains 1.35 million PPIs for ~85% of the human proteome. The PrePPI database also contains experimentally determined interactions compiled from a set of publicly available databases that curate interactions from the literature, e.g., DIP, IntAct, HPRD",
+    "license": "https://www.ncbi.nlm.nih.gov/home/about/policies",
+    "keyword": "protein",
+    "page": "https://honiglab.c2b2.columbia.edu/PrePPI",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/23193263",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "Honig Lab",
+        "page": "http://honig.c2b2.columbia.edu/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/preppi",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "turtle",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://honiglab.c2b2.columbia.edu/PrePPI/ref/preppi_final600.txt.tar.gz"
+        }
+    ],
+    "postProcessScript": "prepare.sh"
+}

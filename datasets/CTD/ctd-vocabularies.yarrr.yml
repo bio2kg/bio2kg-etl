@@ -39,21 +39,21 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(AltGeneIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:hasSynonym
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(Synonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:seeAlso
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(BioGRIDIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:seeAlso
@@ -61,7 +61,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(PharmGKBIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "pharmgkb:"]
           type: iri
 
@@ -70,7 +70,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(UniProtIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "uniprot:"]
           type: iri
 
@@ -91,14 +91,14 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(Synonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:parents
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(ParentIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:TreeNumbers
@@ -106,7 +106,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(TreeNumbers)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
   
   diseases:
@@ -123,21 +123,21 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(AltDiseaseIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:hasSynonym
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(Synonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:parents
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(ParentIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:TreeNumbers
@@ -145,7 +145,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(TreeNumbers)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:SlimMappings
@@ -153,7 +153,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(SlimMappings)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
   anatomy:
@@ -170,21 +170,21 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(AltAnatomyIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:hasSynonym
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(Synonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
       - p: sio:parents
         o:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(ParentIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:TreeNumbers
@@ -192,7 +192,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(TreeNumbers)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri
 
       - p: sio:hasSynonym
@@ -200,5 +200,5 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(ExternalSynonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
           # type: iri

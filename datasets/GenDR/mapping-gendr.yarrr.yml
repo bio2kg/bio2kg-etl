@@ -28,7 +28,7 @@ mappings:
   # 1,SIR2,Saccharomyces cerevisiae,851520,Silent Information Regulator 2
   gendr-manipulations:
     sources:
-      - ['data/gendr_manipulations.csv~csv']
+      - ['gendr_manipulations.csv~csv']
     s: ncbigene:$(entrez gene id)
     po:
       - [a, sio:Gene]

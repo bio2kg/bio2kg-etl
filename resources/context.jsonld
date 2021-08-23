@@ -60,6 +60,7 @@
         "postProcessScript": "https://w3id.org/d2s/vocab/postProcessScript",
         "processor": "https://w3id.org/d2s/vocab/processor",
         "graph": "https://w3id.org/d2s/vocab/graph",
-        "rdfSyntax": "https://w3id.org/d2s/vocab/rdfSyntax"
+        "rdfSyntax": "https://w3id.org/d2s/vocab/rdfSyntax",
+        "processedFilename": "https://w3id.org/d2s/vocab/processedFilename"
     }
 }

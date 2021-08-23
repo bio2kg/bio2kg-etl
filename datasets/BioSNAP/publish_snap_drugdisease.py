@@ -36,14 +36,14 @@ def create_nanopub(np_client, drug_id, disease_id):
     nanopub_rdf = Graph()
     nanopub_rdf.bind("biolink", URIRef('https://w3id.org/biolink/vocab/'))
     nanopub_rdf.bind("drugbank", URIRef('https://identifiers.org/DRUGBANK:'))
-    nanopub_rdf.bind("pmid", URIRef('http://www.ncbi.nlm.nih.gov/pubmed/'))
+    nanopub_rdf.bind("pmid", URIRef('https://www.ncbi.nlm.nih.gov/pubmed/'))
     nanopub_rdf.bind("ro", URIRef('http://purl.obolibrary.org/obo/RO_'))
     nanopub_rdf.bind("mesh", URIRef('https://identifiers.org/MESH:'))
 
     drug_uri = URIRef('https://identifiers.org/' + drug_id)
     disease_uri = URIRef('https://identifiers.org/' + disease_id)
     
-    association_uri = URIRef('https://w3id.org/um/collaboratory/snap-biodata/drug-disease/' + drug_id.replace(':', '_') + '_' + disease_id.replace(':', '_'))
+    association_uri = URIRef('https://w3id.org/um/collaboratory/biosnap/drug-disease/' + drug_id.replace(':', '_') + '_' + disease_id.replace(':', '_'))
 
     # BioLink do not require to define rdf:type, but we do it anyway
     nanopub_rdf.add( (drug_uri, RDF.type, BIOLINK['Drug'] ) )

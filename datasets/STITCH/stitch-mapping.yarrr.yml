@@ -19,7 +19,7 @@ prefixes:
 mappings:
   genes:
     sources:
-      - ['data/chemical_chemical.csv~csv']
+      - ['chemical_chemical.csv~csv']
       # "chemical1","chemical2","similarity","experimental","database","textmining","combined_score"
       # "CIDm00024759","CIDs00024759","0","0","900","0","900"
       # "CIDs91758695","CIDs00107694","0","0","0","230","230"

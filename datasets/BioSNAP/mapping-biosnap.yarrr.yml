@@ -21,7 +21,7 @@ prefixes:
 mappings:
   chemical-gene-interactions:
     sources:
-      - ['data/disease-chemical.csv~csv']
+      - ['DCh-Miner_miner-disease-chemical.csv~csv']
     s: b2kbiodata:interaction/$(Chemical)-$(# Disease(MESH\))
     po:
       - [a, sio:ChemicalDiseaseAssocation]
@@ -29,19 +29,19 @@ mappings:
       - [rdf:object, https://identifiers.org/$(# Disease(MESH\))~iri]
       - [rdf:predicate, sio:toInteractWith]
 
-      - [sio:hasProvider, bio2kg:graph/snap-biodata~iri]
+      - [sio:hasProvider, bio2kg:graph/biosnap~iri]
 
 
   chemicals:
     sources:
-      - ['data/disease-chemical.csv~csv']
+      - ['DCh-Miner_miner-disease-chemical.csv~csv']
     s: drugbank:$(Chemical)
     po:
       - [a, sio:Drug]
 
   diseases:
     sources:
-      - ['data/disease-chemical.csv~csv']
+      - ['DCh-Miner_miner-disease-chemical.csv~csv']
     s: https://identifiers.org/$(# Disease(MESH\))
     po:
       - [a, sio:Disease]

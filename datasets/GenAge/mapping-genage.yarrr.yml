@@ -28,7 +28,7 @@ mappings:
   # 2,aat-8,Amino Acid Transporter,Caenorhabditis elegans,185079,30,Increase,Anti-Longevity
   models-gene:
     sources:
-      - ['data/genage_models.csv~csv']
+      - ['genage_models.csv~csv']
     s: ncbigene:$(entrez gene id)
     po:
       - [a, sio:Gene]
@@ -48,7 +48,7 @@ mappings:
   # 1,GHR,growth hormone receptor,2690,GHR_HUMAN,mammal
   human-gene:
     sources:
-      - ['data/genage_human.csv~csv']
+      - ['genage_human.csv~csv']
     s: ncbigene:$(entrez gene id)
     po:
       - [a, sio:Gene]

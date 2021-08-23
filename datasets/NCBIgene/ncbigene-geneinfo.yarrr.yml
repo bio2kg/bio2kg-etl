@@ -26,7 +26,7 @@ prefixes:
 mappings:
   gene-info:
     sources:
-      - ['data/gene_info.csv~csv']
+      - ['gene_info.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]
@@ -43,11 +43,11 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(Synonyms)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
 
   # organims:
   #   sources:
-  #     - ['data/CTD_chem_gene_ixns-processed.csv~csv']
+  #     - ['CTD_chem_gene_ixns-processed.csv~csv']
   #   s: ncbitaxon:$(OrganismID)
   #   po:
   #     - [a, sio:Organism]

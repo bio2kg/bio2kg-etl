@@ -40,7 +40,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(PubMedIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               # - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
               - [idsf:add_prefix, "pubmed:"]
           type: iri
@@ -50,7 +50,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(PubMedIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               # - [idsf:add_prefix, "https://identifiers.org/pubmed:"]
               - [idsf:add_prefix, "pubmed:"]
           type: iri
@@ -80,7 +80,7 @@ mappings:
           function: idsf:string_process
           parameters:
               - [idsf:input, "$(OmimIDs)"]
-              - [idsf:split_on, "\|"]
+              - [idsf:split_on, \|]
               - [idsf:add_prefix, "omim:"]
           type: iri
       # TODO: add seeAlso OMIM IDs here? Or in the interaction?
