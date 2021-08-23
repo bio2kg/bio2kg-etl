@@ -24,7 +24,7 @@ mappings:
 
   pathways:
     sources:
-      - ['data/processed-CTD_diseases_pathways.csv~csv']
+      - ['processed-CTD_diseases_pathways.csv~csv']
     s: $(PathwayID)
     po:
       - [a, sio:Pathway]
@@ -32,7 +32,7 @@ mappings:
 
   diseases:
     sources:
-      - ['data/processed-CTD_diseases_pathways.csv~csv']
+      - ['processed-CTD_diseases_pathways.csv~csv']
     s: $(DiseaseID)
     po:
       - [a, sio:Gene]

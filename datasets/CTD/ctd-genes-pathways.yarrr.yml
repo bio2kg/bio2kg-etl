@@ -23,7 +23,7 @@ mappings:
 
   pathways:
     sources:
-      - ['data/processed-CTD_genes_pathways.csv~csv']
+      - ['processed-CTD_genes_pathways.csv~csv']
     s: $(PathwayID)
     po:
       - [a, sio:Pathway]
@@ -31,7 +31,7 @@ mappings:
 
   genes:
     sources:
-      - ['data/processed-CTD_genes_pathways.csv~csv']
+      - ['processed-CTD_genes_pathways.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]

@@ -21,7 +21,7 @@ prefixes:
 mappings:
   chemical-gene-interactions:
     sources:
-      - ['data/processed-CTD_chemicals_diseases.csv~csv']
+      - ['processed-CTD_chemicals_diseases.csv~csv']
     # s: "https://identifiers.org/$(ctd_id)"
     s: bio2kg:ctd/interaction/$(ChemicalID)-$(DiseaseID)
     po:
@@ -60,7 +60,7 @@ mappings:
 
   chemicals:
     sources:
-      - ['data/processed-CTD_chemicals_diseases.csv~csv']
+      - ['processed-CTD_chemicals_diseases.csv~csv']
     s: mesh:$(ChemicalID)
     po:
       - [a, sio:ChemicalEntity]
@@ -70,7 +70,7 @@ mappings:
 
   diseases:
     sources:
-      - ['data/processed-CTD_chemicals_diseases.csv~csv']
+      - ['processed-CTD_chemicals_diseases.csv~csv']
     s: https://identifiers.org/$(DiseaseID)
     po:
       - [a, sio:Disease]

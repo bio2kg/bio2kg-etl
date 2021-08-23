@@ -24,19 +24,19 @@ jobs:
       env:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
+        pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
         cd datasets/CTD
-        ./download.sh
-        ./run.sh
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-ctd-chemical-gene.yarrr.yml.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: ctd-chemical-gene" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
-        cd data
-        ls bio2kg-*.ttl | while read UPLOAD_FILE 
-        do
-            UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
-            curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
-        done
+        d2s run --memory 20g
+
+      # cd data
+      # ls bio2kg-*.ttl | while read UPLOAD_FILE 
+      # do
+      #     UPLOAD_SLUG=$(echo $UPLOAD_FILE | sed "s/\.ttl//g" | sed "s/bio2kg-//g")
+      #     curl -u dav:$DBA_PASSWORD --data-binary @$UPLOAD_FILE -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: $UPLOAD_SLUG" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+      # done
 
     - name: Upload RDF output
       uses: actions/upload-artifact@v2
       with:
         name: output
-        path: datasets/CTD/data/bio2kg-*.ttl
+        path: datasets/CTD/output/*

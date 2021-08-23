@@ -27,7 +27,7 @@ prefixes:
 mappings:
   genes:
     sources:
-      - ['data/processed-CTD_genes.csv~csv']
+      - ['processed-CTD_genes.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]
@@ -77,7 +77,7 @@ mappings:
 
   chemicals:
     sources:
-      - ['data/processed-CTD_chemicals.csv~csv']
+      - ['processed-CTD_chemicals.csv~csv']
     s: mesh:$(ChemicalID)
     po:
       - [a, sio:ChemicalEntity]
@@ -111,7 +111,7 @@ mappings:
   
   diseases:
     sources:
-      - ['data/processed-CTD_diseases.csv~csv']
+      - ['processed-CTD_diseases.csv~csv']
     s: $(DiseaseID)
     po:
       - [a, sio:Disease]
@@ -158,7 +158,7 @@ mappings:
 
   anatomy:
     sources:
-      - ['data/processed-CTD_anatomy.csv~csv']
+      - ['processed-CTD_anatomy.csv~csv']
     s: mesh:$(AnatomyID)
     po:
       - [a, sio:Organism] # TODO

@@ -19,7 +19,7 @@ prefixes:
 mappings:
   chemical-gene-interactions:
     sources:
-      - ['data/processed-CTD_chem_gene_ixns.csv~csv']
+      - ['processed-CTD_chem_gene_ixns.csv~csv']
     s: bio2kg:ctd/interaction/$(ChemicalID)-$(GeneID)
     po:
       - [a, sio:ChemicalGeneAssocation]
@@ -59,7 +59,7 @@ mappings:
 
   chemicals:
     sources:
-      - ['data/processed-CTD_chem_gene_ixns.csv~csv']
+      - ['processed-CTD_chem_gene_ixns.csv~csv']
     s: mesh:$(ChemicalID)
     po:
       - [a, sio:ChemicalEntity]
@@ -69,14 +69,14 @@ mappings:
 
   genes:
     sources:
-      - ['data/processed-CTD_chem_gene_ixns.csv~csv']
+      - ['processed-CTD_chem_gene_ixns.csv~csv']
     s: ncbigene:$(GeneID)
     po:
       - [a, sio:Gene]
       
   organims:
     sources:
-      - ['data/processed-CTD_chem_gene_ixns.csv~csv']
+      - ['processed-CTD_chem_gene_ixns.csv~csv']
     s: ncbitaxon:$(OrganismID)
     po:
       - [a, sio:Organism]

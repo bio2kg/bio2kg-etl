@@ -1,0 +1,74 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/ctd",
+
+    "identifier": "ctd",
+    "preferredPrefix": "ctd",
+    "label": "CTD dataset summary",
+    "title": "Comparative Toxicogenomics Database",
+    "description": "CTD is a robust, publicly available database that aims to advance understanding about how environmental exposures affect human health. It provides manually curated information about chemical–gene/protein interactions, chemical–disease and gene–disease relationships. These data are integrated with functional and pathway data to aid in development of hypotheses about the mechanisms underlying environmentally influenced diseases.",
+    "rights": "Curated chemical–gene interactions, chemical–disease, gene–disease data were retrieved from the Comparative Toxicogenomics Database (CTD), MDI Biological Laboratory, Salisbury Cove, Maine, and NC State University, Raleigh, North Carolina. World Wide Web (URL: http://ctdbase.org/).",
+    "license": "http://ctdbase.org/about/legal.jsp#datause",
+    "keyword": "drugs",
+    "page": "http://ctdbase.org/downloads/",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/33068428",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "NC State University",
+        "page": "http://www.ncsu.edu/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ctd",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "ntriples",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_chemicals_diseases.csv.gz",
+            "processedFilename": "processed-CTD_chemicals_diseases.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_chem_gene_ixns.csv.gz",
+            "processedFilename": "processed-CTD_chem_gene_ixns.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_genes_pathways.csv.gz",
+            "processedFilename": "processed-CTD_genes_pathways.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_diseases_pathways.csv.gz",
+            "processedFilename": "processed-CTD_diseases_pathways.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_chemicals.csv.gz",
+            "processedFilename": "processed-CTD_chemicals.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_diseases.csv.gz",
+            "processedFilename": "processed-CTD_diseases.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_anatomy.csv.gz",
+            "processedFilename": "processed-CTD_anatomy.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_genes.csv.gz",
+            "processedFilename": "processed-CTD_genes.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "http://ctdbase.org/reports/CTD_pathways.csv.gz",
+            "processedFilename": "processed-CTD_pathways.csv"
+        }        
+    ],
+    "postProcessScript": "prepare.sh"
+}
