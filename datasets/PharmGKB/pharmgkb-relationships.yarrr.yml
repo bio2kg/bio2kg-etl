@@ -38,7 +38,7 @@ prefixes:
 mappings:
   relationships:
     sources:
-      - ['data/relationships.csv~csv']
+      - ['relationships.csv~csv']
     s: pharmgkbdata:association/$(Entity1_id)-$(Entity2_id)
     po:
       - [a, sio:Association]

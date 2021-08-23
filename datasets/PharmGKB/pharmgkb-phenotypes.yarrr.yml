@@ -40,7 +40,7 @@ prefixes:
 mappings:
   genes:
     sources:
-      - ['data/phenotypes.csv~csv']
+      - ['phenotypes.csv~csv']
     s: pharmgkb:$(PharmGKB Accession Id)
     po:
       - [a, sio:Phenotype]

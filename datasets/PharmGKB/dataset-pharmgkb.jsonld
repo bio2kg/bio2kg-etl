@@ -1,0 +1,67 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/pharmgkb",
+
+    "identifier": "pharmgkb",
+    "preferredPrefix": "pharmgkb",
+    "label": "PharmGKB dataset summary",
+    "title": "PharmGKB",
+    "description": "A curated database of candidate human ageing-related genes and genes associated with longevity and/or ageing in model organisms.",
+    "rights": "https://www.pharmgkb.org/page/dataUsagePolicy",
+    "license": "http://creativecommons.org/licenses/by-sa/4.0/",
+    "keyword": "drugs",
+    "page": "https://www.pharmgkb.org/downloads",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/23824865",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": " João Pedro de Magalhães",
+        "page": "https://www.pharmgkb.org/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/pharmgkb",
+    "processor": "rmlmapper-java",
+    "rdfSyntax": "ntriples",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/relationships.zip",
+            "processedFilename": "relationships.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/genes.zip",
+            "processedFilename": "genes.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/drugs.zip",
+            "processedFilename": "drugs.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/chemicals.zip",
+            "processedFilename": "chemicals.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/phenotypes.zip",
+            "processedFilename": "phenotypes.csv"
+        }
+    ],
+    "postProcessScript": "prepare.sh",
+
+    "otherFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/pathways-biopax.zip",
+            "processedFilename": "pathways-biopax.csv"
+        },
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://api.pharmgkb.org/v1/download/file/data/pathways-tsv.zip",
+            "processedFilename": "pathways-tsv.csv"
+        }
+    ]
+}

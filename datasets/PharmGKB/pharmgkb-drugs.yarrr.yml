@@ -46,7 +46,7 @@ prefixes:
 mappings:
   drugs:
     sources:
-      - ['data/drugs.csv~csv']
+      - ['drugs.csv~csv']
     s: pharmgkbDrug:$(PharmGKB Accession Id)
     po:
       - [a, sio:Drug]

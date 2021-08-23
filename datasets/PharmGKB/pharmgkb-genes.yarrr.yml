@@ -44,7 +44,7 @@ prefixes:
 mappings:
   genes:
     sources:
-      - ['data/genes.csv~csv']
+      - ['genes.csv~csv']
     s: pharmgkbGene:$(PharmGKB Accession Id)
     po:
       - [a, sio:Gene]
