@@ -369,98 +369,59 @@ Some relevant resources:
 * [Community Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
 * [Airflow template for OpenShift](https://github.com/CSCfi/airflow-openshift)
 
-1. Install Official chart with Helm:
+Install the official Airflow Helm chart:
 
 ```bash
 helm repo add apache-airflow https://airflow.apache.org
 helm repo update
 ```
 
-Deploy for test:
+Deploy airflow with dags synchronized with this GitHub repository `workflows/dags` folder (cf. `workflows/airflow-helm-values.yaml` for all deployment settings):
 
 ```bash
 helm install airflow apache-airflow/airflow \
-    --set 'env[0].name=AIRFLOW__CORE__LOAD_EXAMPLES,env[0].value=True' \
-    --set workers.replicas=3 \
-    --set logs.persistence.enabled=true \
-    --set scheduler.serviceAccount.create=false \
-    --set scheduler.serviceAccount.name=anyuid \
-    --set webserver.serviceAccount.create=false \
-    --set webserver.serviceAccount.name=anyuid \
-    --set workers.serviceAccount.create=false \
-    --set workers.serviceAccount.name=anyuid \
-    --set flower.serviceAccount.create=false \
-    --set flower.serviceAccount.name=anyuid \
-    --set migrateDatabaseJob.serviceAccount.create=false \
-    --set migrateDatabaseJob.serviceAccount.name=anyuid \
-    --set statsd.serviceAccount.create=false \
-    --set statsd.serviceAccount.name=anyuid \
-    --set cleanup.serviceAccount.create=false \
-    --set cleanup.serviceAccount.name=anyuid \
-    --set createUserJob.serviceAccount.create=false \
-    --set createUserJob.serviceAccount.name=anyuid \
-    --set pgbouncer.enabled=false \
-    --set pgbouncer.serviceAccount.create=false \
-    --set pgbouncer.serviceAccount.name=anyuid \
-    --set postgresql.serviceAccount.name=anyuid \
-    --set dags.persistence.enabled=true \
-  	--set dags.gitSync.enabled=true
-    
-    --set webserver.defaultUser.username=admin \
-    --set webserver.defaultUser.password=$DBA_PASSWORD \
-    
-    --set executor=CeleryExecutor \
-    
-    --set postgresql.enable=false \
-    --set data.metadataConnection.host=airflow-postgresql \
-    --set data.metadataConnection.db=airflow \
-    --set data.metadataConnection.pass=$DBA_PASSWORD \
-    --set data.metadataConnection.user=postgres 
-    # --set data.metadataSecretName=airflow-db
+    -f workflows/airflow-helm-values.yaml \
+    --set webserver.defaultUser.password=$DBA_PASSWORD
 ```
 
-Deploy with git sync:
-
-```bash
-helm install airflow apache-airflow/airflow -f workflows/airflow-helm-values.yaml
-```
-
-Fix the postgresql deployment (helm sub chart for postgresql don't enable to use the sub charts parameters):
+Fix the postgresql deployment (because setting the `serviceAccount.name` of the sub chart `postgresql` don't work, but should be possible according to the [official helm docs](https://helm.sh/docs/chart_template_guide/subcharts_and_globals/)):
 
 ```bash
 oc patch statefulset/airflow-postgresql --patch '{"spec":{"template":{"spec": {"serviceAccountName": "anyuid"}}}}'
 ```
 
-Forward the webserver on your machine http://localhost:8080
+To access it you can forward the webserver on your machine http://localhost:8080
 
 ```bash
 oc port-forward svc/airflow-webserver 8080
 ```
 
-When using [embedded postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql): the database won't start due to permissions issue (requires `anyuid`), but setting the `serviceAccount.name` of the sub chart `postgresql` don't work (which should works according to the [official helm docs](https://helm.sh/docs/chart_template_guide/subcharts_and_globals/))
-
-When using a different database for production: 
+Or expose the service on a URL (accessible when on the UM VPN) with HTTPS enabled:
 
 ```bash
-oc new-app postgresql-persistent \
-  -p DATABASE_SERVICE_NAME=airflow-postgresql \
-  -p POSTGRESQL_DATABASE=airflow \
-  -p POSTGRESQL_USER=postgres \
-  -p POSTGRESQL_PASSWORD=$DBA_PASSWORD \
-  -p VOLUME_CAPACITY=20Gi \
-  -p MEMORY_LIMIT=1Gi \
-  -p POSTGRESQL_VERSION="10-el8"
+oc expose svc/airflow-webserver
+oc patch route/airflow-webserver --patch '{"spec":{"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Redirect"}}}'
 ```
 
-Getting error due to the fact that the service is not directly part of the helm release (which shows the  [doc to deploy in production](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html) is wrong, and the chart poorly written): 
-
+> If you try to use a different database for production, you can use this on the DSRI: 
+> 
 > ```bash
-> Error: rendered manifests contain a resource that already exists. 
-> Unable to continue with install: 
+> oc new-app postgresql-persistent \
+>     -p DATABASE_SERVICE_NAME=airflow-postgresql \
+>     -p POSTGRESQL_DATABASE=airflow \
+>     -p POSTGRESQL_USER=postgres \
+>     -p POSTGRESQL_PASSWORD=$DBA_PASSWORD \
+>     -p VOLUME_CAPACITY=20Gi \
+>     -p MEMORY_LIMIT=1Gi \
+>     -p POSTGRESQL_VERSION="10-el8"
+> ```
+> 
+> But getting error due to the fact that the service is not directly part of the helm release (which shows the  [doc to deploy in production](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html) is wrong, and the chart poorly written): 
+> 
+> ```bash
+> Error: rendered manifests contain a resource that already exists. Unable to continue with install: 
 > Service "airflow-postgresql" in namespace "bio2kg" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: 
-> missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: 
-> missing key "meta.helm.sh/release-name": must be set to "airflow"; annotation validation error: 
-> missing key "meta.helm.sh/release-namespace": must be set to "bio2kg"
+> missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "airflow"
 > ```
 
 Delete:
@@ -469,62 +430,7 @@ Delete:
 helm uninstall airflow
 ```
 
-2. Install community chart with Helm (failing):
-
-```bash
-helm repo add airflow-stable https://airflow-helm.github.io/charts
-helm repo update
-```
-
-Deploy using Helm:
-
-```bash
-helm install airflow airflow-stable/airflow \
-	--namespace bio2kg \
-    --version "8.X.X" \
-    --values ./workflows/airflow-helm-values.yaml
-    # --set airflow.webserverSecretKey=$DBA_PASSWORD \
-    # --set serviceAccount.name="anyuid" 
-```
-
-Stop Helm chart:
-
-```bash
-helm uninstall airflow
-```
-
-3. Or deploy using the OpenShift template (failing):
-
-```bash
-oc apply -f https://raw.githubusercontent.com/CSCfi/airflow-openshift/master/AirflowTemplate.yml
-```
-
-Then start Airflow:
-
-```bash
-oc new-app apache-airflow \
-  -p APPLICATION_NAME=airflow \
-  -p AIRFLOW_IMAGE=docker-registry.rahti.csc.fi/airflow-image/airflow-2-os:latest \
-  -p AUTHENTICATION_USERNAME=airflow \
-  -p AUTHENTICATION_PASSWORD=$DBA_PASSWORD \
-  -p JUPYTER_PASSWORD=$DBA_PASSWORD \
-  -p WORKER_COUNT=4 \
-  -p WORKER_CPU=16 \
-  -p WORKER_MEMORY=50Gi \
-  -p PIP_REQUIREMENTS="git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master" \
-  -p FLOWER_USER=airflow \
-  -p FLOWER_PASSWORD=$DBA_PASSWORD \
-  -p PERSISTENT_VOLUME_CLAIM_TMP_WORKER_SIZE=500Gi
-```
-
-> The dags are stored in `/opt/airflow/dags` in the Airflow scheduler, and shared with  `/opt/app-root/src` in the Jupyter
-
-Delete airflow started from template:
-
-```bash
-oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=airflow
-```
-
 ## Credits
 
 We reused some RML mappings from this publication: https://doi.org/10.5281/zenodo.3552369
+
