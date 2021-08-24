@@ -20,7 +20,7 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/drugcentral",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/drugcentral",
     "processor": "rmlmapper-java",
     "rdfSyntax": "ntriples",
     "downloadFiles": [

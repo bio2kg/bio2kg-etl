@@ -2,8 +2,8 @@ production:
   sparql-endpoint: https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql
   virtuoso-ldp-url: https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 staging:
-  sparql-endpoint: https://staging-triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql
-  virtuoso-ldp-url: https://staging-triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+  sparql-endpoint: https://staging-bio2kg.apps.dsri2.unimaas.nl/sparql
+  virtuoso-ldp-url: https://staging-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 base-url: https://w3id.org/bio2kg/
 
 prefixes:

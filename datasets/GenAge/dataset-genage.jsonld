@@ -20,7 +20,7 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/genage",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/genage",
     "processor": "rmlmapper-java",
     "rdfSyntax": "turtle",
     "downloadFiles": [

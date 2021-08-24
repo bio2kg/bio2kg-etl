@@ -9,6 +9,7 @@ output/
 input/
 data/
 .env
+.venv
 
 # Ignore temporary and system files
 **/.ipynb_checkpoints

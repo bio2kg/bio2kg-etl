@@ -19,7 +19,7 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/huri",
+    "graph": "http://https://data.bio2kg.org//DAV/ldp/huri",
     "processor": "rmlmapper-java",
     "rdfSyntax": "turtle",
     "downloadFiles": [

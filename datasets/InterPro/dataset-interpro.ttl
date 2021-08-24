@@ -29,7 +29,7 @@
     ] ;
 
     void:sparqlEndpoint <https://data.bio2kg.ondsri.maastrichtuniversity.nl/sparql> ;
-    d2s:graph <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/interpro> ;
+    d2s:graph <http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/interpro> ;
     d2s:processor "rmlmapper-java" ;
 
     # TODO: add details about how can the different files of the dataset be automatically downloaded

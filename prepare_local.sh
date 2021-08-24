@@ -13,6 +13,8 @@ yarn --cwd /opt add shex
 echo "Installing RocketRML"
 yarn
 
+python3 -m venv .venv
+
 echo "Install dependencies for python scripts"
 pip3 install -r workflows/requirements.txt
 # conda install --file workflows/requirements.txt

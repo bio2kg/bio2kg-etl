@@ -20,7 +20,7 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ctd",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ctd",
     "processor": "rmlmapper-java",
     "rdfSyntax": "ntriples",
     "downloadFiles": [

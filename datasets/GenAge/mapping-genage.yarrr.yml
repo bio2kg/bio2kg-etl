@@ -21,12 +21,15 @@ prefixes:
   genagevocab: "https://w3id.org/bio2kg/vocab/genage/"
   genagedata: "https://w3id.org/bio2kg/data/genage/"
 
+
+
 mappings:
 
   # GenAge ID,symbol,name,organism,entrez gene id,avg lifespan change (max obsv),lifespan effect,longevity influence
   # 1,aak-2,AMP-Activated Kinase,Caenorhabditis elegans,181727,,Increase and Decrease,Pro-Longevity
   # 2,aat-8,Amino Acid Transporter,Caenorhabditis elegans,185079,30,Increase,Anti-Longevity
   models-gene:
+
     sources:
       - ['genage_models.csv~csv']
     s: ncbigene:$(entrez gene id)
@@ -49,6 +52,10 @@ mappings:
   human-gene:
     sources:
       - ['genage_human.csv~csv']
+      - query: rr
+        
+          
+
     s: ncbigene:$(entrez gene id)
     po:
       - [a, sio:Gene]

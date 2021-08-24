@@ -19,7 +19,7 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ncbigene",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/ncbigene",
     "processor": "rmlmapper-java",
     "rdfSyntax": "turtle",
     "downloadFiles": [

@@ -20,9 +20,10 @@
     },
 
     "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
-    "graph": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/pharmgkb",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/pharmgkb",
     "processor": "rmlmapper-java",
     "rdfSyntax": "ntriples",
+    "versionRegex": "https://api.pharmgkb.org/(.*?)/download/file/data/*.zip",
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",

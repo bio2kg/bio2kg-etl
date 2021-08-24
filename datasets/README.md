@@ -26,12 +26,13 @@ Running an ETL workflow should be handled by a small program (python?) which wil
 
 We need to register how to download each file in the dataset metadata
 
-### d2s run
+List of datasets with changing version / URL:
 
-Working for following datasets:
-
-* BioSNAP
-* DrugCentral
+* DrugBank: `5-1-8`
+* iRefIndex: `release_17.0`
+* PharmGKB: `v1`
+* PubMed: `pubmed21n0*`
+* STITCH: `v5.0`
 
 ## Notes
 

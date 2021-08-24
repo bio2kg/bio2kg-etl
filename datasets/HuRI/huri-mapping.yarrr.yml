@@ -24,7 +24,22 @@ mappings:
       - [a, sio:Association]
       - [rdf:subject, ensembl:$(geneB)]
       - [rdf:object, ensembl:$(geneA)]
-      - [rdf:predicate, sio:to-interact-with]
+      - [rdf:predicate, sio:toInteractWith]
 
       - [sio:hasProvider, bio2kg:graph/huri~iri]
+
+  geneA:
+    sources:
+      - ['HuRI.csv~csv']
+    s: ensembl:$(geneA)
+    po:
+      - [a, sio:Gene]
+
+  geneB:
+    sources:
+      - ['HuRI.csv~csv']
+    s: ensembl:$(geneB)
+    po:
+      - [a, sio:Gene]
+    
 

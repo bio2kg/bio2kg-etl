@@ -30,6 +30,16 @@ d2s run --sample 100
 
 All temporary files are put in the `data/` folder
 
+
+If you face conflicts with already installed packages, then you might want to use a [Virtual Environment](https://docs.python.org/3/tutorial/venv.html) to isolate the installation in the current folder before installing `d2s`:
+
+```bash
+# Create the virtual environment folder in your workspace
+python3 -m venv .venv
+# Activate it using a script in the created folder
+source .venv/bin/activate
+```
+
 ### Define mappings
 
 Add autocomplete and validation for YARRRML mappings files and the `d2s.yml` config file in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
@@ -85,7 +95,7 @@ oc new-app virtuoso-triplestore -p PASSWORD=$DBA_PASSWORD \
   -p APPLICATION_NAME=triplestore \
   -p STORAGE_SIZE=300Gi \
   -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
-  -p TRIPLESTORE_URL=https://data.bio2kg.org/
+  -p TRIPLESTORE_URL=triplestore-bio2kg.apps.dsri2.unimaas.nl
 ```
 
 Start the staging triplestore:
@@ -95,7 +105,7 @@ oc new-app virtuoso-triplestore -p PASSWORD=$DBA_PASSWORD \
   -p APPLICATION_NAME=staging \
   -p STORAGE_SIZE=300Gi \
   -p DEFAULT_GRAPH=https://data.bio2kg.org/graph \
-  -p TRIPLESTORE_URL=https://data.bio2kg.org/
+  -p TRIPLESTORE_URL=triplestore-bio2kg.apps.dsri2.unimaas.nl
 ```
 
 After starting the Virtuoso triplestores you will need to install additional VAD packages and create the right folder to enable the Linked Data Platform features:
@@ -353,11 +363,113 @@ Maybe fix with [adding SCC for hostpath](https://docs.openshift.com/container-pl
 
 Some relevant resources:
 
-* [Official Airflow docs for Helm](https://airflow.apache.org/docs/helm-chart/stable/index.html)
-* [Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
+* [Official Helm chart for Airflow docs](https://airflow.apache.org/docs/helm-chart/stable/index.html)
+  * [Official Helm chart source code](https://github.com/apache/airflow/tree/main/chart)
+  * [Official Helm chart parameters](https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html)
+* [Community Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
 * [Airflow template for OpenShift](https://github.com/CSCfi/airflow-openshift)
 
-1. Install with Helm:
+1. Install Official chart with Helm:
+
+```bash
+helm repo add apache-airflow https://airflow.apache.org
+helm repo update
+```
+
+Deploy for test:
+
+```bash
+helm install airflow apache-airflow/airflow \
+    --set 'env[0].name=AIRFLOW__CORE__LOAD_EXAMPLES,env[0].value=True' \
+    --set workers.replicas=3 \
+    --set logs.persistence.enabled=true \
+    --set scheduler.serviceAccount.create=false \
+    --set scheduler.serviceAccount.name=anyuid \
+    --set webserver.serviceAccount.create=false \
+    --set webserver.serviceAccount.name=anyuid \
+    --set workers.serviceAccount.create=false \
+    --set workers.serviceAccount.name=anyuid \
+    --set flower.serviceAccount.create=false \
+    --set flower.serviceAccount.name=anyuid \
+    --set migrateDatabaseJob.serviceAccount.create=false \
+    --set migrateDatabaseJob.serviceAccount.name=anyuid \
+    --set statsd.serviceAccount.create=false \
+    --set statsd.serviceAccount.name=anyuid \
+    --set cleanup.serviceAccount.create=false \
+    --set cleanup.serviceAccount.name=anyuid \
+    --set createUserJob.serviceAccount.create=false \
+    --set createUserJob.serviceAccount.name=anyuid \
+    --set pgbouncer.enabled=false \
+    --set pgbouncer.serviceAccount.create=false \
+    --set pgbouncer.serviceAccount.name=anyuid \
+    --set postgresql.serviceAccount.name=anyuid \
+    --set dags.persistence.enabled=true \
+  	--set dags.gitSync.enabled=true
+    
+    --set webserver.defaultUser.username=admin \
+    --set webserver.defaultUser.password=$DBA_PASSWORD \
+    
+    --set executor=CeleryExecutor \
+    
+    --set postgresql.enable=false \
+    --set data.metadataConnection.host=airflow-postgresql \
+    --set data.metadataConnection.db=airflow \
+    --set data.metadataConnection.pass=$DBA_PASSWORD \
+    --set data.metadataConnection.user=postgres 
+    # --set data.metadataSecretName=airflow-db
+```
+
+Deploy with git sync:
+
+```bash
+helm install airflow apache-airflow/airflow -f workflows/airflow-helm-values.yaml
+```
+
+Fix the postgresql deployment (helm sub chart for postgresql don't enable to use the sub charts parameters):
+
+```bash
+oc patch statefulset/airflow-postgresql --patch '{"spec":{"template":{"spec": {"serviceAccountName": "anyuid"}}}}'
+```
+
+Forward the webserver on your machine http://localhost:8080
+
+```bash
+oc port-forward svc/airflow-webserver 8080
+```
+
+When using [embedded postgresql](https://github.com/bitnami/charts/tree/master/bitnami/postgresql): the database won't start due to permissions issue (requires `anyuid`), but setting the `serviceAccount.name` of the sub chart `postgresql` don't work (which should works according to the [official helm docs](https://helm.sh/docs/chart_template_guide/subcharts_and_globals/))
+
+When using a different database for production: 
+
+```bash
+oc new-app postgresql-persistent \
+  -p DATABASE_SERVICE_NAME=airflow-postgresql \
+  -p POSTGRESQL_DATABASE=airflow \
+  -p POSTGRESQL_USER=postgres \
+  -p POSTGRESQL_PASSWORD=$DBA_PASSWORD \
+  -p VOLUME_CAPACITY=20Gi \
+  -p MEMORY_LIMIT=1Gi \
+  -p POSTGRESQL_VERSION="10-el8"
+```
+
+Getting error due to the fact that the service is not directly part of the helm release (which shows the  [doc to deploy in production](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html) is wrong, and the chart poorly written): 
+
+> ```bash
+> Error: rendered manifests contain a resource that already exists. 
+> Unable to continue with install: 
+> Service "airflow-postgresql" in namespace "bio2kg" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: 
+> missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: 
+> missing key "meta.helm.sh/release-name": must be set to "airflow"; annotation validation error: 
+> missing key "meta.helm.sh/release-namespace": must be set to "bio2kg"
+> ```
+
+Delete:
+
+```bash
+helm uninstall airflow
+```
+
+2. Install community chart with Helm (failing):
 
 ```bash
 helm repo add airflow-stable https://airflow-helm.github.io/charts
@@ -381,7 +493,7 @@ Stop Helm chart:
 helm uninstall airflow
 ```
 
-2. Or deploy using the OpenShift template:
+3. Or deploy using the OpenShift template (failing):
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/CSCfi/airflow-openshift/master/AirflowTemplate.yml
