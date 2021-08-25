@@ -22,12 +22,10 @@ dags:
   persistence:
     # Enable persistent volume for storing dags
     enabled: true
-    # Volume size for dags
     size: 1Gi
+    accessMode: ReadWriteOnce
     # If using a custom storageClass, pass name here
     storageClassName:
-    # access mode of the persistent volume
-    accessMode: ReadWriteOnce
     ## the name of an existing PVC to use
     existingClaim:
     
@@ -224,7 +222,7 @@ webserver:
     enabled: true
     role: Admin
     username: admin
-    email: admin@example.com
+    email: vincent.emonet@maastrichtuniversity.nl
     firstName: admin
     lastName: user
     password: admin
@@ -281,7 +279,6 @@ logs:
   persistence:
     # Enable persistent volume for storing logs
     enabled: true
-    # Volume size for logs
     size: 100Gi
     # If using a custom storageClass, pass name here
     storageClassName:
@@ -292,7 +289,6 @@ logs:
 # Airflow Triggerer Config
 triggerer:
   replicas: 1
-  # Args to use when running Airflow triggerer (templated).
   args: ["bash", "-c", "exec airflow triggerer"]
   serviceAccount:
     create: false
@@ -300,8 +296,7 @@ triggerer:
 
 # Flower settings
 flower:
-  # Enable flower.
-  # If True, and using CeleryExecutor/CeleryKubernetesExecutor, will deploy flower app.
+  # Enable flower. If True, and using CeleryExecutor/CeleryKubernetesExecutor, will deploy flower app.
   enabled: true
   serviceAccount:
     create: false
@@ -315,7 +310,6 @@ flower:
     - |-
       exec \
       airflow {{ semverCompare ">=2.0.0" .Values.airflowVersion | ternary "celery flower" "flower" }}
-
   service:
     type: ClusterIP
     ports:
@@ -337,7 +331,6 @@ pgbouncer:
   serviceAccount:
     create: false
     name: anyuid
-
   # Pool sizes
   metadataPoolSize: 10
   resultBackendPoolSize: 5
