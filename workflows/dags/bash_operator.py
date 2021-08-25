@@ -33,10 +33,11 @@ default_args = {
     # 'trigger_rule': 'all_success'
 }
 with DAG(
-    'tutorial',
+    'bash_operator',
     default_args=default_args,
     description='A simple tutorial DAG',
-    schedule_interval=timedelta(days=1),
+    schedule_interval=None,
+    # schedule_interval=timedelta(days=1),
     start_date=days_ago(2),
     tags=['example'],
     access_control={

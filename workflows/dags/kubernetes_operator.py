@@ -16,15 +16,18 @@ default_args = {
 }
 
 dag = DAG(
-    'kubernetes_sample', default_args=default_args, schedule_interval=timedelta(minutes=10))
-
+    'kubernetes_pod_operator',
+    default_args=default_args, 
+    schedule_interval=None
+    # schedule_interval=timedelta(minutes=10)
+)
 
 start = DummyOperator(task_id='run_this_first', dag=dag)
 
 passing = KubernetesPodOperator(
     namespace='bio2kg',
-    image="Python:3.6",
-    cmds=["Python","-c"],
+    image="python:3.6",
+    cmds=["python","-c"],
     arguments=["print('hello world')"],
     labels={"app": "airflow"},
     name="passing-test",
@@ -36,7 +39,7 @@ passing = KubernetesPodOperator(
 failing = KubernetesPodOperator(
     namespace='bio2kg',
     image="ubuntu:1604",
-    cmds=["Python","-c"],
+    cmds=["python","-c"],
     arguments=["print('hello world')"],
     labels={"app": "airflow"},
     name="fail",
