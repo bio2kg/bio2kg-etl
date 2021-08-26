@@ -37,16 +37,16 @@ passing = KubernetesPodOperator(
     task_id="passing-task",
     get_logs=True,
     dag=dag,
-    volumes=Volume(name='flink', configs={
-        'persistentVolumeClaim':
-            {
-                'claimName': 'flink'
-            }
-    }),
-    volume_mount=VolumeMount('flink',
-        mount_path='/mnt',
-        sub_path=None,
-        read_only=False)
+    # volumes=Volume(name='flink', configs={
+    #     'persistentVolumeClaim':
+    #         {
+    #             'claimName': 'flink'
+    #         }
+    # }),
+    # volume_mount=VolumeMount('flink',
+    #     mount_path='/mnt',
+    #     sub_path=None,
+    #     read_only=False)
 )
 
 # Mount volumes:
