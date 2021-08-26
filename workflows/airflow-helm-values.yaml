@@ -17,7 +17,7 @@ airflowVersion: "2.1.3"
 # Options: LocalExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
 executor: "CeleryExecutor"
 
-# Git sync
+# Git sync, cf. https://airflow.apache.org/docs/helm-chart/stable/manage-dags-files.html
 dags:
   persistence:
     # Enable persistent volume for storing dags
@@ -134,7 +134,7 @@ workers:
       airflow {{ semverCompare ">=2.0.0" .Values.airflowVersion | ternary "celery worker" "worker" }}
 
   persistence:
-    # Enable persistent volumes
+    # Enable persistent volumes for /opt/airflow/logs
     enabled: true
     # Volume size for worker StatefulSet
     size: 100Gi
@@ -155,8 +155,15 @@ workers:
   safeToEvict: true
 
   # Mount additional volumes into worker.
-  extraVolumes: []
-  extraVolumeMounts: []
+  # extraVolumes: []
+  # extraVolumeMounts: []
+  extraVolumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: "flink"
+  extraVolumeMounts:
+  - name: data
+    mountPath: "/mnt"
 
 # Airflow scheduler settings
 scheduler:

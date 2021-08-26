@@ -1,3 +1,20 @@
 FROM apache/airflow
 
-COPY dags $AIRFLOW_HOME/dags
+# COPY dags $AIRFLOW_HOME/dags
+
+USER root
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends vim && \
+    apt-get autoremove -yqq --purge && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+    
+USER airflow
+
+# TODO: conda not installed
+
+ADD requirements.txt .
+# RUN conda install --file requirements.txt && \
+RUN pip install -r requirements.txt && \
+    rm requirements.txt

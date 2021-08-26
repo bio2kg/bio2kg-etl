@@ -143,25 +143,34 @@ Create the Flink cluster in your project on DSRI:
 
 ```bash
 oc new-app apache-flink -p APPLICATION_NAME=flink \
-  -p STORAGE_SIZE=500Gi \
+  -p PASSWORD=$DBA_PASSWORD \
+  -p STORAGE_SIZE=1Ti \
   -p WORKER_COUNT="4" \
   -p TASKS_SLOTS="64" \
   -p CPU_LIMIT="32" \
   -p MEMORY_LIMIT=100Gi \
   -p LOG_LEVEL=DEBUG \
-  -p FLINK_IMAGE="flink:1.12.3-scala_2.11"
-  # -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
+  -p FLINK_IMAGE="ghcr.io/maastrichtu-ids/rml-streamer:latest"
+  # -p FLINK_IMAGE="flink:1.12.3-scala_2.11"
 ```
 
 > Check [this repo](https://github.com/vemonet/flink-on-openshift) to build the image of Flink with the RMLStreamer.
 
-Download the [latest release](https://github.com/RMLio/RMLStreamer/releases) of the `RMLStreamer.jar` file in the Flink cluster (to do only if not already present)
+Clone the repository with all datasets mappings in `/mnt` in the RMLStreamer:
+
+```bash
+oc exec $(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name) -- bash -c "cd /mnt && git clone https://github.com/bio2kg/bio2kg-etl.git && mv {bio2kg-etl/*,bio2kg-etl/.*} . && rmdir bio2kg-etl"
+
+oc exec $(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name) -- git clone https://github.com/bio2kg/bio2kg-etl.git 
+```
+
+Download the [latest release](https://github.com/RMLio/RMLStreamer/releases) of the `RMLStreamer.jar` file in the `/mnt` folder in the Flink cluster (to do only if not already present)
 
 ```bash
 oc exec $(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name) -- bash -c "curl -s https://api.github.com/repos/RMLio/RMLStreamer/releases/latest | grep browser_download_url | grep .jar | cut -d '\"' -f 4 | wget -O /mnt/RMLStreamer.jar -qi -"
 ```
 
-Submit a job:
+Submit a job with the CLI:
 
 ```bash
 export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name)
@@ -169,16 +178,39 @@ export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanag
 oc exec $FLINK_POD -- /opt/flink/bin/flink run -p 64 -c io.rml.framework.Main /opt/RMLStreamer.jar toFile -m /mnt/mapping.rml.ttl -o /mnt/bio2kg-output.nt --job-name "RMLStreamer Bio2KG - dataset"
 ```
 
-See the Flink docs for more details on running jobs using the [CLI](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/cli/) or [Kubernetes native execution](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/native_kubernetes/).
+> See the Flink docs for more details on running jobs using the [CLI](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/cli/) or [Kubernetes native execution](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/native_kubernetes/). And more Flink [docs for Kubernetes deployment](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/standalone/kubernetes/)
 
-cf. more Flink [docs for Kubernetes deployment](https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/standalone/kubernetes/)
+Submit a job with the UI (not working):
+
+* `io.rml.framework.Main`
+* `toFile -m /mnt/datasets/iProClass/data/iproclass-mapping.rml.ttl -o /mnt/datasets/iProClass/output/output.nt`
+
+[Upload a jar file with the API](https://ci.apache.org/projects/flink/flink-docs-release-1.3/monitoring/rest_api.html#submitting-programs):
+
+```bash
+curl -X POST -F jarfile=@RMLStreamer.jar flink-jobmanager-rest:8081/jars/upload
+curl flink-jobmanager-rest:8081/jars
+```
+
+Run the jar previously uploaded (not working):
+
+```bash
+curl -X POST flink-jobmanager-rest:8081/jars/b61e9ca3-ca5b-437f-bfe5-59661ed5826c_RMLStreamer.jar/run?parallelism=4&entry-class=io.rml.framework.Main&program-args=toFile -m /mnt/datasets/iProClass/data/iproclass-mapping.rml.ttl -o /mnt/datasets/iProClass/output/output.nt
+```
+
+Returns error: ` {"errors":["org.apache.flink.runtime.rest.handler.RestHandlerException: No jobs included in application.`
+
+Docs for Flink API:
+
+* https://ci.apache.org/projects/flink/flink-docs-release-1.3/monitoring/rest_api.html#submitting-programs
+* https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/ops/rest_api/
 
 Uninstall the Flink cluster from your project on DSRI:
 
 ```bash
 oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
-# Delete the persistent volume:
-oc delete pvc --selector app=flink
+# Delete also the persistent volume:
+oc delete pvc,all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
 ```
 
 ## Run workflows on DSRI 
@@ -259,6 +291,75 @@ Uninstall:
 
 ```bash
 helm uninstall actions-runner
+```
+
+### Deploy Airflow on DSRI
+
+Some relevant resources:
+
+* [Official Helm chart for Airflow docs](https://airflow.apache.org/docs/helm-chart/stable/index.html)
+* [Official Helm chart source code](https://github.com/apache/airflow/tree/main/chart)
+* [Official Helm chart parameters](https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html)
+
+Install the official Airflow Helm chart:
+
+```bash
+helm repo add apache-airflow https://airflow.apache.org
+helm repo update
+```
+
+Deploy airflow with dags synchronized with this GitHub repository `workflows/dags` folder (cf. `workflows/airflow-helm-values.yaml` for all deployment settings):
+
+```bash
+helm install airflow apache-airflow/airflow \
+    -f workflows/airflow-helm-values.yaml \
+    --set webserver.defaultUser.password=$DBA_PASSWORD
+```
+
+Fix the postgresql deployment (because setting the `serviceAccount.name` of the sub chart `postgresql` don't work, but should be possible according to the [official helm docs](https://helm.sh/docs/chart_template_guide/subcharts_and_globals/)):
+
+```bash
+oc patch statefulset/airflow-postgresql --patch '{"spec":{"template":{"spec": {"serviceAccountName": "anyuid"}}}}'
+```
+
+To access it you can forward the webserver on your machine http://localhost:8080
+
+```bash
+oc port-forward svc/airflow-webserver 8080
+```
+
+Or expose the service on a URL (accessible when on the UM VPN) with HTTPS enabled:
+
+```bash
+oc expose svc/airflow-webserver
+oc patch route/airflow-webserver --patch '{"spec":{"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Redirect"}}}'
+```
+
+> If you try to use a different database for production, you can use this on the DSRI: 
+>
+> ```bash
+> oc new-app postgresql-persistent \
+>   -p DATABASE_SERVICE_NAME=airflow-postgresql \
+>   -p POSTGRESQL_DATABASE=airflow \
+>   -p POSTGRESQL_USER=postgres \
+>   -p POSTGRESQL_PASSWORD=$DBA_PASSWORD \
+>   -p VOLUME_CAPACITY=20Gi \
+>   -p MEMORY_LIMIT=1Gi \
+>   -p POSTGRESQL_VERSION="10-el8"
+> ```
+>
+> But getting error due to the fact that the service is not directly part of the helm release (which shows the  [doc to deploy in production](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html) is wrong, and the chart poorly written): 
+>
+> ```bash
+> Error: rendered manifests contain a resource that already exists. Unable to continue with install: 
+> Service "airflow-postgresql" in namespace "bio2kg" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: 
+> missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "airflow"
+> ```
+
+Delete:
+
+```bash
+helm uninstall airflow
 ```
 
 ### Deploy Prefect workflows on DSRI
@@ -358,77 +459,6 @@ helm uninstall argo-workflows
 ```
 
 Maybe fix with [adding SCC for hostpath](https://docs.openshift.com/container-platform/3.11/admin_guide/manage_scc.html#use-the-hostpath-volume-plugin)
-
-### Deploy Airflow on DSRI
-
-Some relevant resources:
-
-* [Official Helm chart for Airflow docs](https://airflow.apache.org/docs/helm-chart/stable/index.html)
-  * [Official Helm chart source code](https://github.com/apache/airflow/tree/main/chart)
-  * [Official Helm chart parameters](https://airflow.apache.org/docs/helm-chart/stable/parameters-ref.html)
-* [Community Helm chart GitHub repo](https://github.com/airflow-helm/charts/tree/main/charts/airflow)
-* [Airflow template for OpenShift](https://github.com/CSCfi/airflow-openshift)
-
-Install the official Airflow Helm chart:
-
-```bash
-helm repo add apache-airflow https://airflow.apache.org
-helm repo update
-```
-
-Deploy airflow with dags synchronized with this GitHub repository `workflows/dags` folder (cf. `workflows/airflow-helm-values.yaml` for all deployment settings):
-
-```bash
-helm install airflow apache-airflow/airflow \
-    -f workflows/airflow-helm-values.yaml \
-    --set webserver.defaultUser.password=$DBA_PASSWORD
-```
-
-Fix the postgresql deployment (because setting the `serviceAccount.name` of the sub chart `postgresql` don't work, but should be possible according to the [official helm docs](https://helm.sh/docs/chart_template_guide/subcharts_and_globals/)):
-
-```bash
-oc patch statefulset/airflow-postgresql --patch '{"spec":{"template":{"spec": {"serviceAccountName": "anyuid"}}}}'
-```
-
-To access it you can forward the webserver on your machine http://localhost:8080
-
-```bash
-oc port-forward svc/airflow-webserver 8080
-```
-
-Or expose the service on a URL (accessible when on the UM VPN) with HTTPS enabled:
-
-```bash
-oc expose svc/airflow-webserver
-oc patch route/airflow-webserver --patch '{"spec":{"tls": {"termination": "edge", "insecureEdgeTerminationPolicy": "Redirect"}}}'
-```
-
-> If you try to use a different database for production, you can use this on the DSRI: 
-> 
-> ```bash
-> oc new-app postgresql-persistent \
->     -p DATABASE_SERVICE_NAME=airflow-postgresql \
->     -p POSTGRESQL_DATABASE=airflow \
->     -p POSTGRESQL_USER=postgres \
->     -p POSTGRESQL_PASSWORD=$DBA_PASSWORD \
->     -p VOLUME_CAPACITY=20Gi \
->     -p MEMORY_LIMIT=1Gi \
->     -p POSTGRESQL_VERSION="10-el8"
-> ```
-> 
-> But getting error due to the fact that the service is not directly part of the helm release (which shows the  [doc to deploy in production](https://airflow.apache.org/docs/helm-chart/stable/production-guide.html) is wrong, and the chart poorly written): 
-> 
-> ```bash
-> Error: rendered manifests contain a resource that already exists. Unable to continue with install: 
-> Service "airflow-postgresql" in namespace "bio2kg" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: 
-> missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "airflow"
-> ```
-
-Delete:
-
-```bash
-helm uninstall airflow
-```
 
 ## Credits
 

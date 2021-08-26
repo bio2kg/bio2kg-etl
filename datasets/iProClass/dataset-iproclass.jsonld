@@ -1,0 +1,33 @@
+{
+    "@context": "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/context.jsonld",
+    "@type": "http://purl.org/dc/dcmitype/Dataset",
+    "@id": "https://w3id.org/bio2kg/dataset/iproclass",
+
+    "identifier": "iProClass",
+    "preferredPrefix": "iproclass",
+    "label": "iProClass dataset summary",
+    "title": "iProClass",
+    "description": "The Protein Information Resource (PIR) is an integrated public bioinformatics resource to support genomic, proteomic and systems biology research and scientific studies.",
+    "rights": "https://proteininformationresource.org/pirwww/about/linkpir.shtml",
+    "keyword": "gene",
+    "page": "https://proteininformationresource.org/pirwww/download/",
+    "references": "https://pubmed.ncbi.nlm.nih.gov/12520030",
+    "publisher": {
+        "@type": "http://purl.org/dc/terms/Agent",
+        "name": "University of Delaware",
+        "page": "http://bioinformatics.udel.edu/"
+    },
+
+    "sparqlEndpoint": "https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql",
+    "graph": "http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/iproclass",
+    "processor": "rmlstreamer",
+    "rdfSyntax": "ntriples",
+    "downloadFiles": [
+        {
+            "@type": "https://w3id.org/d2s/vocab/FileDownload",
+            "downloadURL": "https://ftp.proteininformationresource.org/databases/iproclass/iproclass.tb.gz",
+            "processedFilename": "iproclass.csv"
+        }
+    ],
+    "postProcessScript": "prepare.sh"
+}

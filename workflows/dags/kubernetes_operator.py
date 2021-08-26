@@ -2,6 +2,8 @@ from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.kubernetes.volume import Volume
+from airflow.kubernetes.volume_mount import VolumeMount
 
 
 default_args = {
@@ -27,18 +29,32 @@ start = DummyOperator(task_id='run_this_first', dag=dag)
 passing = KubernetesPodOperator(
     namespace='bio2kg',
     image="python:3.6",
-    cmds=["python","-c"],
-    arguments=["print('hello world')"],
+    # cmds=["python","-c"],
+    cmds=["ls"],
+    arguments=["-alh /mnt"],
     labels={"app": "airflow"},
     name="passing-test",
     task_id="passing-task",
     get_logs=True,
-    dag=dag
+    dag=dag,
+    volumes=Volume(name='flink', configs={
+        'persistentVolumeClaim':
+            {
+                'claimName': 'flink'
+            }
+    }),
+    volume_mount=VolumeMount('flink',
+        mount_path='/mnt',
+        sub_path=None,
+        read_only=False)
 )
+
+# Mount volumes:
+# https://stackoverflow.com/questions/57754521/how-to-mount-volume-of-airflow-worker-to-airflow-kubernetes-pod-operator
 
 failing = KubernetesPodOperator(
     namespace='bio2kg',
-    image="ubuntu:1604",
+    image="ubuntu",
     cmds=["python","-c"],
     arguments=["print('hello world')"],
     labels={"app": "airflow"},

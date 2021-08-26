@@ -5,6 +5,9 @@ staging:
   sparql-endpoint: https://staging-bio2kg.apps.dsri2.unimaas.nl/sparql
   virtuoso-ldp-url: https://staging-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 base-url: https://w3id.org/bio2kg/
+resources:
+  flink-cores: 64
+
 
 prefixes:
   rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"

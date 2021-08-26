@@ -5,12 +5,12 @@
 # oc project bio2kg
 
 export DATASET=iProClass
-DATASET_PATH=/mnt/$DATASET
+DATASET_PATH=/mnt/datasets/$DATASET
 export FLINK_POD=$(oc get pod --selector app=flink --selector component=jobmanager --no-headers -o=custom-columns=NAME:.metadata.name)
 
 # echo "Run script to download dataset on DSRI"
-# oc cp download.sh $FLINK_POD:/mnt/$DATASET/
-# oc exec $FLINK_POD -- bash -c "cd /mnt/$DATASET/ && ./download.sh"
+# oc cp download.sh $FLINK_POD:$DATASET_PATH/
+# oc exec $FLINK_POD -- bash -c "cd $DATASET_PATH/ && ./download.sh"
 
 # oc exec $FLINK_POD -- wget -O /mnt/RMLStreamer.jar https://github.com/RMLio/RMLStreamer/releases/download/v2.1.1/RMLStreamer-2.1.1.jar
 # oc exec $FLINK_POD -- wget -O /mnt/RMLStreamer-2.1.0.jar https://github.com/RMLio/RMLStreamer/releases/download/v2.1.0/RMLStreamer-2.1.0.jar
@@ -35,8 +35,8 @@ echo "Converting YARRRML mappings to RML"
 yarrrml-parser -i iproclass-mapping.yarrr.yml -o data/mapping.rml.ttl
 
 echo "Update and copy the $DATASET mappings to the RML Streamer on DSRI"
-sed -ir 's/data\/iproclass.csv/\/mnt\/iProClass\/data\/iproclass.csv/g' data/mapping.rml.ttl
-oc cp data/mapping.rml.ttl $FLINK_POD:/mnt/
+sed -ir 's/data\/iproclass.csv/\/mnt\/datasets\/iProClass\/data\/iproclass.csv/g' data/mapping.rml.ttl
+oc cp data/mapping.rml.ttl $FLINK_POD:$DATASET_PATH/data/
 
 # oc exec $FLINK_POD -- ls -alh /mnt/$DATASET
 
@@ -46,10 +46,10 @@ PARALLELISM=64
 echo "Running the RML Streamer on $PARALLELISM threads"
 
 ## Modified RMLStreamer with IDS functions:
-# oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
+oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer.jar toFile -m $DATASET_PATH/data/mapping.rml.ttl -o $DATASET_PATH/output/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
 
 ## Original RMLStreamer:
-oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer-2.1.0.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
+# oc exec $FLINK_POD -- /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main /mnt/RMLStreamer-2.1.0.jar toFile -m $DATASET_PATH/mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name "RMLStreamer Bio2KG - $DATASET"
 
 ## Change directory first:
 # oc exec $FLINK_POD -- bash -c "cd /mnt && /opt/flink/bin/flink run -p $PARALLELISM -c io.rml.framework.Main RMLStreamer.jar toFile -m mapping.rml.ttl -o /mnt/bio2kg-$DATASET.nt --job-name \"RMLStreamer Bio2KG - $DATASET\""

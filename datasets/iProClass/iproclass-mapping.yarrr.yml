@@ -22,7 +22,7 @@ mappings:
   proteins:
 
     sources:
-      - ['data/iproclass.csv~csv']
+      - ['iproclass.csv~csv']
   
     
     s: uniprot:$(UniProtKB accession)
@@ -54,6 +54,6 @@ mappings:
         o:
             function: grel:string_split
             parameters:
-                - [grel:p_string_sep, ";"]
-                - [grel:valueParameter, $(PubMed)]
+                - [grel:p_string_sep, "; "]
+                - [grel:valueParameter, $(PubMed ID)]
             # language: en
