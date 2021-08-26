@@ -61,8 +61,8 @@ def tutorial_taskflow_api_etl():
         print(f"Total order value is: {total_order_value:.2f}")
 
     bash_task = BashOperator(
-        task_id='print_date',
-        bash_command='ls -alh /mnt',
+        task_id='check_storage',
+        bash_command='rm /mnt/datasets/iProClass/iproclass.csvw.json',
     )
 
     order_data = extract()
