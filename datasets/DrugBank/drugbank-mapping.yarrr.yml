@@ -32,91 +32,111 @@ mappings:
       - [sio:description, $(description)]
       - [sio:seeAlso, https://identifiers.org/cas:$(cas-number)~iri]
       - [sio:seeAlso, https://identifiers.org/unii:$(unii)~iri]
-  #     - [sio:hasSynonym, $(synonyms/synonym)] 
-  #     # Extract lang? $(synonyms/synonym@language)
+      - [sio:hasSynonym, $(synonyms/synonym)] 
+      # Extract lang? $(synonyms/synonym@language)
 
-  #     - p: sio:isSupportedBy
-  #       o: "pubmed:$(general-references/articles/article/pubmed-id)~iri"
-  #     - p: sio:narrowerThan # bl:category
-  #       o: "mesh:$(categories/category/mesh-id)~iri"
-  #     - p: sio:affects
-  #       o: "$(affected-organisms/affected-organisms)"
-  #     - p: sio:comment
-  #       # TODO: improve (value: "approved")
-  #       o: $(groups/group)
+      - p: sio:isSupportedBy
+        o: "pubmed:$(general-references/articles/article/pubmed-id)~iri"
+      - p: sio:narrowerThan # bl:category
+        o: "mesh:$(categories/category/mesh-id)~iri"
+      - p: sio:affects
+        o: "$(affected-organisms/affected-organisms)"
+      - p: sio:comment
+        # TODO: improve (value: "approved")
+        o: $(groups/group)
 
-  #     - [drugbankvocab:state, $(state)]
-  #     - [drugbankvocab:indication, $(indication)]
-  #     - [drugbankvocab:pharmacodynamics, $(pharmacodynamics)]
-  #     - [drugbankvocab:mechanism-of-action, $(mechanism-of-action)]
-  #     - [drugbankvocab:metabolism, $(metabolism)]
-  #     - [drugbankvocab:absorption, $(absorption)]
-  #     - [drugbankvocab:half-life, $(half-life)]
-  #     # Time could be extracted, e.g. Approximately 1.3 hours
-  #     - [drugbankvocab:food-interaction, "$(food-interactions/food-interaction)"]
+      - [drugbankvocab:state, $(state)]
+      - [drugbankvocab:indication, $(indication)]
+      - [drugbankvocab:pharmacodynamics, $(pharmacodynamics)]
+      - [drugbankvocab:mechanism-of-action, $(mechanism-of-action)]
+      - [drugbankvocab:metabolism, $(metabolism)]
+      - [drugbankvocab:absorption, $(absorption)]
+      - [drugbankvocab:half-life, $(half-life)]
+      # Time could be extracted, e.g. Approximately 1.3 hours
+      - [drugbankvocab:food-interaction, "$(food-interactions/food-interaction)"]
 
-  #     # TODO: more properties
-  #     # classification/class
-  #     # - ["ex:test$(@id)", "$(tag/@v)"]
+      - p: sio:hasAttribute
+        # Or use sio:has-role?
+        o:
+          function: idsf:makeAttribute
+          parameters:
+              - [idsf:value, "$(mechanism-of-action)"]
+              - [idsf:split_on, ";"]
+              - [idsf:type, "sio:MechanismOfAction"]
+              - [idsf:subject, "autogenerate"]
+          type: iri
+
+      # TODO: more properties
+      # classification/class
+      # - ["ex:test$(@id)", "$(tag/@v)"]
   
-  # drug-interactions:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
-  #   s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
-  #   po:
-  #     - [a, sio:Association]
-  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
-  #     - [rdf:object, "drugbank:$(drugbank-id)~iri"]
-  #     - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
+  mechanism-of-action:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug]
+    s: drugbank:$(drugbank-id-primary)-mecha
+    po:
+      - [a, sio:MechanismOfAction]
+      - [sio:hasValue, $(mechanism-of-action)]
 
-  #     - [sio:description, "$(description)"]
 
-  # target-interactions:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
-  #   s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
-  #   po:
-  #     - [a, sio:ChemicalGeneAssociation]
-  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
-  #     - [rdf:object, "drugbank:$(id)~iri"]
-  #     - p: rdf:predicate
-  #       # Or use sio:has-role?
-  #       o:
-  #         function: idsf:string_process
-  #         parameters:
-  #             - [idsf:input, "$(actions/action)"]
-  #             # - [idsf:split_on, "null"]
-  #             - [idsf:add_prefix, "drugbankvocab:action/"]
-  #             # - [idsf:find, "null"]
-  #             # - [idsf:replace, "null"]
-  #             - [idsf:format_for, "uri"]
-  #         type: iri
+  drug-interactions:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
+    s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+    po:
+      - [a, sio:Association]
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(drugbank-id)~iri"]
+      - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
 
-  #     - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]
+      - [sio:description, "$(description)"]
 
-  # targets:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
-  #   s: drugbank:$(id)
-  #   po:
-  #     - [a, sio:BiologicalEntity]
-  #     - [sio:title, $(name)]
-  #     - [sio:hasUniqueIdentifier, "drugbank:$(id)~iri"]
+  target-interactions:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
+    s: drugbankdata:target/$(../../drugbank-id-primary)-$(id)
+    po:
+      - [a, sio:ChemicalGeneAssociation]
+      - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+      - [rdf:object, "drugbank:$(id)~iri"]
+      - p: rdf:predicate
+        # Or use sio:has-role?
+        o:
+          function: idsf:string_process
+          parameters:
+              - [idsf:input, "$(actions/action)"]
+              # - [idsf:split_on, "null"]
+              - [idsf:add_prefix, "drugbankvocab:action/"]
+              # - [idsf:find, "null"]
+              # - [idsf:replace, "null"]
+              - [idsf:format_for, "uri"]
+          type: iri
 
-  #     - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
+      - [sio:isSupportedBy, "pubmed:$(references/articles/article/pubmed-id)~iri"]
 
-  # publications:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
-  #   s: pubmed:$(pubmed-id)
-  #   po:
-  #     - [a, sio:PeerReviewedArticle]
-  #     - [sio:title, $(citation)]
+  targets:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/targets/target]
+    s: drugbank:$(id)
+    po:
+      - [a, sio:BiologicalEntity]
+      - [sio:title, $(name)]
+      - [sio:hasUniqueIdentifier, "drugbank:$(id)~iri"]
 
-  # mesh-categories:
-  #   sources:
-  #     - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
-  #   s: mesh:$(mesh-id)
-  #   po:
-  #     - [a, sio:Category]
-  #     - [sio:title, $(category)]
+      - [sio:similarTo, "uniprot:$(polypeptide/@id)~iri"]
+
+  publications:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
+    s: pubmed:$(pubmed-id)
+    po:
+      - [a, sio:PeerReviewedArticle]
+      - [sio:title, $(citation)]
+
+  mesh-categories:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
+    s: mesh:$(mesh-id)
+    po:
+      - [a, sio:Category]
+      - [sio:title, $(category)]

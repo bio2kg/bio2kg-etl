@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "rocketrml": "file:/home/vemonet/sandbox/RocketRML",
+    "rocketrml": "^1.11.2",
     "yargs": "^17.1.0"
   }
 }

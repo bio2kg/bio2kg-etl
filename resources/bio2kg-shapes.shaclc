@@ -31,7 +31,7 @@ shape sioshape:Drug -> sio:Drug {
 }
 
 shape sioshape:Association -> sio:Association {
-	closed=false ignoredProperties=[rdf:type] . 
+	closed=false ignoredProperties=[rdf:type] .
 
 	rdf:subject  IRI [1..1] .
 	rdf:predicate  IRI [1..1] .

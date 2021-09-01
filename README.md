@@ -76,6 +76,22 @@ See also:
 
 * [CARML](https://github.com/carml/carml): can't be used as executable apparently, requires to write a java program
 
+### Run in a docker container
+
+Still work in progress
+
+Build:
+
+```bash
+docker build -t ghcr.io/bio2kg/d2s-runner:latest -f Dockerfile .
+```
+
+Run:
+
+```bash
+docker run -it --entrypoint bash -v $(pwd):/data ghcr.io/bio2kg/d2s-runner:latest
+```
+
 ## Deploy services on the DSRI
 
 ### Start Virtuoso triplestores on DSRI
@@ -237,7 +253,7 @@ The workflow-runner image is built and publish at every change to `workflows/Doc
 Build with the latest version of [miniforge conda](https://github.com/conda-forge/miniforge/releases) automatically downloaded:
 
 ```bash
-docker build -t ghcr.io/bio2kg/workflow-runner:latest workflows
+docker build -t ghcr.io/bio2kg/workflow-runner:latest -f workflows/Dockerfile .
 ```
 
 Quick try:

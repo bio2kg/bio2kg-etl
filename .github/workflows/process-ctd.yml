@@ -14,6 +14,7 @@ jobs:
 
   process:
     runs-on: ["self-hosted", "dsri", "bio2kg" ]
+    # runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
@@ -25,8 +26,7 @@ jobs:
         DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
       run: |
         pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
-        cd datasets/CTD
-        d2s run --memory 20g
+        python my_script.py
 
       # cd data
       # ls bio2kg-*.ttl | while read UPLOAD_FILE 

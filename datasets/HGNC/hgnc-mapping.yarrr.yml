@@ -109,7 +109,7 @@ mappings:
             function: idsf:string_process
             parameters:
                 - [idsf:input, "$(refseq_accession)"]
-                - [idsf:split_on, "|"]
+                - [idsf:split_on, \|]
                 - [idsf:add_prefix, "https://www.ncbi.nlm.nih.gov/nuccore:"]
             type: iri
 
