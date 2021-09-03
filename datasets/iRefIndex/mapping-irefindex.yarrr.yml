@@ -46,106 +46,106 @@ mappings:
       - [rdf:object, $(uidB)~iri]
       - [rdf:predicate, sio:toInteractWith]
 
-      - [sio:creator, $(author)]
-      - p: sio:isSupportedBy
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(pmids)"]
-              - [idsf:split_on, \|]
-              # - [idsf:find, "-"]
-              # - [idsf:replace, ""]
-          # type: iri
-      - [sio:created, $(Creation_date)]
-      - [sio:modified, $(Update_date)]
+  #     - [sio:creator, $(author)]
+  #     - p: sio:isSupportedBy
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(pmids)"]
+  #             - [idsf:split_on, \|]
+  #             # - [idsf:find, "-"]
+  #             # - [idsf:replace, ""]
+  #         # type: iri
+  #     - [sio:created, $(Creation_date)]
+  #     - [sio:modified, $(Update_date)]
 
-      - [irefvocab:method, $(method)  ]
-      - [irefvocab:interactionType, $(interactionType)]
-      - [irefvocab:sourcedb, $(sourcedb)]
-      - p: sio:hasIdentifier
-        o:
-          function: idsf:string_process
-          # intact:EBI-1576987|rigid:HUhmEWlMTKd2a8cn4XZdVj4mWlI|edgetype:X
-          parameters:
-              - [idsf:input, "$(interactionIdentifier)"]
-              - [idsf:split_on, \|]
-          # type: iri
+  #     - [irefvocab:method, $(method)  ]
+  #     - [irefvocab:interactionType, $(interactionType)]
+  #     - [irefvocab:sourcedb, $(sourcedb)]
+  #     - p: sio:hasIdentifier
+  #       o:
+  #         function: idsf:string_process
+  #         # intact:EBI-1576987|rigid:HUhmEWlMTKd2a8cn4XZdVj4mWlI|edgetype:X
+  #         parameters:
+  #             - [idsf:input, "$(interactionIdentifier)"]
+  #             - [idsf:split_on, \|]
+  #         # type: iri
 
-      - p: irefvocab:confidence
-        o:
-          function: idsf:string_process
-          # hpr:362|lpr:362|np:1
-          parameters:
-              - [idsf:input, "$(confidence)"]
-              - [idsf:split_on, \|]
+  #     - p: irefvocab:confidence
+  #       o:
+  #         function: idsf:string_process
+  #         # hpr:362|lpr:362|np:1
+  #         parameters:
+  #             - [idsf:input, "$(confidence)"]
+  #             - [idsf:split_on, \|]
 
-      - [irefvocab:expansion, $(expansion)]
+  #     - [irefvocab:expansion, $(expansion)]
 
-      # psi-mi:\"MI:0499\"(unspecified role)
-      - [irefvocab:subjectBiologicalRole, $(biological_role_A)]
-      - [irefvocab:objectBiologicalRole, $(biological_role_B)]
-      # psi-mi:\"MI:0498\"(prey) or bait
-      - [irefvocab:subjectExperimentalRole, $(experimental_role_A)]
-      - [irefvocab:objectExperimentalRole, $(experimental_role_B)]
-      # psi-mi:\"MI:0326\"(protein)
-      - [irefvocab:subjectInteractorRole, $(interactor_type_A)]
-      - [irefvocab:objectInteractorRole, $(interactor_type_B)]
+  #     # psi-mi:\"MI:0499\"(unspecified role)
+  #     - [irefvocab:subjectBiologicalRole, $(biological_role_A)]
+  #     - [irefvocab:objectBiologicalRole, $(biological_role_B)]
+  #     # psi-mi:\"MI:0498\"(prey) or bait
+  #     - [irefvocab:subjectExperimentalRole, $(experimental_role_A)]
+  #     - [irefvocab:objectExperimentalRole, $(experimental_role_B)]
+  #     # psi-mi:\"MI:0326\"(protein)
+  #     - [irefvocab:subjectInteractorRole, $(interactor_type_A)]
+  #     - [irefvocab:objectInteractorRole, $(interactor_type_B)]
 
-      - [sio:affects, $(Host_organism_taxid)]
-      - [sio:comment, $(Annotations_Interaction)]
-      - [irefvocab:xrefs, $(xrefs_Interaction)]
+  #     - [sio:affects, $(Host_organism_taxid)]
+  #     - [sio:comment, $(Annotations_Interaction)]
+  #     - [irefvocab:xrefs, $(xrefs_Interaction)]
 
-      - [irefvocab:numParticipants, $(numParticipants)]
-      - [irefvocab:edgetype, $(edgetype)]
-      - [irefvocab:subjectMappingScore, $(MappingScoreA)]
-      - [irefvocab:objectMappingScore, $(MappingScoreB)]
+  #     - [irefvocab:numParticipants, $(numParticipants)]
+  #     - [irefvocab:edgetype, $(edgetype)]
+  #     - [irefvocab:subjectMappingScore, $(MappingScoreA)]
+  #     - [irefvocab:objectMappingScore, $(MappingScoreB)]
 
-  subjects:
-    sources:
-      - ['irefindex.csv~csv']
-    s: $(#uidA)
-    po:
-      - [a, sio:Entity] # TODO: improve
-      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
+  # subjects:
+  #   sources:
+  #     - ['irefindex.csv~csv']
+  #   s: $(#uidA)
+  #   po:
+  #     - [a, sio:Entity] # TODO: improve
+  #     - [sio:hasProvider, bio2kg:graph/irefindex~iri]
 
-      - [sio:title, $(#uidA)]
-      - [sio:affects, $(taxa)] # TODO: could be an URI
-      - p: sio:alternative
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(altA)"]
-              - [idsf:split_on, \|]
-          # type: iri
+  #     - [sio:title, $(#uidA)]
+  #     - [sio:affects, $(taxa)] # TODO: could be an URI
+  #     - p: sio:alternative
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(altA)"]
+  #             - [idsf:split_on, \|]
+  #         # type: iri
 
-      - p: sio:hasSynonym
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(aliasA)"]
-              - [idsf:split_on, \|]
+  #     - p: sio:hasSynonym
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(aliasA)"]
+  #             - [idsf:split_on, \|]
 
-  objects:
-    sources:
-      - ['irefindex.csv~csv']
-    s: $(uidB)
-    po:
-      - [a, sio:Entity] # TODO: improve
-      - [sio:hasProvider, bio2kg:graph/irefindex~iri]
+  # objects:
+  #   sources:
+  #     - ['irefindex.csv~csv']
+  #   s: $(uidB)
+  #   po:
+  #     - [a, sio:Entity] # TODO: improve
+  #     - [sio:hasProvider, bio2kg:graph/irefindex~iri]
 
-      - [sio:affects, $(taxb)] # TODO: could be an URI
-      - [sio:title, $(uidB)]
-      - p: sio:alternative
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(altB)"]
-              - [idsf:split_on, \|]
-          # type: iri
+  #     - [sio:affects, $(taxb)] # TODO: could be an URI
+  #     - [sio:title, $(uidB)]
+  #     - p: sio:alternative
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(altB)"]
+  #             - [idsf:split_on, \|]
+  #         # type: iri
 
-      - p: sio:hasSynonym
-        o:
-          function: idsf:string_process
-          parameters:
-              - [idsf:input, "$(aliasB)"]
-              - [idsf:split_on, \|]
+  #     - p: sio:hasSynonym
+  #       o:
+  #         function: idsf:string_process
+  #         parameters:
+  #             - [idsf:input, "$(aliasB)"]
+  #             - [idsf:split_on, \|]

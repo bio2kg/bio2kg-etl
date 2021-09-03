@@ -1,0 +1,82 @@
+prefixes:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  xsd: "http://www.w3.org/2001/XMLSchema#"
+  grel: "http://users.ugent.be/~bjdmeest/function/grel.ttl#"
+  idlab: "http://example.com/idlab/function/"
+  idsf: "https://w3id.org/um/ids/rmlfunctions.ttl#"
+  pubmed: "https://identifiers.org/pubmed:"
+  drugbank: "https://identifiers.org/drugbank:"
+  mesh: "https://identifiers.org/mesh:"
+  uniprot: "https://identifiers.org/uniprot:"
+  ncbigene: "https://identifiers.org/ncbigene:"
+  ncbitaxon: "http://purl.org/obo/owl/NCBITaxon#"
+  schema: "https://schema.org/"
+  sio: "http://semanticscience.org/resource/"
+  bl: "https://w3id.org/biolink/vocab/"
+  d2s: "https://w3id.org/d2s/"
+  bio2kg: "https://w3id.org/bio2kg/data/"
+  drugbankvocab: "https://w3id.org/bio2kg/vocab/drugbank/"
+  drugbankdata: "https://w3id.org/bio2kg/data/drugbank/"
+
+mappings:
+  drugs:
+    sources:
+      - ["drugbank.xml~xpath", /drugbank/drug]
+    s: drugbank:$(drugbank-id-primary)
+    po:
+      - [a, sio:Drug]
+      - [sio:hasProvider, bio2kg:graph/drugbank]
+      - [sio:title, $(name)]
+      - [sio:description, $(description)]
+      - [sio:seeAlso, https://identifiers.org/cas:$(cas-number)~iri]
+      - [sio:seeAlso, https://identifiers.org/unii:$(unii)~iri]
+      - [sio:hasSynonym, $(synonyms/synonym)] 
+
+  #     - p: sio:hasAttribute
+  #       # Or use sio:has-role?
+  #       o:
+  #         function: idsf:makeAttribute
+  #         parameters:
+  #             - [idsf:value, "$(mechanism-of-action)"]
+  #             - [idsf:split_on, ";"]
+  #             - [idsf:type, "sio:MechanismOfAction"]
+  #             - [idsf:subject, "autogenerate"]
+  #         type: iri
+
+  
+  mechanism-of-action:
+    sources:
+      - ["data/drugbank.xml~xpath", /drugbank/drug]
+    s: drugbank:$(drugbank-id-primary)-mecha
+    po:
+      - [a, sio:MechanismOfAction]
+      - [sio:hasValue, $(mechanism-of-action)]
+
+
+  # drug-interactions:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/drug-interactions/drug-interaction]
+  #   s: drugbankdata:interaction/$(../../drugbank-id-primary)-$(drugbank-id)
+  #   po:
+  #     - [a, sio:Association]
+  #     - [rdf:subject, drugbank:$(../../drugbank-id-primary)~iri]
+  #     - [rdf:object, "drugbank:$(drugbank-id)~iri"]
+  #     - [rdf:predicate, "drugbankvocab:drug-drug-interaction"]
+  #     - [sio:description, "$(description)"]
+
+  # publications:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/general-references/articles/article]
+  #   s: pubmed:$(pubmed-id)
+  #   po:
+  #     - [a, sio:PeerReviewedArticle]
+  #     - [sio:title, $(citation)]
+
+  # mesh-categories:
+  #   sources:
+  #     - ["data/drugbank.xml~xpath", /drugbank/drug/categories/category]
+  #   s: mesh:$(mesh-id)
+  #   po:
+  #     - [a, sio:Category]
+  #     - [sio:title, $(category)]
