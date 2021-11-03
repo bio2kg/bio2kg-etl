@@ -13,6 +13,8 @@ yarn --cwd /opt add shex
 echo "Installing RocketRML"
 yarn
 
+echo "Create the virtual environment folder in your workspace (not activated). To activate it, run:"
+echo "source .venv/bin/activate"
 python3 -m venv .venv
 
 echo "Install dependencies for python scripts"

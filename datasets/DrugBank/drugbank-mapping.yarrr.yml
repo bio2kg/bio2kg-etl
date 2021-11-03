@@ -19,6 +19,8 @@ prefixes:
   drugbankvocab: "https://w3id.org/bio2kg/vocab/drugbank/"
   drugbankdata: "https://w3id.org/bio2kg/data/drugbank/"
 
+
+
 # Existing SPARQL mappings for d2s: https://github.com/MaastrichtU-IDS/d2s-project-template/blob/master/datasets/drugbank/mapping/drugbank-drug_infos.rq
 mappings:
   drugs:

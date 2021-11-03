@@ -9,17 +9,29 @@
 | [Publications](https://vemonet.github.io/semanticscience/browse/class-siopeerreviewedarticle.html) | [![PubMed](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml) [![ClinicalTrials](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml) |
 | [Associations](https://vemonet.github.io/semanticscience/browse/class-sioassociation.html) | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![iRefIndex](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process BioSNAP](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml) |
 
-## Run workflows locally
+## Run workflows locally for development
 
 A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large datasets though, so try to use a sample for testing). Checking a dataset workflow definition is a good way to see exactly the process to convert this dataset to RDF using the SemanticScience ontology.
 
-> If you are using Windows you will need to use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run Bash scripts (even when using the python library).
+### Start the workspace
 
-Checkout the `prepare_local.sh` script to see if you need to install additional packages like `wget` and `unzip`, and run it to install dependencies to run the ETL scripts locally:
+Define the password used by the Triplestore to store the data generated in a `.env` file at the root of this repository, you can copy `.env.sample` to make it easier
 
 ```bash
-./prepare_local.sh
+VIRTUOSO_PASSWORD=the_password
 ```
+
+Start the workspace with `docker-compose` 
+
+```bash
+docker-compose up
+```
+
+Access the workspace started on http://localhost:8888
+
+> The source code for the `d2s-cli` will be cloned and installed locally in the docker container, this way you can make change to the `d2s-cli` code, and they will be automatically used by the `d2s` command in the docker container.
+
+### Run a dataset conversion
 
 Go to the folder of the dataset you want to process, and use `d2s` to run the dataset processing based on its `metadata.ttl` file: e.g. to run `HGNC`:
 
@@ -42,7 +54,7 @@ source .venv/bin/activate
 
 ### Define mappings
 
-Add autocomplete and validation for YARRRML mappings files and the `d2s.yml` config file in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
+For VisualStudio Code users: add autocomplete and validation for YARRRML mappings files and the `d2s.yml` config file in VisualStudio Code easily with the [YAML extension from RedHat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Go to VisualStudio Code, open settings (`File` > `Preferences` > `Settings` or `Ctrl + ,`). Then add the following lines to the `settings.json` :
 
 ```json
     "yaml.schemas": {
@@ -75,22 +87,6 @@ See also:
 * [SDM-RDFizer](https://github.com/SDM-TIB/SDM-RDFizer/wiki/Install&Run): work started in `datasets/CTD`
 
 * [CARML](https://github.com/carml/carml): can't be used as executable apparently, requires to write a java program
-
-### Run in a docker container
-
-Still work in progress
-
-Build:
-
-```bash
-docker build -t ghcr.io/bio2kg/d2s-runner:latest -f Dockerfile .
-```
-
-Run:
-
-```bash
-docker run -it --entrypoint bash -v $(pwd):/data ghcr.io/bio2kg/d2s-runner:latest
-```
 
 ## Deploy services on the DSRI
 
@@ -229,7 +225,7 @@ oc delete all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
 oc delete pvc,all,secret,configmaps,serviceaccount,rolebinding --selector app=flink
 ```
 
-## Run workflows on DSRI 
+## Run workflows on DSRI (experimental)
 
 ### With GitHub Actions
 

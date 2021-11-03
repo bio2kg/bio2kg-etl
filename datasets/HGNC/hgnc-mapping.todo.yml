@@ -22,6 +22,9 @@ prefixes:
   hgncvocab: "https://w3id.org/bio2kg/vocab/hgnc/"
   hgncdata: "https://w3id.org/bio2kg/data/hgnc/"
 
+## Dirty file to checkout how to define reified triples for SIO
+
+
 authors:
   - Vincent Emonet <vincent.emonet@gmail.com>
 # targets:
