@@ -12,9 +12,20 @@ os.system('git config --global credential.helper store')
 
 # os.chdir('/home/jovyan/work')
 
+# Make sure d2s-cli is cloned and installed at the start of the docker container
+if not os.path.exists('d2s-cli'):
+    os.system('git clone https://github.com/MaastrichtU-IDS/d2s-cli')
+
+if os.path.exists('d2s-cli'):
+    print('Installing d2s-cli package locally')
+    os.system('pip install ./d2s-cli')
+
+
+# Download bio2kg-etl
 if git_url:
-    # repo_id = git_url.rsplit('/', 1)[-1].replace('.git', '')
-    os.system('git clone --quiet --recursive ' + git_url + ' .')
+    os.system('git clone --quiet --recursive ' + git_url)
+    repo_id = git_url.rsplit('/', 1)[-1].replace('.git', '')
+    os.chdir(repo_id)
 
 if os.path.exists('packages.txt'):
     os.system('sudo apt-get update')
@@ -26,19 +37,11 @@ if os.path.exists('requirements.txt'):
 if os.path.exists('extensions.txt'):
     os.system('cat extensions.txt | xargs -I {} jupyter {} install --user')
 
+if os.path.exists('package.json'):
+    os.system('yarn install')
 
-
-# Make sure d2s-cli is cloned and installed at the start of the docker container
-if not os.path.exists('d2s-cli'):
-    os.system('git clone https://github.com/MaastrichtU-IDS/d2s-cli')
-
-
-if os.path.exists('d2s-cli'):
-    print('Installing d2s-cli package locally')
-    os.system('pip install ./d2s-cli')
-
-
-
+if git_url:
+    os.chdir('..')
 
 c.ServerApp.terminado_settings = {'shell_command': ['/bin/zsh']}
 

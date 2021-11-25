@@ -21,7 +21,8 @@ RUN curl -s https://api.github.com/repos/RMLio/rmlmapper-java/releases/latest \
     | grep browser_download_url | grep .jar | cut -d '"' -f 4 \
     | wget -O /opt/rmlmapper.jar -qi -
 
-RUN cp /opt/rmlmapper.jar .local/share/d2s/rmlmapper.jar
+RUN mkdir -p ~/.local/share/d2s && \
+    cp /opt/rmlmapper.jar ~/.local/share/d2s/rmlmapper.jar
 
 # Use custom config to make sure d2s is cloned and installed at start
 ADD jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py

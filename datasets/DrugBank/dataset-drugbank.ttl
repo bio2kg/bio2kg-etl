@@ -30,6 +30,7 @@
 
     void:sparqlEndpoint <https://triplestore-bio2kg.apps.dsri2.unimaas.nl/sparql> ;
     d2s:graph <http://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp/drugbank> ;
+    # d2s:processor "rocketrml" ;
     d2s:processor "rmlmapper-java" ;
 
     # TODO: add details about how can the different files of the dataset be automatically downloaded
@@ -39,8 +40,10 @@
             a d2s:FileDownload ;
             dcat:downloadURL <https://go.drugbank.com/releases/5-1-8/downloads/all-full-database> ;
             d2s:downloadScript """curl -Lfs -o drugbank.zip -u $DRUGBANK_USERNAME:$DRUGBANK_PASSWORD https://go.drugbank.com/releases/5-1-8/downloads/all-full-database""" ;
-            d2s:postProcessScript "prepare.sh"
+            d2s:postProcessScript "prepare.sh" ;
+            d2s:processedFilename "drugbank.xml" 
         ] .
+
 
     # pav:lastUpdateOn "2021-08-17"^^xsd:date .
 

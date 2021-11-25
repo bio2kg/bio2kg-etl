@@ -44,7 +44,8 @@ mappings:
       parameters:
         - [idsf:input, "$(ACCESSION)"]
         - [idsf:add_prefix, "bio2kg:drugcentral/interaction/$(STRUCT_ID)-"]
-        - [idsf:find, \|]
+        # - [idsf:find, \|]
+        - [idsf:find, "|"]
         - [idsf:replace, "-"]
       type: iri
     po:
@@ -65,7 +66,8 @@ mappings:
           function: idsf:string_process
           parameters:
             - [idsf:input, "$(ACCESSION)"]
-            - [idsf:split_on, \|]
+            # - [idsf:split_on, \|]
+            - [idsf:split_on, "|"]
             - [idsf:add_prefix, "uniprot:"]
           # type: iri
 

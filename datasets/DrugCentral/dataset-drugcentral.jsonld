@@ -26,12 +26,12 @@
     "downloadFiles": [
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://unmtid-shinyapps.net/download/drug.target.interaction.tsv.gz",
+            "downloadURL": "https://unmtid-shinyapps.net/download/DrugCentral/2021_09_01/drug.target.interaction.tsv.gz",
             "processedFilename": "drug.target.interaction.csv"
         },
         {
             "@type": "https://w3id.org/d2s/vocab/FileDownload",
-            "downloadURL": "https://unmtid-shinyapps.net/download/structures.smiles.tsv",
+            "downloadURL": "https://unmtid-shinyapps.net/download/DrugCentral/2021_09_01/structures.smiles.tsv",
             "processedFilename": "structures.smiles.csv"
         }
     ],

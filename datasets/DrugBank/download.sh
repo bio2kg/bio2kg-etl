@@ -1,8 +1,14 @@
 #!/bin/bash
 
+## To run in your terminal before `d2s run`
+# export DRUGBANK_USERNAME=user_email
+# export DRUGBANK_PASSWORD=pass
+
+## Script not used currently, download in the config file
+
 # Allow to provide drugbank login via args or env variables
 DRUGBANK_USERNAME="${1:-$DRUGBANK_USERNAME}"
-DRUGBANK_USERNAME="${2:-$DRUGBANK_PASSWORD}"
+DRUGBANK_PASSWORD="${2:-$DRUGBANK_PASSWORD}"
 
 DRUGBANK_VERSION="${DRUGBANK_VERSION:=5-1-8}"
 
@@ -11,7 +17,7 @@ if [ ! -f "data/drugbank.xml" ]; then
     mkdir -p data
     cd data
     curl -Lfs -o drugbank.zip -u $DRUGBANK_USERNAME:$DRUGBANK_PASSWORD https://go.drugbank.com/releases/$DRUGBANK_VERSION/downloads/all-full-database
-    unzip drugbank.zip
+    unzip -o drugbank.zip
     # Replace <drugbank-id @primary=true> by <drugbank-id-primary> to enable RML to get the main DrugBank ID
     sed -r 's/<drugbank-id primary="true">(.*)<\/drugbank-id>/<drugbank-id-primary>\1<\/drugbank-id-primary>/g' full\ database.xml > drugbank.xml
 
