@@ -12,9 +12,9 @@ ENV PATH="$PATH:$HOME/.yarn/bin"
 RUN yarn global add @rmlio/yarrrml-parser
 RUN yarn --cwd /opt add shex
 
-# Install RocketRML
-ADD package.json .
-RUN yarn install
+# Install RocketRML, useless if workspace mounted
+# ADD package.json .
+# RUN yarn install
 
 # Download latest RML mapper in /opt/rmlmapper.jar
 RUN curl -s https://api.github.com/repos/RMLio/rmlmapper-java/releases/latest \
