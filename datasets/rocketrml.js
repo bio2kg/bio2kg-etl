@@ -104,4 +104,5 @@ const doMapping = async () => {
 
 doMapping();
 
-// node ../rocketrml.js
+// Run with 2G memory (help with large CSV):
+// node --max_old_space_size=2048 ../rocketrml.js

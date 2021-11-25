@@ -90,6 +90,39 @@ See also:
 
 ## Deploy services on the DSRI
 
+### Start a workspace on DSRI
+
+Create the image in your project (to do only once):
+
+```bash
+oc new-build --name bio2kg-workspace --binary
+```
+
+Build the `Dockerfile` on the DSRI (to re-run everytime you make a change to the script and content of the docker image):
+
+```bash
+oc start-build bio2kg-workspace --from-dir=. --follow --wait
+```
+
+Start the JupyterLab/VSCode workspace with Helm (cf. docs to add the repository), replace `/bio2kg/` by your project name:
+
+```bash
+helm install workspace dsri/jupyterlab \
+  --set serviceAccount.name=anyuid \
+  --set service.openshiftRoute.enabled=true \
+  --set image.repository=image-registry.openshift-image-registry.svc:5000/bio2kg/bio2kg-workspace:latest \
+  --set image.tag=latest \
+  --set storage.mountPath=/home/jovyan/work \
+  --set gitUrl=https://github.com/bio2kg/bio2kg-etl \
+  --set password=changeme
+```
+
+Uninstall the chart:
+
+```bash
+helm install workspace
+```
+
 ### Start Virtuoso triplestores on DSRI
 
 On the DSRI you can easily create Virtuoso triplestores by using the dedicated template in the **Catalog** (cf. this docs for [Virtuoso LDP](https://github.com/vemonet/virtuoso-ldp))
