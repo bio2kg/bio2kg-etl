@@ -50,6 +50,17 @@ jobs:
     #     ./download.sh
     #     curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
 
+    - name: Run dataset processing
+      env:
+        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+        DRUGBANK_VERSION: 5-1-8
+      run: |
+        pip install git+https://github.com/MaastrichtU-IDS/d2s-cli.git@master
+        cd datasets/DrugBank
+        d2s run --memory 32g
+
     # https://github.com/redhat-actions/oc-login#readme
     # - name: Log in to OpenShift
     #   uses: redhat-actions/oc-login@v1
@@ -74,20 +85,20 @@ jobs:
     #     # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         
     
-    - name: Run RocketRML mapper ETL
-      env:
-        DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
-        DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
-        DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
-        DRUGBANK_VERSION: 5-1-8
-      run: |
-        conda install -y pugixml
-        conda install -y -c anaconda make gcc
-        yarn
-        cd datasets/DrugBank
-        ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
-        ./run.sh
-        # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
+    # - name: Run RocketRML mapper ETL
+    #   env:
+    #     DBA_PASSWORD: ${{ secrets.VIRTUOSO_PASSWORD }}
+    #     DRUGBANK_USERNAME: ${{ secrets.DRUGBANK_USERNAME }}
+    #     DRUGBANK_PASSWORD: ${{ secrets.DRUGBANK_PASSWORD }}
+    #     DRUGBANK_VERSION: 5-1-8
+    #   run: |
+    #     conda install -y pugixml
+    #     conda install -y -c anaconda make gcc
+    #     yarn
+    #     cd datasets/DrugBank
+    #     ./download.sh $DRUGBANK_USERNAME $DRUGBANK_PASSWORD
+    #     ./run.sh
+    #     # curl -u dav:$DBA_PASSWORD --data-binary @data/bio2kg-drugbank.ttl -H "Accept: text/turtle" -H "Content-type: text/turtle" -H "Slug: drugbank" https://triplestore-bio2kg.apps.dsri2.unimaas.nl/DAV/ldp
         
 
     - name: Upload RDF output

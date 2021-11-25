@@ -112,8 +112,6 @@ helm install workspace dsri/jupyterlab \
   --set extraEnvs[0].value=your_drugbank_password \
   --set extraEnvs[0].name=DRUGBANK_PASSWORD \
   --set extraEnvs[0].value=your_drugbank_password \
-  export DRUGBANK_PASSWORD=maasitest12
-
   --set password=changeme
 ```
 
