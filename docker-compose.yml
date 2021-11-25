@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/home/jovyan/work
     user: "root"
+    # No password for JupyterLab locally:
     command: "--NotebookApp.token=''"
     environment:
       - DBA_PASSWORD=${VIRTUOSO_PASSWORD:-dba}

@@ -1,6 +1,11 @@
 version: "3"
 
 # NOTE: we currently use the DSRI to host our Virtuoso instance, cf. README.md
+
+# Define the password used by the Triplestore to store the data generated in a `.env` file at the root of this repository, you can copy `.env.sample` to make it easier
+# VIRTUOSO_PASSWORD=the_password
+
+
 # docker-compose -f docker-compose.prod.yml up -d
 
 services:

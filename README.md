@@ -15,12 +15,6 @@ A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can al
 
 ### Start the workspace
 
-Define the password used by the Triplestore to store the data generated in a `.env` file at the root of this repository, you can copy `.env.sample` to make it easier
-
-```bash
-VIRTUOSO_PASSWORD=the_password
-```
-
 Start the workspace with `docker-compose` 
 
 ```bash
@@ -29,7 +23,7 @@ docker-compose up
 
 Access the workspace started on http://localhost:8888
 
-> The source code for the `d2s-cli` will be cloned and installed locally in the docker container, this way you can make change to the `d2s-cli` code, and they will be automatically used by the `d2s` command in the docker container.
+The source code for the `d2s-cli` will be cloned and installed locally in the docker container, this way you can make change to the `d2s-cli` code, and they will be automatically used by the `d2s` command in the docker container.
 
 ### Run a dataset conversion
 
@@ -59,7 +53,7 @@ For VisualStudio Code users: add autocomplete and validation for YARRRML mapping
 ```json
     "yaml.schemas": {
         "https://raw.githubusercontent.com/bio2kg/bio2kg-etl/main/resources/yarrrml.schema.json": ["*.yarrr.yml"],
-        "https://raw.githubusercontent.com/d2s/d2s-cli/master/resources/d2s-config.schema.json": ["d2s.yml"],
+        "https://raw.githubusercontent.com/MaastrichtU-IDS/d2s-cli/master/resources/d2s-config.schema.json": ["d2s.yml"],
     }
 ```
 
@@ -98,7 +92,7 @@ Create the image in your project (to do only once):
 oc new-build --name bio2kg-workspace --binary
 ```
 
-Build the `Dockerfile` on the DSRI (to re-run everytime you make a change to the script and content of the docker image):
+Build the `Dockerfile` on the DSRI (to re-run everytime you make a change to the script and content of the docker image on your machine):
 
 ```bash
 oc start-build bio2kg-workspace --from-dir=. --follow --wait
@@ -110,17 +104,23 @@ Start the JupyterLab/VSCode workspace with Helm (cf. docs to add the repository)
 helm install workspace dsri/jupyterlab \
   --set serviceAccount.name=anyuid \
   --set service.openshiftRoute.enabled=true \
-  --set image.repository=image-registry.openshift-image-registry.svc:5000/bio2kg/bio2kg-workspace:latest \
+  --set image.repository=image-registry.openshift-image-registry.svc:5000/bio2kg/bio2kg-workspace \
   --set image.tag=latest \
   --set storage.mountPath=/home/jovyan/work \
   --set gitUrl=https://github.com/bio2kg/bio2kg-etl \
+  --set extraEnvs[0].name=DRUGBANK_USER \
+  --set extraEnvs[0].value=your_drugbank_password \
+  --set extraEnvs[0].name=DRUGBANK_PASSWORD \
+  --set extraEnvs[0].value=your_drugbank_password \
+  export DRUGBANK_PASSWORD=maasitest12
+
   --set password=changeme
 ```
 
 Uninstall the chart:
 
 ```bash
-helm install workspace
+helm uninstall workspace
 ```
 
 ### Start Virtuoso triplestores on DSRI

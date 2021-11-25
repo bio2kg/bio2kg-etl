@@ -18,7 +18,7 @@ if not os.path.exists('d2s-cli'):
 
 if os.path.exists('d2s-cli'):
     print('Installing d2s-cli package locally')
-    os.system('pip install ./d2s-cli')
+    os.system('pip install -e ./d2s-cli')
 
 
 # Download bio2kg-etl
