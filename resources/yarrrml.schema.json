@@ -33,12 +33,14 @@
         }]}
       },
       "sources": {
-        "type": "object",
-        "patternProperties": {
-          "^.*$": {
-            "$ref": "#/$defs/source"
-          }
-        }
+        "anyOf": [{
+          "type": "object",
+          "patternProperties": {
+            "^.*$": {
+              "$ref": "#/$defs/source"
+          }}},{
+          "type": "string"
+        }]
       },
       "mappings": {
         "type": "object",
