@@ -106,19 +106,32 @@ helm install workspace dsri/jupyterlab \
   --set service.openshiftRoute.enabled=true \
   --set image.repository=image-registry.openshift-image-registry.svc:5000/bio2kg/bio2kg-workspace \
   --set image.tag=latest \
+  --set image.pullPolicy=Always \
   --set storage.mountPath=/home/jovyan/work \
   --set gitUrl=https://github.com/bio2kg/bio2kg-etl \
-  --set extraEnvs[0].name=DRUGBANK_USER \
-  --set extraEnvs[0].value=your_drugbank_password \
-  --set extraEnvs[0].name=DRUGBANK_PASSWORD \
-  --set extraEnvs[0].value=your_drugbank_password \
   --set password=changeme
+```
+
+Add DrugBank user email and password:
+
+```bash 
+  --set extraEnvs[0].name=DRUGBANK_USER \
+  --set extraEnvs[0].value=your_drugbank_user \
+  --set extraEnvs[1].name=DRUGBANK_PASSWORD \
+  --set extraEnvs[1].value=your_drugbank_password \
 ```
 
 Uninstall the chart:
 
 ```bash
 helm uninstall workspace
+```
+
+Delete the build config:
+
+```bash
+oc delete bc/bio2kg-workspace
+oc delete imagestreamtag/bio2kg-workspace
 ```
 
 ### Start Virtuoso triplestores on DSRI
@@ -318,7 +331,7 @@ helm install actions-runner openshift-actions-runner/actions-runner \
     --set-string githubPat=$GITHUB_PAT \
     --set-string githubOwner=bio2kg \
     --set runnerLabels="{ dsri, bio2kg }" \
-    --set replicas=40 \
+    --set replicas=5 \
     --set serviceAccountName=anyuid \
     --set memoryRequest="512Mi" \
     --set memoryLimit="200Gi" \

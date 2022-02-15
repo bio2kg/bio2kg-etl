@@ -7,12 +7,15 @@ services:
     build: .
     # restart: unless-stopped
     volumes:
-      - .:/home/jovyan/work
+      - .:/home/jovyan/work/bio2kg-etl
+      - ../d2s-cli:/home/jovyan/work/d2s-cli
     user: "root"
     # No password for JupyterLab locally:
     command: "--NotebookApp.token=''"
     environment:
       - DBA_PASSWORD=${VIRTUOSO_PASSWORD:-dba}
+      # - GIT_URL=https://github.com/bio2kg/bio2kg-etl
+
     #   - JUPYTER_TOKEN=password
     ports:
       - 8888:8888

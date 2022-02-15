@@ -1,4 +1,5 @@
 
+## Script to run in the docker workspace
 
 echo "Installing package.json (for RocketRML)"
 yarn
@@ -6,6 +7,7 @@ yarn
 # echo "Install dependencies for python scripts"
 # pip install -r requirements.txt
 # conda install --file requirements.txt
+cd ..
 
 if [ ! -f "d2s-cli" ]; then
     echo "Clone d2s-cli"

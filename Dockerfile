@@ -25,10 +25,13 @@ RUN mkdir -p ~/.local/share/d2s && \
     cp /opt/rmlmapper.jar ~/.local/share/d2s/rmlmapper.jar
 
 # Use custom config to make sure d2s is cloned and installed at start
-ADD jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+# USER root
+COPY jupyter_notebook_config.py /etc/jupyter/jupyter_notebook_config.py
+# --chown=root:0
+# USER $NB_USER
 
-# ENTRYPOINT [ "/home/jovyan/work/prepare_docker.sh", "&&", "jupyter", "lab", "--no-browser", "--ip=0.0.0.0", "--config=/etc/jupyter/jupyter_notebook_config.py"]
+# ENTRYPOINT [ "jupyter", "lab", "--no-browser", "--allow-root", "--ip=0.0.0.0", "--port=8888", "--config=/etc/jupyter/jupyter_notebook_config.py"]
 
+# ENTRYPOINT [ "/home/jovyan/work/prepare_docker.sh", "&&", "jupyter", "lab", "--no-browser", "--ip=0.0.0.0", "--port=8888", "--config=/etc/jupyter/jupyter_notebook_config.py"]
 # CMD [ "prepare_docker.sh", "&&", "start-notebook.sh" ]
-
 # CMD [ "prepare_docker.sh", "&&", "start-notebook.sh" ]
