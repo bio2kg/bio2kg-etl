@@ -9,6 +9,20 @@
 | [Publications](https://vemonet.github.io/semanticscience/browse/class-siopeerreviewedarticle.html) | [![PubMed](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-pubmed.yml) [![ClinicalTrials](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-clinicaltrials.yml) |
 | [Associations](https://vemonet.github.io/semanticscience/browse/class-sioassociation.html) | [![Process CTD](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-ctd.yml) [![iRefIndex](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-irefindex.yml) [![Process STITCH](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-stitch.yml) [![Process HuRI](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-huri.yml) [![Process BioSNAP](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml/badge.svg)](https://github.com/bio2kg/bio2kg-etl/actions/workflows/process-biosnap.yml) |
 
+## Install
+
+Install pip package:
+
+```bash
+pip install d2s
+```
+
+Install yarrrml-parser:
+
+```bash
+npm i -g @rmlio/yarrrml-parser
+```
+
 ## Run workflows locally for development
 
 A GitHub Action workflow is defined to run each ETL workflow on DSRI. You can also easily run them locally (you might face scalability issues for some large datasets though, so try to use a sample for testing). Checking a dataset workflow definition is a good way to see exactly the process to convert this dataset to RDF using the SemanticScience ontology.
